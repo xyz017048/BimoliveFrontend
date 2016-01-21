@@ -4,13 +4,13 @@ Official repository for Bimolive.com front end code.
 # Developing on Local
 Clone the repository
 ``` bash
-git clone https://your_username@bitbucket.org/the_pros/bimolivefrontend.git bimoliveAngularFrontEnd
+git clone https://your_username@bitbucket.org/the_pros/bimoliveangularfrontend.git bimoliveAngularFrontEnd
 ```
 
-Install nodejs and npm
+Install nodejs and npm if you haven't installed before
 [https://nodejs.org/en/](https://nodejs.org/en/)
 
-Install Grunt on your machine
+Install things on your machine
 ```bash
 sudo npm install -g grunt-cli bower yo generator-karma generator-angular
 sudo npm install karma jasmine-core phantomjs --save-dev
