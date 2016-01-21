@@ -1,0 +1,28 @@
+<!--Question Modal-->
+<div class="modal fade" id="questionModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h1 class="modal-title">Question from {{teacherCtrl.currentQuestion.username}}</h1>
+            </div>
+            <div class="modal-body">
+                <p id="question-content">{{teacherCtrl.currentQuestion.content}}</p>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Answer</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

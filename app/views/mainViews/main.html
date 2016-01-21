@@ -1,0 +1,31 @@
+<!--header-->
+<div class="page-header">
+    <h1>BimoLive.com</h1>
+</div>
+
+<!--main body-->
+<div class="row" style="display:flex; flex-wrap:wrap;">
+    <div ng-repeat="video in mainCtrl.videoInfo track by $index" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
+        <a ng-href="#/student/{{video.id}}">
+            <div class="imageWrapper" style="position: relative;">
+                <img ng-src="images/thumbnail_pics/{{video.id}}.png" class="img-responsive img-thumbnail" alt="1" 
+                    style="position: relative;"/>
+                <div class="img-overlay">
+                    <img ng-src="images/play_icon.png" class="img-responsive play-icon" alt="play" />
+                </div>
+            </div>
+            <div class="caption">
+                <a ng-href="#/student/{{video.id}}">{{video.name}}</a>
+                <p>by {{video.presenter}}</p>
+                <p>Current View: {{video.getViewNumber(video.id)}}</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--footer-->
+<div class="footer">
+    <div class="container">
+        <p><span class="glyphicon glyphicon-heart"></span> from the PROS </p>
+    </div>
+</div>
