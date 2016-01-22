@@ -35,6 +35,11 @@ angular.module('bimoliveApp', [
             controller: 'TeacherCtrl',
             controllerAs: 'teacherCtrl'
         })
+        .when('/mycourses', {
+            templateUrl: 'views/teacherViews/mycoursesView.html',
+            controller: 'TeacherCtrl',
+            controllerAs: 'teacherCtrl'
+        })
         .when('/student/:id', {
             templateUrl: 'views/studentViews/studentView.html',
             controller: 'StudentCtrl',
