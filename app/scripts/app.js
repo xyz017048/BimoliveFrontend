@@ -50,7 +50,6 @@ angular.module('bimoliveApp', [
         });
      
 })
-
 .config(['$httpProvider', function ($httpProvider) {
 
     $httpProvider.defaults.useXDomain = true;

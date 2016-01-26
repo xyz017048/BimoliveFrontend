@@ -2,12 +2,12 @@
     <!-- <span class="glyphicon glyphicon-search nav-toggle-btn" aria-hidden="true"></span> -->
     <div class="row">
         <ul class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="jumbotron" ng-if="!mainCtrl.isLogIn">
+            <div class="jumbotron" ng-if="!mainCtrl.isLoggedIn">
                 <li><a href data-toggle="modal" data-target="#logInModal" mydata="mydata">Log In</a></li>
                 <li><a href data-toggle="modal" data-target="#signUpModal" mydata="mydata">Sign Up</a></li>
             </div>
-            <div class="jumbotron" ng-if="mainCtrl.isLogIn">
-                <li style="padding-left: 50px; padding-bottom: 0px;"><img class="img-responsive img-circle" ng-src="images/profile.jpg" alt="profile"></li>
+            <div class="jumbotron" ng-if="mainCtrl.isLoggedIn">
+                <li id="profile-pic"><img class="img-responsive img-circle" ng-src="images/profile.jpg" alt="profile"></li>
                 <li ng-click="mainCtrl.logout()"><a>Log Out</a></li>
             </div>
             <li><a href>Lectures</a></li>

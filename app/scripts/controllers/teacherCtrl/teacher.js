@@ -30,4 +30,18 @@ angular.module('bimoliveApp')
     // set current question to the first question in the question array
     this.currentQuestion = this.questions[0];
     
+    // this is fake! place holder for the real function
+    function getMycourses () {
+        var array = [];
+        for (var i = 0; i < 11; i++) {
+            var video = { "name": "video #" + i,
+                "presenter": "Smith" + i,
+                "id": i
+            };
+            array.push(video);
+        }
+        return array;
+    }
+    
+    this.myCourses = getMycourses();
 });

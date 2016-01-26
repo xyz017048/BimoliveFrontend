@@ -23,15 +23,21 @@ angular.module('bimoliveApp')
     
     this.email = '';
     this.password = '';
-    this.isLogIn = false;
+    this.isLoggedIn = false;
     
     /**
      * Check the login status
      */
-    this.isLogin = function() {
-        if(this.isLogIn === true) {
+    this.checkIsLoggedIn = function() {
+        if(this.isLoggedIn === true) {
             alert('You are logined');
         }
+    };
+    
+    this.clear = function () {
+        // clear the textbox
+        this.email = '';
+        this.password = '';
     };
     
     /**
@@ -56,8 +62,8 @@ angular.module('bimoliveApp')
             
             .success(function(data, status) {
                 if(data.result) {
-                    appScope.isLogIn = true;
-                    appScope.isLogin();
+                    appScope.isLoggedIn = true;
+                    appScope.checkIsLoggedIn();
                 }
 
             })
@@ -71,13 +77,15 @@ angular.module('bimoliveApp')
         } else {
             alert('error');
         }
+        // clear the textbox
+        this.clear();
     };
     
     /**
      * Set isLogIn to false, reset the toggle bar
      */
     this.logout = function() {
-        this.isLogIn = false;
+        this.isLoggedIn = false;
     };
     
     this.videoInfo = getVideos();

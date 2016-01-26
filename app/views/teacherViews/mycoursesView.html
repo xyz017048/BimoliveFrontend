@@ -4,5 +4,22 @@
         <h1>My Courses
         </h1>
     </div>
-    <p>This is the my courses view.</p>
+    <div class="row" style="display:flex; flex-wrap:wrap;">
+        <div ng-repeat="course in teacherCtrl.myCourses" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <a ng-href="#/course/{{course.id}}">
+                <div class="imageWrapper" style="position: relative;">
+                    <img ng-src="images/thumbnail_pics/{{course.id}}.png" class="img-responsive img-thumbnail" alt="1" style="position: relative;"
+                    />
+                    <div class="img-overlay">
+                        <img ng-src="images/play_icon.png" class="img-responsive play-icon" alt="play" />
+                    </div>
+                </div>
+                <div class="caption">
+                    <a ng-href="#/course/{{course.id}}">{{course.name}}</a>
+                    <p>by {{course.presenter}}</p>
+                    <p>Current View: {{course.getViewNumber(course.id)}}</p>
+                </div>
+            </a>
+        </div>
+    </div>
 </div>

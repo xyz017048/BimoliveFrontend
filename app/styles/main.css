@@ -94,6 +94,10 @@ h2 {
 .modal-body #question-content {
     font-size: 140%;
 }
-.modal-title{
+.modal-title {
     font-size: 200%;
+}
+#profile-pic {
+    padding-left: 50px;
+    padding-bottom: 0px;
 }
