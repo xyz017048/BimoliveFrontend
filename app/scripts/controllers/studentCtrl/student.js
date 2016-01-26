@@ -38,9 +38,9 @@ angular.module('bimoliveApp')
         } )
         .success(function(data, status) {
             console.log(data);
-            for(var d in data) {
-                result.push({ "content": d.content, "username": d.username});
-                console.log(a);
+            for(var n in data) {
+                console.log(data[n]);
+                result.push({ "content": data[n].content, "username": data[n].username});
             }
         })
         .error(function(data, status) {
