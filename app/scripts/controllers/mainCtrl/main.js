@@ -8,7 +8,7 @@ angular.module('bimoliveApp')
  */
 .controller('MainCtrl', function ($http) {
     
-    // this is fake! place holder for the real function
+    // This is fake! place holder for the real function
     function getVideos () {
         var array = [];
         for (var i = 0; i < 11; i++) {
@@ -26,6 +26,8 @@ angular.module('bimoliveApp')
     this.password = '';
     this.idUser = 0;
     this.username = '';
+    
+    // 
     this.isLoggedIn = false;
     
     // Sign up variables
@@ -42,12 +44,24 @@ angular.module('bimoliveApp')
         }
     };
     
-    this.clear = function () {
+    /**
+     * Clear Login
+     */
+    this.logInClear = function () {
         // clear the textbox
         this.email = '';
         this.password = '';
         this.idUser = 0;
         this.username = '';
+    };
+    
+    /**
+     * Sign Up
+     */
+    this.signUpClear = function() {
+        this.signUpUsername = '';
+        this.signUpEmail = '';
+        this.signUpPassword = '';
     };
     
     /**
@@ -90,8 +104,8 @@ angular.module('bimoliveApp')
         } else {
             alert('error');
         }
-        // clear the textbox
-        this.clear();
+        // Clear the textbox
+        this.logInClear();
     };
     
     /**
@@ -110,7 +124,7 @@ angular.module('bimoliveApp')
             
             // Assign app object in appScope
             var appScope = this;
-            /*
+            
             // Serveice
             $http( { 
                 method: 'POST', 
@@ -123,30 +137,22 @@ angular.module('bimoliveApp')
             
             .success(function(data, status) {
                 if(data.result) {
-                    appScope.email = data.email;
-                    appScope.idUser = data.idUser;
-                    appScope.username = data.username;
                     appScope.isLoggedIn = true;
                     appScope.checkIsLoggedIn();
                 }
-
             })
             
             .error(function(data, status) {
-                console.log(data);
-                console.log(status);
-                console.log('Request failed');
             });
-            */
-            console.log(this.signUpUsername);
+            
         } else {
-            // remain error message
+            // Remain error message
         }
     };
     
     this.videoInfo = getVideos();
     
-    // this is fake! Place holder for function that gets view number from server
+    // This is fake! Place holder for function that gets view number from server
     this.getViewNumber = function (coruseId) {
         return 10;
     };
