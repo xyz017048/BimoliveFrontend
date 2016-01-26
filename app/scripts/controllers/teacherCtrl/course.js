@@ -5,9 +5,10 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('CourseCtrl', ['$controller', function ($controller) {
+.controller('CourseCtrl', ['$controller', function ($controller, $http) {
     // fetch teacher controller
     var TeacherCtrl = $controller('TeacherCtrl');
+    var MainCtrl = $controller('MainCtrl');
 
     // fetch mycourses from teacher controller
     this.myCourses = TeacherCtrl.myCourses;
@@ -58,11 +59,39 @@ angular.module('bimoliveApp')
     // FAKE ! Real one should send the course info to server and create a new course
     this.createNewCourse = function () {
         if (this.checkNewCourseValid()) {
-            alert('name: ' + this.newCourse.name + '\n' +
+            /* alert('name: ' + this.newCourse.name + '\n' +
                 ' category: ' + this.newCourse.category + '\n' +
                 ' level: ' + this.newCourse.level + '\n' +
                 ' Start Date: ' + this.newCourse.startDate + '\n' +
-                ' End Date: ' + this.newCourse.endDate);   
+                ' End Date: ' + this.newCourse.endDate); */
+                
+            // Assign app object in appScope
+            /*
+            var appScope = this;
+            
+            // Serveice
+            $http( { 
+                method: 'POST', 
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com//teacher/createcourse',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: {
+                    email: this.signUpEmail, 
+                    username: this.signUpUsername, 
+                    password: this.signUpPassword 
+                    
+                }
+            } )
+            
+            .success(function(data, status) {
+            })
+            
+            .error(function(data, status) {
+            });
+            */
+            console.log(MainCtrl.idUser);
+            
             this.clearForm();
         }
     };
