@@ -21,11 +21,17 @@ angular.module('bimoliveApp')
         return array;
     }
     
+    // Log in variables
     this.email = '';
     this.password = '';
     this.idUser = 0;
     this.username = '';
     this.isLoggedIn = false;
+    
+    // Sign up variables
+    this.signUpUsername = '';
+    this.signUpEmail = '';
+    this.signUpPassword = '';
     
     /**
      * Check the login status
@@ -93,6 +99,49 @@ angular.module('bimoliveApp')
      */
     this.logout = function() {
         this.isLoggedIn = false;
+    };
+    
+    /**
+     * Sign up 
+     */
+    this.signUp = function() {
+        // If the signUpUsername, signUpEmail and signUpPassword is valid and defined
+        if( this.signUpUsername && this.signUpEmail && this.signUpPassword ) {
+            
+            // Assign app object in appScope
+            var appScope = this;
+            /*
+            // Serveice
+            $http( { 
+                method: 'POST', 
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/register',
+                 headers: {
+                    'Content-Type': undefined
+                },
+                data: { email: this.signUpEmail, username: this.signUpUsername, password: this.signUpPassword }
+            } )
+            
+            .success(function(data, status) {
+                if(data.result) {
+                    appScope.email = data.email;
+                    appScope.idUser = data.idUser;
+                    appScope.username = data.username;
+                    appScope.isLoggedIn = true;
+                    appScope.checkIsLoggedIn();
+                }
+
+            })
+            
+            .error(function(data, status) {
+                console.log(data);
+                console.log(status);
+                console.log('Request failed');
+            });
+            */
+            console.log(this.signUpUsername);
+        } else {
+            // remain error message
+        }
     };
     
     this.videoInfo = getVideos();
