@@ -30,7 +30,7 @@ angular.module('bimoliveApp')
      */
     this.checkIsLoggedIn = function() {
         if(this.isLoggedIn === true) {
-            alert('You are logined');
+            alert('You are logged in!');
         }
     };
     
@@ -89,5 +89,10 @@ angular.module('bimoliveApp')
     };
     
     this.videoInfo = getVideos();
+    
+    // this is fake! Place holder for function that gets view number from server
+    this.getViewNumber = function (coruseId) {
+        return 10;
+    };
     
 });

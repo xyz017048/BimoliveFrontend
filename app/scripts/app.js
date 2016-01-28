@@ -30,6 +30,11 @@ angular.module('bimoliveApp', [
             controller: 'AboutCtrl',
             controllerAs: 'aboutCtrl'
         })
+        .when('/profile', {
+            templateUrl: 'views/otherViews/profile.html',
+            controller: 'ProfileCtrl',
+            controllerAs: 'profileCtrl'
+        })
         .when('/teacher', {
             templateUrl: 'views/teacherViews/teacherView.html',
             controller: 'TeacherCtrl',
@@ -37,8 +42,13 @@ angular.module('bimoliveApp', [
         })
         .when('/mycourses', {
             templateUrl: 'views/teacherViews/mycoursesView.html',
-            controller: 'TeacherCtrl',
-            controllerAs: 'teacherCtrl'
+            controller: 'CourseCtrl',
+            controllerAs: 'courseCtrl'
+        })
+        .when('/addcourse', {
+            templateUrl: 'views/teacherViews/addcourseView.html',
+            controller: 'CourseCtrl',
+            controllerAs: 'courseCtrl'
         })
         .when('/student/:id', {
             templateUrl: 'views/studentViews/studentView.html',

@@ -33,8 +33,8 @@ angular.module('bimoliveApp')
     // this is fake! place holder for the real function
     function getMycourses () {
         var array = [];
-        for (var i = 0; i < 11; i++) {
-            var video = { "name": "video #" + i,
+        for (var i = 0; i < 5; i++) {
+            var video = { "name": "Course #" + i,
                 "presenter": "Smith" + i,
                 "id": i
             };
@@ -44,4 +44,9 @@ angular.module('bimoliveApp')
     }
     
     this.myCourses = getMycourses();
+    
+    // this is fake! Place holder for function that gets view number from server
+    this.getViewNumber = function (coruseId) {
+        return 10;
+    };
 });
