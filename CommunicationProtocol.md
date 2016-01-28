@@ -89,14 +89,28 @@ Question ask and answer:
 				}
 
 
-	<!-- For teacher to get all questions:
-		Request: POST or GET  /teacher/questions
+	For teacher to get all questions:
+		Request: POST  /teacher/questions
+				{
+					"idLecture":	INT,
+					"interval":		INT (seconds, if interval == 0, get all questions with 'new' 
+												status from this lecture;
+										else, get questions with 'new' status between current time and current time - interval)
+				}
 				
-		Response: 
+		Response: it is possible to receive empty response
 				[
 					{
-						"username" 	  : String,
-						"content" : String
+						"idQuestion":	INT,
+						"username": 	STRING,
+						"content" : 	STRING,
+						"sentTime":		STRING
 					},
 					...
-				] -->
+				]
+
+
+
+
+
+
