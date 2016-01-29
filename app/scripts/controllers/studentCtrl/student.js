@@ -37,9 +37,7 @@ angular.module('bimoliveApp')
             }
         } )
         .success(function(data, status) {
-            console.log(data);
             for(var n in data) {
-                console.log(data[n]);
                 result.push({ "content": data[n].content, "username": data[n].username});
             }
         })
@@ -59,23 +57,23 @@ angular.module('bimoliveApp')
      * @return {[type]}           [description]
      */
     // function sendQuestion (idUser, username, sectionId) {
-    this.sendQuestion = function(sectionId) {
+    this.sendQuestion = function() {
         console.log('send ' + this.idUser 
                 + ' ' + this.username + ' ' 
-                 + sectionId + ' (' 
-                 + this.currentQuestion + ')');
+                 + this.idLecture + ' '
+                 + this.currentQuestion);
 
         if (this.currentQuestion.trim() !== '') {
             $http( { 
                 method: 'POST', 
-                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/sendQuestion',
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/sendquestion',
                 headers: {
                     'Content-Type': undefined
                 },
                 data: {
                     idUser: this.idUser,
                     username: this.username,
-                    idLecture: sectionId,
+                    idLecture: this.idLecture,
                     content: this.currentQuestion.trim()
                 }
             } )
@@ -83,11 +81,7 @@ angular.module('bimoliveApp')
                 if(data.result) {
                     this.currentQuestion = '';
                 } else {
-                    alert('send ' + this.idUser 
-                    + ' ' + this.username + ' ' 
-                     + sectionId + ' ' 
-                     + this.currentQuestion
-                     + " " + data.result);
+                    console.log("success but got " + data.result);
                 }
             })
             .error(function(data, status) {
@@ -101,6 +95,7 @@ angular.module('bimoliveApp')
     var sectionId = $routeParams.id; //the current video id
     this.idUser = '1';
     this.username = 'xueyangh';
+    this.idLecture = sectionId;
 
     this.currentQuestion = '';
     
