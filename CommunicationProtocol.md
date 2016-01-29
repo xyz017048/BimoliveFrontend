@@ -74,6 +74,8 @@ Login:
 				"regisDate":            STRING
 			}
 
+account setting, apply to be a teacher
+
 Question ask and answer Part:
 	For student view to send a question:
 		Request: POST /student/sendquestion
@@ -121,7 +123,38 @@ Question ask and answer Part:
                                     "result":           INT (result=0 fail; reuslt=1 success)
                                 }        
 
-
+Teacher create courses/lectures:
+        Get course category: 
+                Request: POST/GET  /getcategory
+                Response:
+                                [
+                                    {
+                                        "abbreviation": STRING,
+                                        "fullName":     STRING
+                                    },
+                                    ...
+                                ]
+                                    
+                                
+        Create a course:
+                Request: POST   /teacher/createcourse
+                                {
+                                    "idUser":       INT,
+                                    "category":     STRING,
+                                    "levelNumber":  INT,
+                                    "name":         STRING,
+                                    "intro":        STRING,
+                                    "image":        STRING,     (the image path/id of the course)
+                                    "startDate":    STRING,     (format: "yyyy-MM-dd hh:mm:ss")
+                                    "endDate":      STRING,     (format: "yyyy-MM-dd hh:mm:ss")
+                                    "endFlag":      INT         (endFlag = 0, no endDate, make endDate same as startDate;
+                                                                 endFlag = 1, real endDate)
+                                }
+                Response:
+                                {
+                                    "result":           INT (result=0 fail; reuslt=1 success)
+                                }
+                
 
 
 
