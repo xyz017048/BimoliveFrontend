@@ -39,7 +39,7 @@ angular.module('bimoliveApp')
         .success(function(data, status) {
             console.log(data);
             for(var d in data) {
-                // result.push({ "content": d.content, "username": d.username});
+                result.push({ "content": d.content, "username": d.username});
                 console.log(a);
             }
         })
