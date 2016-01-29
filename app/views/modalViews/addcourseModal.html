@@ -1,0 +1,54 @@
+<!-- add course Modal -->
+<div class="modal fade" id="addCourseModal" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">New Course</h4>
+            </div>
+            <div class="modal-body">
+                <form name="courseCtrl.newCourseForm" id="newCourseForm" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' : courseCtrl.newCourseForm.newCourseName.$invalid && !courseCtrl.newCourseForm.newCourseName.$pristine }">
+                        <label class="control-label" for="newCourseName">Course Name</label>
+                        <input type="text" class="form-control" id="newCourseName" name="newCourseName" placeholder="Course name" ng-model="courseCtrl.newCourse.name"
+                        required>
+                        <p ng-show="courseCtrl.newCourseForm.newCourseName.$invalid && !courseCtrl.newCourseForm.newCourseName.$pristine" class="help-block">Course name is required.</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : courseCtrl.newCourseForm.category.$invalid && !courseCtrl.newCourseForm.category.$pristine }">
+                        <label class="control-label" for="category">Category</label>
+                        <select class="form-control" id="category" name="category" ng-model="courseCtrl.newCourse.category" required>
+                            <option ng-repeat="category in courseCtrl.categories">{{category}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : courseCtrl.newCourseForm.level.$invalid && !courseCtrl.newCourseForm.level.$pristine }">
+                        <label class="control-label" for="level">Level</label>
+                        <select class="form-control" id="level" name="level" ng-model="courseCtrl.newCourse.level" required>
+                            <option ng-repeat="level in courseCtrl.levels">{{level}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : courseCtrl.newCourseForm.startDate.$invalid && !courseCtrl.newCourseForm.startDate.$pristine }">
+                        <label class="control-label" for="startDate">Start Date</label>
+                        <p class="input-group">
+                            <input type="text" class="form-control" uib-datepicker-popup ng-model="courseCtrl.newCourse.startDate" is-open="courseCtrl.popup1.opened" min-date="courseCtrl.today"
+                            max-date="courseCtrl.maxDate" datepicker-options="courseCtrl.dateOptions" ng-required="true"
+                            close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="courseCtrl.open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" ng-disabled="courseCtrl.newCourseForm.$invalid" ng-click="courseCtrl.createNewCourse()">Create</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="courseCtrl.clearForm()">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

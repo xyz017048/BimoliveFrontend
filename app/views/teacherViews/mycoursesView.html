@@ -20,7 +20,7 @@
         </div>
         <div id="add-course-thumbnail" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
             <div id="add-course-wrapper">
-                <a ng-href="#/addcourse" id="add-course-button">
+                <a href id="add-course-button" data-toggle="modal" data-target="#addCourseModal" mydata="mydata">
                     <button id="add-course-button" class="btn btn-default btn-circle btn-xl">
                         <span class="glyphicon glyphicon-plus" style="text-align: center;"></span>
                     </button>
@@ -30,3 +30,6 @@
 
     </div>
 </div>
+
+<!--add course modal-->
+<div ng-include="'views/modalViews/addcourseModal.html'"></div>
