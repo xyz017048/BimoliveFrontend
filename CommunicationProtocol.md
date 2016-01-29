@@ -88,15 +88,15 @@ Question ask and answer Part:
 					"result": INT 	(result=0 fail; reuslt=1 success)
 				}
 
-        For Student question panel to display answered question and 
+        For Student question panel to display answered and solved question and 
         For teacher to get all questions::
                 Request: POST   /getquestions
                                 {
                                     "roleLevel":        INT, (1:student; 2:teacher)
                                     "idLecture":        INT,
-                                    "interval":         INT (seconds, if interval == 0, get all questions with 'answer' 
-												status from this lecture;
-										else, get questions with 'answer' status between current time and current time - interval)
+                                    "interval":         INT (seconds, if interval == 0, get all questions with 'answer' and 'solve' status for student or 'new' status for teacher
+												from this lecture;
+										else, get questions between current time and current time - interval)
                                 }
                 Response:   it is possible to receive empty response.
                                 [
@@ -104,6 +104,7 @@ Question ask and answer Part:
 						"idQuestion":	INT,
 						"username": 	STRING,
 						"content" : 	STRING,
+                                                "status":       STRING,
 						"sendTime":	STRING (format: yyyy-mm-dd hh:mm:ss)
 					},
 					...
