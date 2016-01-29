@@ -23,6 +23,8 @@ angular.module('bimoliveApp')
     
     this.email = '';
     this.password = '';
+    this.idUser = 0;
+    this.username = '';
     this.isLoggedIn = false;
     
     /**
@@ -38,6 +40,8 @@ angular.module('bimoliveApp')
         // clear the textbox
         this.email = '';
         this.password = '';
+        this.idUser = 0;
+        this.username = '';
     };
     
     /**
@@ -62,6 +66,9 @@ angular.module('bimoliveApp')
             
             .success(function(data, status) {
                 if(data.result) {
+                    appScope.email = data.email;
+                    appScope.idUser = data.idUser;
+                    appScope.username = data.username;
                     appScope.isLoggedIn = true;
                     appScope.checkIsLoggedIn();
                 }

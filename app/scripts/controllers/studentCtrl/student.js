@@ -27,7 +27,7 @@ angular.module('bimoliveApp')
             { "content": "What is the broadcast 2", "username": "Smith" },
             { "content": "What is the broadcast showing,3", "username": "Jones" }];
         /*
-        $routeParams( { 
+        $http( { 
             method: 'POST', 
             url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/getQuestion',
              headers: {
@@ -82,12 +82,8 @@ angular.module('bimoliveApp')
                 }
             } )
             .success(function(data, status) {
-                if(data.result === 1) {
+                if(data.result) {
                     this.currentQuestion = '';
-                } else {
-                    console.log(data);
-                    console.log(status);
-                    console.log('Request failed');
                 }
             })
             .error(function(data, status) {
