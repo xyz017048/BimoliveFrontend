@@ -21,29 +21,44 @@
                         <select class="form-control" id="category" name="category" ng-model="courseCtrl.newCourse.category" required>
                             <option ng-repeat="category in courseCtrl.categories">{{category}}</option>
                         </select>
+                        <p ng-show="courseCtrl.newCourseForm.category.$invalid && !courseCtrl.newCourseForm.category.$pristine" class="help-block">Category is required.</p>
                     </div>
                     <div class="form-group" ng-class="{ 'has-error' : courseCtrl.newCourseForm.level.$invalid && !courseCtrl.newCourseForm.level.$pristine }">
                         <label class="control-label" for="level">Level</label>
                         <select class="form-control" id="level" name="level" ng-model="courseCtrl.newCourse.level" required>
                             <option ng-repeat="level in courseCtrl.levels">{{level}}</option>
                         </select>
+                        <p ng-show="courseCtrl.newCourseForm.level.$invalid && !courseCtrl.newCourseForm.level.$pristine" class="help-block">Level is required.</p>
                     </div>
-                    <div class="form-group" ng-class="{ 'has-error' : courseCtrl.newCourseForm.startDate.$invalid && !courseCtrl.newCourseForm.startDate.$pristine }">
+                    <div class="form-group" ng-class="{ 'has-error' : !courseCtrl.newCourseForm.startDate.$pristine && !courseCtrl.isStartDateValid() }">
                         <label class="control-label" for="startDate">Start Date</label>
                         <p class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup ng-model="courseCtrl.newCourse.startDate" is-open="courseCtrl.popup1.opened" min-date="courseCtrl.today"
-                            max-date="courseCtrl.maxDate" datepicker-options="courseCtrl.dateOptions" ng-required="true"
-                            close-text="Close" />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="courseCtrl.open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                             </span>
+                            <input type="text" class="form-control" id="startDate" name="startDate" uib-datepicker-popup="{{courseCtrl.format}}" ng-model="courseCtrl.newCourse.startDate" is-open="courseCtrl.popup1.opened" min-date="courseCtrl.today"
+                            max-date="courseCtrl.maxDate" datepicker-options="courseCtrl.dateOptions" ng-required="true"
+                            close-text="Close"/>
                         </p>
+                        <p ng-show="!courseCtrl.newCourseForm.startDate.$pristine && !courseCtrl.isStartDateValid() " class="help-block">{{courseCtrl.startDateErrMsg}}</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : !courseCtrl.newCourseForm.endDate.$pristine && !courseCtrl.isEndDateValid()}">
+                        <label class="control-label" for="endDate">End Date</label>
+                        <p class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="courseCtrl.open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                            <input type="text" class="form-control" id="endDate" name="endDate" uib-datepicker-popup="{{courseCtrl.format}}" ng-model="courseCtrl.newCourse.endDate" is-open="courseCtrl.popup2.opened" min-date="courseCtrl.newCourse.startDate"
+                            max-date="courseCtrl.maxDate" datepicker-options="courseCtrl.dateOptions" ng-required="true"
+                            close-text="Close"/>
+                        </p>
+                        <p ng-show="!courseCtrl.newCourseForm.endDate.$pristine && !courseCtrl.isEndDateValid() " class="help-block">{{courseCtrl.endDateErrMsg}}</p>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary" ng-disabled="courseCtrl.newCourseForm.$invalid" ng-click="courseCtrl.createNewCourse()">Create</button>
+                    <button type="submit" class="btn btn-primary" ng-click="courseCtrl.createNewCourse()">Create</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="courseCtrl.clearForm()">Cancel</button>
                 </div>
 
