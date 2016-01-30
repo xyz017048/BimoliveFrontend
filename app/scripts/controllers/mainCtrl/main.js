@@ -54,6 +54,10 @@ angular.module('bimoliveApp')
         this.password = '';
         this.idUser = 0;
         this.username = '';
+        // hide the modal
+        $('#logInModal').modal('hide');
+        // hide set the form to be pristine
+        this.logInForm.$setPristine();
     };
     
     /**
@@ -70,12 +74,22 @@ angular.module('bimoliveApp')
         this.signUpForm.$setPristine();
     };
     
+    this.checkIsLogInValid = function () {
+        this.logInForm.email.$setDirty();
+        this.logInForm.password.$setDirty();
+        if (!this.email || !this.password) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
     /**
      * Validate the email and password
      */
     this.login = function() {
         // If the email is valid and defined and password is defined
-        if(this.email && this.password) {
+        if(this.checkIsLogInValid()) {
             
             // Assign app object in appScope
             var appScope = this;
@@ -106,12 +120,10 @@ angular.module('bimoliveApp')
                 console.log(status);
                 console.log('Request failed');
             });
-                
-        } else {
-            alert('error');
-        }
-        // Clear the textbox
-        this.logInClear();
+            
+            // Clear the textbox
+            this.logInClear();   
+        } 
     };
     
     /**
@@ -169,9 +181,7 @@ angular.module('bimoliveApp')
                 });
             
             this.signUpClear();
-        } else {
-            // Remain error message
-        }
+        } 
     };
     
     this.videoInfo = getVideos();
@@ -182,7 +192,7 @@ angular.module('bimoliveApp')
     };
     
     this.signUpForm = '';
-    
+    this.logInForm = '';
     this.usernameErrMsg = 'Username is required.';
     this.emailErrMsg = 'Email is required';
     this.passwordErrMsg = 'Password is required';
