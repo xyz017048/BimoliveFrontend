@@ -9,30 +9,33 @@
                 <h4 class="modal-title">Sign Up</h4>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">*Username</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Username" ng-model="mainCtrl.signUpUsername">
+                <form name="mainCtrl.signUpForm" id="signUpForm" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' : !mainCtrl.checkUsernameValid()}">
+                        <label class="control-label" for="username">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" ng-model="mainCtrl.signUpUsername" required>
+                        <p ng-show=" !mainCtrl.checkUsernameValid()" class="help-block"> {{ mainCtrl.usernameErrMsg }}</p>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">*Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="mainCtrl.signUpEmail">
+                    <div class="form-group" ng-class="{ 'has-error' : !mainCtrl.checkEmailValid()}">
+                        <label class="control-label" for="email">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" ng-model="mainCtrl.signUpEmail" required>
+                        <p ng-show=" !mainCtrl.checkEmailValid()" class="help-block"> {{ mainCtrl.emailErrMsg }}</p>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">*Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="mainCtrl.signUpPassword">
+                    <div class="form-group" ng-class="{ 'has-error' : !mainCtrl.checkPasswordValid()}">
+                        <label class="control-label" for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="mainCtrl.signUpPassword" required>
+                        <p ng-show=" !mainCtrl.checkPasswordValid()" class="help-block"> {{ mainCtrl.passwordErrMsg }}</p>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">*Confirm Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" >
+                    <div class="form-group" ng-class="{ 'has-error' : !mainCtrl.checkConfirmPasswordValid()}">
+                        <label class="control-label" for="confirmPassword">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" ng-model="mainCtrl.confirmPassword" required>
+                        <p ng-show=" !mainCtrl.checkConfirmPasswordValid()" class="help-block"> {{ mainCtrl.confirmPasswordErrMsg }}</p>
                     </div>
-
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="mainCtrl.signUp()" >Submit</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" ng-click="mainCtrl.signUp()" >Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="mainCtrl.signUpClear()">Cancel</button>
                 </div>
 
             </div>

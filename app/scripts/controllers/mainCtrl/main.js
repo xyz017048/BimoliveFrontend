@@ -34,6 +34,7 @@ angular.module('bimoliveApp')
     this.signUpUsername = '';
     this.signUpEmail = '';
     this.signUpPassword = '';
+    this.confirmPassword = '';
     
     /**
      * Check the login status
@@ -62,6 +63,11 @@ angular.module('bimoliveApp')
         this.signUpUsername = '';
         this.signUpEmail = '';
         this.signUpPassword = '';
+        this.confirmPassword = '';
+        // hide the modal
+        $('#signUpModal').modal('hide');
+        // hide set the form to be pristine
+        this.signUpForm.$setPristine();
     };
     
     /**
@@ -115,12 +121,29 @@ angular.module('bimoliveApp')
         this.isLoggedIn = false;
     };
     
+    this.checkIsSignUpValid = function () {
+        
+        this.signUpForm.username.$setDirty();
+        this.signUpForm.email.$setDirty();
+        this.signUpForm.password.$setDirty();
+        this.signUpForm.confirmPassword.$setDirty();
+            
+        if (!this.checkUsernameValid() ||
+            !this.checkEmailValid() ||
+            !this.checkPasswordValid() ||
+            !this.checkConfirmPasswordValid()) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+    
     /**
      * Sign up 
      */
     this.signUp = function() {
         // If the signUpUsername, signUpEmail and signUpPassword is valid and defined
-        if( this.signUpUsername && this.signUpEmail && this.signUpPassword ) {
+        if(this.checkIsSignUpValid()) {
             
             // Assign app object in appScope
             var appScope = this;
@@ -143,8 +166,9 @@ angular.module('bimoliveApp')
             })
             
             .error(function(data, status) {
-            });
+                });
             
+            this.signUpClear();
         } else {
             // Remain error message
         }
@@ -157,4 +181,75 @@ angular.module('bimoliveApp')
         return 10;
     };
     
+    this.signUpForm = '';
+    
+    this.usernameErrMsg = 'Username is required.';
+    this.emailErrMsg = 'Email is required';
+    this.passwordErrMsg = 'Password is required';
+    this.confirmPasswordErrMsg = 'Confirm password is required';
+    // This is FAKE! It's for checking if the user name is taken with the server
+    function isUserNameTaken() {
+        return false;
+    }
+    
+    // This is FAKE! It's for checking if the email is already used
+    function isEmailTaken() {
+        return false;
+    }
+    
+    // Check if use name is valid
+    this.checkUsernameValid = function () {
+        if (this.signUpForm.username.$invalid && !this.signUpForm.username.$pristine) {
+            this.usernameErrMsg = 'Username is required.';
+            return false;
+        } else {
+            if (isUserNameTaken()) {
+                this.usernameErrMsg = 'Username is taken.';
+                return false;
+            } else {
+                if (this.signUpUsername.indexOf(' ') >= 0) {
+                    this.usernameErrMsg = 'Username can not have white spaces.';
+                    return false;
+                } 
+            }
+        }
+        return true;
+    };
+    
+    // Check if email is valid
+    this.checkEmailValid = function () {
+        if (this.signUpForm.email.$invalid && !this.signUpForm.email.$pristine) {
+            this.emailErrMsg = 'Email is not valid.';
+            return false;
+        } else {
+            if (isEmailTaken()) {
+                this.emailErrMsg = 'Email is taken.';
+                return false; 
+            }
+        }
+        return true;
+    };
+    
+    // Check if password is valid
+    this.checkPasswordValid = function () {
+        if (this.signUpForm.password.$invalid && !this.signUpForm.password.$pristine) {
+            this.passwordErrMsg = 'Password is required.';
+            return false;
+        } 
+        return true;
+    };
+    
+    // Check if confirm password is valid
+    this.checkConfirmPasswordValid = function () {
+        if (!this.signUpForm.confirmPassword.$pristine) {
+            if (!this.confirmPassword || this.signUpForm.confirmPassword.$invalid) {
+                this.confirmPasswordErrMsg = 'Confirm password is required.';
+                return false;
+            } else if (this.signUpPassword !== this.confirmPassword) {
+                this.confirmPasswordErrMsg = 'Two passwords should be the same.';
+                return false;
+            }   
+        }
+        return true;
+    };
 });
