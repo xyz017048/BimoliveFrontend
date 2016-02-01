@@ -101,18 +101,20 @@ Question ask and answer Part:
 										else, get questions between current time and current time - interval)
                                 }
                 Response:   it is possible to receive empty response.
+                        note: for teacher, the questions are order by sendTime
+                              for student, the questions are order by changeTime, which means the answering time.
                                 [
 					{
 						"idQuestion":	INT,
 						"username": 	STRING,
 						"content" : 	STRING,
                                                 "status":       STRING,
-						"sendTime":	STRING (format: yyyy-mm-dd hh:mm:ss)
+						"sendTime":	STRING (format: yyyy-MM-dd hh:mm:ss)
 					},
 					...
 				]
                          
-        Teacher makes an action on a question:
+        Teacher makes an action on a question: (Once the teacher answers the question, he/she must click the "solve" button to close the dialog box. No other way ALLOWED to close it.)
                 Request: POST   /teacher/questionaction
                                 {
                                     "idQuestion":       INT,
@@ -123,7 +125,7 @@ Question ask and answer Part:
                                     "result":           INT (result=0 fail; reuslt=1 success)
                                 }        
 
-Teacher create courses/lectures:
+Teacher create/get courses/lectures:
         Get course category: 
                 Request: POST/GET  /getcategory
                 Response:
@@ -135,7 +137,32 @@ Teacher create courses/lectures:
                                     ...
                                 ]
                                     
-                                
+        Get All my Courses:  
+                Request: POST   /teacher/courses
+                                {
+                                    "idUser":           INT
+                                }
+
+                Response：      may be an empty list, order by "createDate" desc
+                                [
+                                    {
+                                        "idCourse":     INT,
+                                        "idUser":       INT,
+                                        "category":     STRING,
+                                        "levelNumber":  INT,
+                                        "name":         STRING,
+                                        "intro":        STRING,
+                                        "image":        STRING,     (the image path/id of the course)
+                                        "createDate":   STRING,
+                                        "startDate":    STRING,     (format: "yyyy-MM-dd hh:mm:ss" Here time zone problem)
+                                        "endDate":      STRING,     (format: "yyyy-MM-dd hh:mm:ss")
+                                        "endFlag":      INT         (endFlag = 0, no endDate, make endDate same as startDate;
+                                                                 endFlag = 1, real endDate)
+                                    },
+                                    ...
+                                ]
+
+                     
         Create a course:
                 Request: POST   /teacher/createcourse
                                 {
@@ -145,7 +172,7 @@ Teacher create courses/lectures:
                                     "name":         STRING,
                                     "intro":        STRING,
                                     "image":        STRING,     (the image path/id of the course)
-                                    "startDate":    STRING,     (format: "yyyy-MM-dd hh:mm:ss")
+                                    "startDate":    STRING,     (format: "yyyy-MM-dd hh:mm:ss" Here time zone problem)
                                     "endDate":      STRING,     (format: "yyyy-MM-dd hh:mm:ss")
                                     "endFlag":      INT         (endFlag = 0, no endDate, make endDate same as startDate;
                                                                  endFlag = 1, real endDate)
@@ -154,7 +181,50 @@ Teacher create courses/lectures:
                                 {
                                     "result":           INT (result=0 fail; reuslt=1 success)
                                 }
-                
+
+        Get all lectures of one course: when you click on one course, you will request all lectures of this course.
+                Request:    POST    /teacher/lectures
+                                {
+                                    "idCourse":         INT
+                                }
+                                  
+                Response:   may be an empty list, order by "lectureNum"
+                                [
+                                    {
+                                        "idLecture":        INT,
+                                        "idCourse":         INT,
+                                        "lectureNumber":    INT,       
+                                        "topic":            STRING,
+                                        "intro":            STRING,     (may not be required)
+                                        "image":            STRING,     (the image path/id of the lecture, may need a default pic)
+                                        "scheduleDate":     STRING,     (format: "yyyy-MM-dd" Here time zone problem)
+                                        "startTime":        STRING,     (format: "hh:mm")
+                                        "endTime":          STRING,     (format: "hh:mm")
+                                        "createDate":       STRING,     (format: "yyyy-MM-dd hh:mm:ss")
+                                        "status":           STRING,         
+                                        "url":              STRING
+                                    },
+                                    ...
+                                ]
 
 
+        Create a new Lecture:   
+                Request: POST   /teacher/createlecture
+                                {
+                                    "idCourse":         INT,
+                                    "lectureNumber":    INT,       (will only display the correct number for teacher)
+                                    "topic":            STRING,
+                                    "intro":            STRING,     (may not be required)
+                                    "image":            STRING,     (the image path/id of the lecture, may need a default pic)
+                                    "scheduleDate":     STRING,     (format: "yyyy-MM-dd" Here time zone problem)
+                                    "startTime":        STRING,     (format: "hh:mm")
+                                    "endTime":          STRING,     (format: "hh:mm")
+                                }
+                Response:
+                                {
+                                    "result":           INT (result=0 fail; reuslt=1 success)
+                                }
 
+get all live videos
+
+get all replay videos
