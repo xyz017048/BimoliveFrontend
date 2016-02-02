@@ -5,7 +5,11 @@ angular.module('bimoliveApp')
 /**
  * Controller for student view
  */
-.controller('StudentCtrl',['$controller', '$routeParams', '$http', function ($controller, $routeParams, $http) {
+
+.controller('StudentCtrl', ['$routeParams', '$controller', '$http', function ($routeParams, $controller, $http) {
+
+    this.MainCtrl = $controller('MainCtrl');
+
     // this is fake! Place holder for the real function that
     // gets the video info from server
     function getCurrentVideo (sectionId) {
@@ -51,19 +55,18 @@ angular.module('bimoliveApp')
 
     /**
      * send question to server
-     * @param  {[type]} idUser    [description]
-     * @param  {[type]} username  [description]
-     * @param  {[type]} sectionId [description]
-     * @return {[type]}           [description]
      */
-    // function sendQuestion (idUser, username, sectionId) {
     this.sendQuestion = function() {
-        console.log('send ' + this.idUser 
-                + ' ' + this.username + ' ' 
-                 + this.idLecture + ' '
-                 + this.currentQuestion);
+        console.log(this.MainCtrl.idUser);
+        console.log(this.MainCtrl.isLoggedIn);
+        console.log(this.MainCtrl.username);
+        if (!this.MainCtrl.isLoggedIn) {
+            alert('login please');
+        }
+        else if (this.currentQuestion.trim() !== '') {
+            // Assign app object in appScope
+            var appScope = this;
 
-        if (this.currentQuestion.trim() !== '') {
             $http( { 
                 method: 'POST', 
                 url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/sendquestion',
@@ -71,15 +74,15 @@ angular.module('bimoliveApp')
                     'Content-Type': undefined
                 },
                 data: {
-                    idUser: this.idUser,
-                    username: this.username,
+                    idUser: MainCtrl.idUser,
+                    username: MainCtrl.username,
                     idLecture: this.idLecture,
                     content: this.currentQuestion.trim()
                 }
             } )
             .success(function(data, status) {
                 if(data.result) {
-                    this.currentQuestion = '';
+                    appScope.currentQuestion = '';
                 } else {
                     console.log("success but got " + data.result);
                 }
@@ -93,10 +96,8 @@ angular.module('bimoliveApp')
     };
     
     var sectionId = $routeParams.id; //the current video id
-    this.key = 'live0';
-    this.idUser = '1';
-    this.username = 'xueyangh';
     this.idLecture = sectionId;
+    this.key = 'live0';
     
     this.currentQuestion = '';
     
@@ -105,9 +106,6 @@ angular.module('bimoliveApp')
     this.currentVideo = getCurrentVideo(sectionId);
     
     this.questions = getQuestions(sectionId);
-
-    // this.sendQuestion.value('idUser', '1').value('username', username);
-    // this.sendQuestion = this.sendQuestion(idUser, username, sectionId);
     
     this.streamVideo = function () {
         var live_url = 'rtmp://' + '52.34.242.6' + '/live' + '/' + this.key;
@@ -120,9 +118,9 @@ angular.module('bimoliveApp')
             width: video.offsetWidth,
             height: video.offsetHeight,
             autostart: true,
-            skin : {
-            name: "seven"
+            skin: {
+                name: "seven"
             }
         });
-    }
+    };
 }]);
