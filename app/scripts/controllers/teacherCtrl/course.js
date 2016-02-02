@@ -56,17 +56,13 @@ angular.module('bimoliveApp')
     this.categories = getCategories();
     this.levels = getLevels();
     
-    // FAKE ! Real one should send the course info to server and create a new course
+    /**
+     * 
+     */
     this.createNewCourse = function () {
         if (this.checkNewCourseValid()) {
-            /* alert('name: ' + this.newCourse.name + '\n' +
-                ' category: ' + this.newCourse.category + '\n' +
-                ' level: ' + this.newCourse.level + '\n' +
-                ' Start Date: ' + this.newCourse.startDate + '\n' +
-                ' End Date: ' + this.newCourse.endDate); */
-                
             // Assign app object in appScope
-            /*
+            
             var appScope = this;
             
             // Serveice
@@ -77,20 +73,26 @@ angular.module('bimoliveApp')
                     'Content-Type': undefined
                 },
                 data: {
-                    email: this.signUpEmail, 
-                    username: this.signUpUsername, 
-                    password: this.signUpPassword 
-                    
+                    idUser: MainCtrl.idUser, 
+                    category: this.signUpUsername, 
+                    levelNumber: this.newCourse.level,
+                    name: this.newCourse.name,
+                    intro: '',
+                    image: '',
+                    startDate: this.newCourse.startDate,
+                    endDate: this.newCourse.endDate,
+                    endFlag: 0
                 }
             } )
             
             .success(function(data, status) {
+                if (data.result) {
+                    alert('You have sucessfully created a course');
+                }
             })
             
             .error(function(data, status) {
             });
-            */
-            console.log(MainCtrl.idUser);
             
             this.clearForm();
         }
