@@ -153,7 +153,7 @@ Teacher create/get courses/lectures:
                                         "name":         STRING,
                                         "intro":        STRING,
                                         "image":        STRING,     (the image path/id of the course)
-                                        "createDate":   STRING,
+                                        "createDate":   STRING,     (format: "yyyy-MM-dd hh:mm:ss" )
                                         "startDate":    STRING,     (format: "yyyy-MM-dd hh:mm:ss" Here time zone problem)
                                         "endDate":      STRING,     (format: "yyyy-MM-dd hh:mm:ss")
                                         "endFlag":      INT         (endFlag = 0, no endDate, make endDate same as startDate;
@@ -182,6 +182,7 @@ Teacher create/get courses/lectures:
                                     "result":           INT (result=0 fail; reuslt=1 success)
                                 }
 
+
         Get all lectures of one course: when you click on one course, you will request all lectures of this course.
                 Request:    POST    /teacher/lectures
                                 {
@@ -193,7 +194,7 @@ Teacher create/get courses/lectures:
                                     {
                                         "idLecture":        INT,
                                         "idCourse":         INT,
-                                        "lectureNumber":    INT,       
+                                        "lectureNum":       INT,       
                                         "topic":            STRING,
                                         "intro":            STRING,     (may not be required)
                                         "image":            STRING,     (the image path/id of the lecture, may need a default pic)
@@ -212,13 +213,13 @@ Teacher create/get courses/lectures:
                 Request: POST   /teacher/createlecture
                                 {
                                     "idCourse":         INT,
-                                    "lectureNumber":    INT,       (will only display the correct number for teacher)
+                                    "lectureNum":       INT,       (will only display the correct number for teacher)
                                     "topic":            STRING,
                                     "intro":            STRING,     (may not be required)
                                     "image":            STRING,     (the image path/id of the lecture, may need a default pic)
                                     "scheduleDate":     STRING,     (format: "yyyy-MM-dd" Here time zone problem)
                                     "startTime":        STRING,     (format: "hh:mm")
-                                    "endTime":          STRING,     (format: "hh:mm")
+                                    "endTime":          STRING      (format: "hh:mm")
                                 }
                 Response:
                                 {
@@ -226,5 +227,6 @@ Teacher create/get courses/lectures:
                                 }
 
 get all live videos
+
 
 get all replay videos
