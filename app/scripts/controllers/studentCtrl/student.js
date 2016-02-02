@@ -5,7 +5,7 @@ angular.module('bimoliveApp')
 /**
  * Controller for student view
  */
-.controller('StudentCtrl', function ($routeParams, $http) {
+.controller('StudentCtrl',['$controller', '$routeParams', '$http', function ($controller, $routeParams, $http) {
     // this is fake! Place holder for the real function that
     // gets the video info from server
     function getCurrentVideo (sectionId) {
@@ -93,10 +93,11 @@ angular.module('bimoliveApp')
     };
     
     var sectionId = $routeParams.id; //the current video id
+    this.key = 'live0';
     this.idUser = '1';
     this.username = 'xueyangh';
     this.idLecture = sectionId;
-
+    
     this.currentQuestion = '';
     
     // call the function that connect the server and get 
@@ -107,4 +108,21 @@ angular.module('bimoliveApp')
 
     // this.sendQuestion.value('idUser', '1').value('username', username);
     // this.sendQuestion = this.sendQuestion(idUser, username, sectionId);
-});
+    
+    this.streamVideo = function () {
+        var live_url = 'rtmp://' + '52.34.242.6' + '/live' + '/' + this.key;
+        var videoPlayer = jwplayer('videoPlayer');
+        var video = document.getElementById('video');
+        videoPlayer.setup({
+            file: live_url,
+            flashplayer: 'scripts/jwplayer/jwplayer.flash.swf',
+            controlbar: "bottom",
+            width: video.offsetWidth,
+            height: video.offsetHeight,
+            autostart: true,
+            skin : {
+            name: "seven"
+            }
+        });
+    }
+}]);
