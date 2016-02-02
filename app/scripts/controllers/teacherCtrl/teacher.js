@@ -10,14 +10,19 @@ angular.module('bimoliveApp')
     function getSectionId() {
         return 1234;
     }
-    
+
     /**
      * get question queue from server
      * @param  {[type]} sectionId [description]
      * @return {[type]}           [description]
      */
-    function getQuestions(sectionId) {
-        var result = [];
+    function getQuestions(sectionId, isFirst) {
+        var result = questions;
+        var interval = 0;
+        if (!isFirst) {
+            interval = 1;
+        }
+        
         $http( { 
             method: 'POST', 
             url: 'http://bimolive.us-west-2.elasticbeanstalk.com/getquestions',
@@ -27,7 +32,7 @@ angular.module('bimoliveApp')
             data: {
                 roleLevel: 2,
                 idLecture: sectionId,
-                interval: 0
+                interval: interval
             }
         } )
         .success(function(data, status) {
@@ -40,6 +45,7 @@ angular.module('bimoliveApp')
             console.log(status);
             console.log('Request failed');
         });
+        questions = result;
         return result;
     }
     
@@ -49,7 +55,14 @@ angular.module('bimoliveApp')
     
     this.sectionId = getSectionId();
 
-    this.questions = getQuestions(this.sectionId);
+    var questions = [];
+    this.questions = questions;
+    getQuestions(6, true);
+    var i=0;
+    setInterval( function() {
+        getQuestions(6, false);
+        this.questions = questions;
+    }, 1000 ); 
 
     // set current question to the first question in the question array
     this.currentQuestion = this.questions[0];

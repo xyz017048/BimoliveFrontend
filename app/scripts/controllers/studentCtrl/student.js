@@ -20,14 +20,19 @@ angular.module('bimoliveApp')
         };
         return video;
     }
-    
+
     /**
      * get question queue from server
      * @param  {[type]} sectionId [description]
      * @return {[type]}           [description]
      */
-    function getQuestions(sectionId) {
-        var result = [];
+    function getQuestions(sectionId, isFirst) {
+        var result = questions;
+        var interval = 0;
+        if (!isFirst) {
+            interval = 1;
+        }
+        
         $http( { 
             method: 'POST', 
             url: 'http://bimolive.us-west-2.elasticbeanstalk.com/getquestions',
@@ -37,7 +42,7 @@ angular.module('bimoliveApp')
             data: {
                 roleLevel: 1,
                 idLecture: sectionId,
-                interval: 0
+                interval: interval
             }
         } )
         .success(function(data, status) {
@@ -50,6 +55,7 @@ angular.module('bimoliveApp')
             console.log(status);
             console.log('Request failed');
         });
+        questions = result;
         return result;
     }
 
@@ -57,16 +63,13 @@ angular.module('bimoliveApp')
      * send question to server
      */
     this.sendQuestion = function() {
-        console.log(this.MainCtrl.idUser);
-        console.log(this.MainCtrl.isLoggedIn);
-        console.log(this.MainCtrl.username);
-        if (!this.MainCtrl.isLoggedIn) {
-            alert('login please');
-        }
-        else if (this.currentQuestion.trim() !== '') {
+        // if (!this.MainCtrl.isLoggedIn) {
+        //     alert('login please');
+        // }
+        // else 
+            if (this.currentQuestion.trim() !== '') {
             // Assign app object in appScope
             var appScope = this;
-
             $http( { 
                 method: 'POST', 
                 url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/sendquestion',
@@ -74,8 +77,8 @@ angular.module('bimoliveApp')
                     'Content-Type': undefined
                 },
                 data: {
-                    idUser: MainCtrl.idUser,
-                    username: MainCtrl.username,
+                    idUser: '1',
+                    username: 'xueyangh',
                     idLecture: this.idLecture,
                     content: this.currentQuestion.trim()
                 }
@@ -105,7 +108,14 @@ angular.module('bimoliveApp')
     // all video info and store in currentVideo
     this.currentVideo = getCurrentVideo(sectionId);
     
-    this.questions = getQuestions(sectionId);
+    var questions = [];
+    this.questions = questions;
+    getQuestions(sectionId, true);
+    var i=0;
+    setInterval( function() {
+        getQuestions(sectionId, false);
+        this.questions = questions;
+    }, 1000 ); 
     
     this.streamVideo = function () {
         var live_url = 'rtmp://' + '52.34.242.6' + '/live' + '/' + this.key;
