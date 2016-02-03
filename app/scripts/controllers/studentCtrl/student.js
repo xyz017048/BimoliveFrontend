@@ -6,9 +6,11 @@ angular.module('bimoliveApp')
  * Controller for student view
  */
 
-.controller('StudentCtrl', ['$routeParams', '$controller', '$http', function ($routeParams, $controller, $http) {
+.controller('StudentCtrl', ['$routeParams', '$http', 'MainService', function ($routeParams, $http, MainService) {
 
-    this.MainCtrl = $controller('MainCtrl');
+    var sectionId = $routeParams.id; //the current video id
+    this.idLecture = sectionId;
+    var user = MainService.getCurrentUser();
 
     // this is fake! Place holder for the real function that
     // gets the video info from server
@@ -20,6 +22,16 @@ angular.module('bimoliveApp')
         };
         return video;
     }
+
+    this.currentQuestion = '';
+    var questions = [];
+    this.questions = questions;
+    getQuestions(sectionId, true);
+    var i=0;
+    setInterval( function() {
+        getQuestions(sectionId, false);
+        this.questions = questions;
+    }, 1000 ); 
 
     /**
      * get question queue from server
@@ -63,11 +75,9 @@ angular.module('bimoliveApp')
      * send question to server
      */
     this.sendQuestion = function() {
-        // if (!this.MainCtrl.isLoggedIn) {
-        //     alert('login please');
-        // }
-        // else 
-            if (this.currentQuestion.trim() !== '') {
+        if (!MainService.getIsLogIn()) {
+            alert('login please');
+        } else if (this.currentQuestion.trim() !== '') {
             // Assign app object in appScope
             var appScope = this;
             $http( { 
@@ -77,8 +87,8 @@ angular.module('bimoliveApp')
                     'Content-Type': undefined
                 },
                 data: {
-                    idUser: '1',
-                    username: 'xueyangh',
+                    idUser: user.idUser,
+                    username: user.username,
                     idLecture: this.idLecture,
                     content: this.currentQuestion.trim()
                 }
@@ -97,25 +107,12 @@ angular.module('bimoliveApp')
             });
         }
     };
-    
-    var sectionId = $routeParams.id; //the current video id
-    this.idLecture = sectionId;
+
     this.key = 'live0';
-    
-    this.currentQuestion = '';
     
     // call the function that connect the server and get 
     // all video info and store in currentVideo
     this.currentVideo = getCurrentVideo(sectionId);
-    
-    var questions = [];
-    this.questions = questions;
-    getQuestions(sectionId, true);
-    var i=0;
-    setInterval( function() {
-        getQuestions(sectionId, false);
-        this.questions = questions;
-    }, 1000 ); 
     
     this.streamVideo = function () {
         var live_url = 'rtmp://' + '52.34.242.6' + '/live' + '/' + this.key;
