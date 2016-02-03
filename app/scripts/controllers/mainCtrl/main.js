@@ -8,8 +8,34 @@ angular.module('bimoliveApp')
  */
 .controller('MainCtrl', ['$http', 'MainService', function ($http, MainService) {
     
+    
+    this.videoInfo = this.getLiveLectures;
+
     // This is fake! place holder for the real function
-    function getVideos () {
+    this.getLiveLectures = function () {
+        // // Assign app object in appScope
+        // var appScope = this;
+        
+        // // Serveice
+        // $http( { 
+        //     method: 'POST', 
+        //     url: 'http://bimolive.us-west-2.elasticbeanstalk.com/lecture',
+        //      headers: {
+        //         'Content-Type': undefined
+        //     },
+        //     data: { type: 'live', count: 'all' }
+        // } )
+        
+        // .success(function(data, status) {
+        //     return data;
+        // })
+        
+        // .error(function(data, status) {
+        //     console.log(data);
+        //     console.log(status);
+        //     console.log('Request failed');
+        // });
+
         var array = [];
         for (var i = 0; i < 11; i++) {
             var video = { "name": "video #" + i,
@@ -251,8 +277,6 @@ angular.module('bimoliveApp')
             }
         } 
     };
-    
-    this.videoInfo = getVideos();
     
     // This is fake! Place holder for function that gets view number from server
     this.getViewNumber = function (coruseId) {
