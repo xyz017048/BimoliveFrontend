@@ -117,7 +117,7 @@ angular.module('bimoliveApp')
                     MainService.setCurrentUser(user);
                     
                     appScope.isLoggedIn = true;
-                    MainService.setCurrentUser(appScope.isLoggedIn);
+                    MainService.setIsLogIn(appScope.isLoggedIn);
                     
                     appScope.checkIsLoggedIn();
                 } else {

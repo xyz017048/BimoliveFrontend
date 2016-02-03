@@ -10,7 +10,6 @@ angular.module('bimoliveApp')
 
     var sectionId = $routeParams.id; //the current video id
     this.idLecture = sectionId;
-    var user = MainService.getCurrentUser();
 
     // this is fake! Place holder for the real function that
     // gets the video info from server
@@ -80,6 +79,7 @@ angular.module('bimoliveApp')
         } else if (this.currentQuestion.trim() !== '') {
             // Assign app object in appScope
             var appScope = this;
+            var user = MainService.getCurrentUser();
             $http( { 
                 method: 'POST', 
                 url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/sendquestion',
