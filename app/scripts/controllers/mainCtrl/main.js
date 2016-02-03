@@ -120,8 +120,9 @@ angular.module('bimoliveApp')
                     MainService.setCurrentUser(appScope.isLoggedIn);
                     
                     appScope.checkIsLoggedIn();
+                } else {
+                    alert('email or password is incorrect');   
                 }
-
             })
             
             .error(function(data, status) {

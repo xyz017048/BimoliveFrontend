@@ -5,21 +5,33 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('CourseCtrl', ['$controller', '$http', 'course', function ($controller, $http, course) {
-    // fetch teacher controller
-    var MainCtrl = $controller('MainCtrl');
+.controller('CourseCtrl', ['$http', 'MainService', function (MainService, $http) {
     
-    // this is fake! place holder for the real function
     function getMycourses () {
-        var array = [];
-        for (var i = 0; i < 1; i++) {
-            var video = { "name": "Course #" + i,
-                "presenter": "Smith" + i,
-                "id": i
-            };
-            array.push(video);
-        }
-        return array;
+        
+        var courses = [];
+        
+        $http( { 
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com//teacher/courses',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: {
+                idUser: MainService.getCurrentUser().idUser
+            }
+        } )
+        
+        .success(function(data, status) {
+            courses = data;
+        })
+        
+        .error(function(data, status) {
+        });
+        
+        return function() {
+            return courses;
+        };
     }
     
     // this is fake! Place holder for function that gets view number from server
@@ -27,10 +39,10 @@ angular.module('bimoliveApp')
         return 10;
     };
     
-    this.currentCourse = 'ss';
-    this.setCurrentCourse = function (CurrentCourse) {
-        course.setCurrentCourse(CurrentCourse);
-    };
+    //this.currentCourse = 'ss';
+    //this.setCurrentCourse = function (CurrentCourse) {
+    //    course.setCurrentCourse(CurrentCourse);
+    // };
      
     // fetch mycourses from teacher controller
     this.myCourses = getMycourses();
@@ -184,11 +196,7 @@ angular.module('bimoliveApp')
     /////////// end ///////////
     
 }])
-.factory('course', ['$http', function ($http) {
-    var course = {};
-    course.currentCourse = '';
-    course.setCurrentCourse = function (CurrentCourse) {
-        course.currentCourse = CurrentCourse;
-    }; 
-    return course;
+
+.factory('CourseService', ['$http', function ($http) {
+    
 }]);
