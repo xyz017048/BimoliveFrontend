@@ -5,15 +5,37 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('CourseCtrl', ['$controller', function ($controller, $http) {
+.controller('CourseCtrl', ['$controller', '$http', 'course', function ($controller, $http, course) {
     // fetch teacher controller
-    var TeacherCtrl = $controller('TeacherCtrl');
     var MainCtrl = $controller('MainCtrl');
-
+    
+    // this is fake! place holder for the real function
+    function getMycourses () {
+        var array = [];
+        for (var i = 0; i < 1; i++) {
+            var video = { "name": "Course #" + i,
+                "presenter": "Smith" + i,
+                "id": i
+            };
+            array.push(video);
+        }
+        return array;
+    }
+    
+    // this is fake! Place holder for function that gets view number from server
+    this.getViewNumber = function (coruseId) {
+        return 10;
+    };
+    
+    this.currentCourse = 'ss';
+    this.setCurrentCourse = function (CurrentCourse) {
+        course.setCurrentCourse(CurrentCourse);
+    };
+     
     // fetch mycourses from teacher controller
-    this.myCourses = TeacherCtrl.myCourses;
+    this.myCourses = getMycourses();
     // link function to teache controller
-    this.viewNumber = TeacherCtrl.getViewNumber();
+    this.viewNumber = this.getViewNumber();
     
     // initialize form
     this.newCourseForm = '';
@@ -161,4 +183,12 @@ angular.module('bimoliveApp')
     };
     /////////// end ///////////
     
+}])
+.factory('course', ['$http', function ($http) {
+    var course = {};
+    course.currentCourse = '';
+    course.setCurrentCourse = function (CurrentCourse) {
+        course.currentCourse = CurrentCourse;
+    }; 
+    return course;
 }]);

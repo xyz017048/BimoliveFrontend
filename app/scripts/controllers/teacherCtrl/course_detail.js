@@ -5,10 +5,9 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('CourseDetailCtrl', ['$controller', function ($controller, $http) {
-    // fetch teacher controller
-    var TeacherCtrl = $controller('TeacherCtrl');
-    var MainCtrl = $controller('MainCtrl');
+.controller('CourseDetailCtrl', ['$http', 'course', function ($http, course) {
+    
+    this.currentCourse = course.currentCourse;
     
     /**
      * 
