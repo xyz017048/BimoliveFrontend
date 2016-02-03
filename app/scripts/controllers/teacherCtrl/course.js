@@ -5,7 +5,7 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('CourseCtrl', ['$http', 'MainService', function (MainService, $http) {
+.controller('CourseCtrl', ['$http', 'MainService', function ($http, MainService) {
     
     function getMycourses () {
         
@@ -13,7 +13,7 @@ angular.module('bimoliveApp')
         
         $http( { 
             method: 'POST', 
-            url: 'http://bimolive.us-west-2.elasticbeanstalk.com//teacher/courses',
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/courses',
             headers: {
                 'Content-Type': undefined
             },
@@ -90,36 +90,60 @@ angular.module('bimoliveApp')
     this.categories = getCategories();
     this.levels = getLevels();
     
+    this.dateFormat = function(date) {
+        
+        var month = date.getMonth() + 1;
+        
+        month = month > 9 ? month : '0' + month;
+        
+        var day = date.getDate();
+        
+        day = day > 9 ? day : '0' + day;
+        
+        return date.getFullYear() + '-' + month + '-' + day + ' ' + '00:00:00';
+               // date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds();
+    };
+    
     /**
      * 
      */
-    this.createNewCourse = function () {
+    this.createNewCourse1 = function () {
+        
+        var appScope = this;
+        var appScopeCourse = this.newCourse;
+        
         if (this.checkNewCourseValid()) {
-            // Assign app object in appScope
-            
-            var appScope = this;
-            
-            // Serveice
             $http( { 
                 method: 'POST', 
-                url: 'http://bimolive.us-west-2.elasticbeanstalk.com//teacher/createcourse',
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/createcourse',
                 headers: {
                     'Content-Type': undefined
                 },
                 data: {
-                    idUser: MainCtrl.idUser, 
-                    category: this.signUpUsername, 
-                    levelNumber: this.newCourse.level,
-                    name: this.newCourse.name,
-                    intro: '',
-                    image: '',
-                    startDate: this.newCourse.startDate,
-                    endDate: this.newCourse.endDate,
-                    endFlag: 0
+                    idUser: MainService.getCurrentUser().idUser, 
+                    category: appScopeCourse.category,
+                    levelNumber: appScopeCourse.level,
+                    name: appScopeCourse.name,
+                    intro: '1',
+                    image: '1',
+                    startDate: appScope.dateFormat(appScopeCourse.startDate),
+                    endDate: appScope.dateFormat(appScopeCourse.endDate),
+                    endFlag: 1
                 }
             } )
             
             .success(function(data, status) {
+                // yyyy-MM-dd hh:mm:ss
+                /*
+                alert(MainService.getCurrentUser().idUser + '-' +
+                      appScopeCourse.category + '-' +
+                      appScopeCourse.level + '-' +
+                      appScopeCourse.name + '-' +
+                      appScope.dateFormat(appScopeCourse.startDate) + '-' + 
+                      appScope.dateFormat(appScopeCourse.endDate)
+                    );
+                alert(data.result);
+                */
                 if (data.result) {
                     alert('You have sucessfully created a course');
                 }
