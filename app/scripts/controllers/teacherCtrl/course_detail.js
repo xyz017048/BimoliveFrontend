@@ -5,14 +5,12 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('CourseDetailCtrl', ['$http', 'course', function ($http, course) {
-    
-    this.currentCourse = course.currentCourse;
-    
+.controller('CourseDetailCtrl', ['$http', 'MainService', function ($http, MainService) {
+        
     /**
      * 
      */
-    this.createNewCourse = function () {
+    this.getAllCourses = function () {
         if (this.checkNewCourseValid()) {
             // Assign app object in appScope
             
@@ -43,7 +41,6 @@ angular.module('bimoliveApp')
                                     ...
                                 ]
              */
-            // Serveice
             $http( { 
                 method: 'POST', 
                 url: 'http://bimolive.us-west-2.elasticbeanstalk.com//teacher/courses',

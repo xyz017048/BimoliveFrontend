@@ -6,7 +6,7 @@ angular.module('bimoliveApp')
 /**
  * Controller for main view
  */
-.controller('MainCtrl', function ($http) {
+.controller('MainCtrl', ['$http', 'MainService', function ($http, MainService) {
     
     // This is fake! place holder for the real function
     function getVideos () {
@@ -109,7 +109,16 @@ angular.module('bimoliveApp')
                     appScope.email = data.email;
                     appScope.idUser = data.idUser;
                     appScope.username = data.username;
+                    
+                    // Inject into MainService
+                    var user = { email: appScope.email,
+                                 idUser: appScope.idUser,
+                                 username: appScope.username };
+                    MainService.setCurrentUser(user);
+                    
                     appScope.isLoggedIn = true;
+                    MainService.setCurrentUser(appScope.isLoggedIn);
+                    
                     appScope.checkIsLoggedIn();
                 }
 
@@ -320,4 +329,34 @@ angular.module('bimoliveApp')
         }
         return true;
     };
-});
+}])
+
+.factory('MainService', ['$http', function($http) { 
+    
+    var MainService = {};
+    
+    // Variables
+    MainService.CurrentUser = {};
+    
+    MainService.isLogIn = false;
+    
+    
+    // Getter and Setter
+    MainService.getCurrentUser = function() {
+        return MainService.CurrentUser;
+    };
+    
+    MainService.setCurrentUser = function(user) {
+        MainService.CurrentUser = user;
+    };
+    
+    MainService.getIsLogIn = function() {
+        return MainService.isLogIn;
+    };
+    
+    MainService.setIsLogIn = function(isLogin) {
+        MainService.isLogIn = isLogin;
+    };
+    
+    return MainService;
+}]);
