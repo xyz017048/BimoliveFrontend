@@ -150,6 +150,55 @@ angular.module('bimoliveApp')
         }
     };
     
+    this.usernameCheck = function() {
+        
+        var result = 0;
+        
+        // Serveice
+        $http( { 
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/usernameCheck',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: { username: this.signUpUsername }
+        } )
+        
+        .success(function(data, status) {
+            result = data.result;
+        })
+        
+        .error(function(data, status) {
+            
+        });
+        
+        return function() { return result; };
+    };
+    
+    this.emailCheck = function() {
+        
+        var result = 0;
+        
+        // Serveice
+        $http( { 
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/emailCheck',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: { email: this.signUpEmail }
+        } )
+        
+        .success(function(data, status) {
+            result = data.result;
+        })
+        
+        .error(function(data, status) {
+        });
+        
+        return function() { return result; };
+    };
+    
     /**
      * Sign up 
      */
@@ -160,27 +209,36 @@ angular.module('bimoliveApp')
             // Assign app object in appScope
             var appScope = this;
             
-            // Serveice
-            $http( { 
-                method: 'POST', 
-                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/register',
-                 headers: {
-                    'Content-Type': undefined
-                },
-                data: { email: this.signUpEmail, username: this.signUpUsername, password: this.signUpPassword }
-            } )
-            
-            .success(function(data, status) {
-                if(data.result) {
-                    appScope.isLoggedIn = true;
-                    appScope.checkIsLoggedIn();
+            if ( this.usernameCheck() ) {
+                
+                if( this.emailCheck() ) {
+                    // Serveice
+                    $http( { 
+                        method: 'POST', 
+                        url: 'http://bimolive.us-west-2.elasticbeanstalk.com/register',
+                        headers: {
+                            'Content-Type': undefined
+                        },
+                        data: { email: this.signUpEmail, username: this.signUpUsername, password: this.signUpPassword }
+                    } )
+                    
+                    .success(function(data, status) {
+                        if(data.result) {
+                            appScope.isLoggedIn = true;
+                            appScope.checkIsLoggedIn();
+                        }
+                    })
+                    
+                    .error(function(data, status) {
+                        });
+                    
+                    this.signUpClear();    
+                } else {
+                    alert( 'Email has been registered' );
                 }
-            })
-            
-            .error(function(data, status) {
-                });
-            
-            this.signUpClear();
+            } else {
+                alert( 'Username is used' );
+            }
         } 
     };
     
