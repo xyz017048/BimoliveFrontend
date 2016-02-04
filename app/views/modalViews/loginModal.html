@@ -1,5 +1,5 @@
 <!-- Log In Modal -->
-<div class="modal fade" id="logInModal" role="dialog">
+<div class="modal fade" id="loginModal" role="dialog">
     <div class="modal-dialog modal-sm">
 
         <!-- Modal content-->
@@ -9,23 +9,23 @@
                 <h4 class="modal-title">Log In</h4>
             </div>
             <div class="modal-body">
-                <form name="mainCtrl.logInForm" id="logInForm" novalidate>
-                    <div class="form-group" ng-class="{ 'has-error' : mainCtrl.logInForm.email.$invalid && !mainCtrl.logInForm.email.$pristine }">
+                <form name="mainCtrl.loginForm" id="loginForm" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' : mainCtrl.loginForm.email.$invalid && !mainCtrl.loginForm.email.$pristine }">
                         <label class="control-label" for="email">Email Address</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="Email" ng-model="mainCtrl.email" required>
-                        <p ng-show=" mainCtrl.logInForm.email.$invalid && !mainCtrl.logInForm.email.$pristine " class="help-block"> Email is not valid.</p>
+                        <p ng-show=" mainCtrl.loginForm.email.$invalid && !mainCtrl.loginForm.email.$pristine " class="help-block"> Email is not valid.</p>
                     </div>
-                    <div class="form-group" ng-class="{ 'has-error' : mainCtrl.logInForm.password.$invalid && !mainCtrl.logInForm.password.$pristine}">
+                    <div class="form-group" ng-class="{ 'has-error' : mainCtrl.loginForm.password.$invalid && !mainCtrl.loginForm.password.$pristine}">
                         <label class="control-label" for="password">Password</label>
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="mainCtrl.password" required>
-                        <p ng-show="mainCtrl.logInForm.password.$invalid && !mainCtrl.logInForm.password.$pristine" class="help-block"> Password is required. </p>
+                        <p ng-show="mainCtrl.loginForm.password.$invalid && !mainCtrl.loginForm.password.$pristine" class="help-block"> Password is required. </p>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary" ng-click="mainCtrl.login()">Submit</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="mainCtrl.logInClear()">Cancel</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="mainCtrl.loginClear()">Cancel</button>
                 </div>
 
             </div>

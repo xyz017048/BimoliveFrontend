@@ -53,8 +53,8 @@ angular.module('bimoliveApp')
     this.idUser = 0;
     this.username = '';
     
-    // 
-    this.isLoggedIn = false;
+    // a variable for html only changed when refresh
+    this.isLogin = MainService.getIsLogin();
     
     // Sign up variables
     this.signUpUsername = '';
@@ -62,28 +62,27 @@ angular.module('bimoliveApp')
     this.signUpPassword = '';
     this.confirmPassword = '';
     
-    /**
-     * Check the login status
-     */
-    this.checkIsLoggedIn = function() {
-        if(this.isLoggedIn === true) {
-            alert('You are logged in!');
-        }
-    };
+    //  I'm not sure what this part will do... Xueyang
+    //  /**
+    //  * Check the login status
+    //  */
+    // this.checkIsLogin = function() {
+    //     return MainService.getIsLogin();
+    // };
     
     /**
      * Clear Login
      */
-    this.logInClear = function () {
+    this.loginClear = function () {
         // clear the textbox
         this.email = '';
         this.password = '';
         this.idUser = 0;
         this.username = '';
         // hide the modal
-        $('#logInModal').modal('hide');
+        $('#loginModal').modal('hide');
         // hide set the form to be pristine
-        this.logInForm.$setPristine();
+        this.loginForm.$setPristine();
     };
     
     /**
@@ -100,9 +99,9 @@ angular.module('bimoliveApp')
         this.signUpForm.$setPristine();
     };
     
-    this.checkIsLogInValid = function () {
-        this.logInForm.email.$setDirty();
-        this.logInForm.password.$setDirty();
+    this.checkIsLoginValid = function () {
+        this.loginForm.email.$setDirty();
+        this.loginForm.password.$setDirty();
         if (!this.email || !this.password) {
             return false;
         } else {
@@ -115,7 +114,7 @@ angular.module('bimoliveApp')
      */
     this.login = function() {
         // If the email is valid and defined and password is defined
-        if(this.checkIsLogInValid()) {
+        if(this.checkIsLoginValid()) {
             
             // Assign app object in appScope
             var appScope = this;
@@ -140,10 +139,11 @@ angular.module('bimoliveApp')
                     var user = { email: appScope.email,
                                  idUser: appScope.idUser,
                                  username: appScope.username };
+                    sessionStorage.setItem('user', user);
                     MainService.setCurrentUser(user);
                     
-                    appScope.isLoggedIn = true;
-                    MainService.setIsLogIn(appScope.isLoggedIn);
+                    appScope.isLogin = true;
+                    MainService.setIsLogin(true);
                     
                     appScope.checkIsLoggedIn();
                 } else {
@@ -158,15 +158,16 @@ angular.module('bimoliveApp')
             });
             
             // Clear the textbox
-            this.logInClear();   
+            this.loginClear();   
         } 
     };
     
     /**
-     * Set isLogIn to false, reset the toggle bar
+     * Set isLogin to false, reset the toggle bar
      */
     this.logout = function() {
-        this.isLoggedIn = false;
+        this.isLogin = false;
+        MainService.setIsLogin(false);
     };
     
     this.checkIsSignUpValid = function () {
@@ -260,13 +261,13 @@ angular.module('bimoliveApp')
                     
                     .success(function(data, status) {
                         if(data.result) {
-                            appScope.isLoggedIn = true;
-                            appScope.checkIsLoggedIn();
+                            appScope.isLogin = true;
+                            MainService.setIsLogin(true);
                         }
                     })
                     
                     .error(function(data, status) {
-                        });
+                    });
                     
                     this.signUpClear();    
                 } else {
@@ -284,7 +285,7 @@ angular.module('bimoliveApp')
     };
     
     this.signUpForm = '';
-    this.logInForm = '';
+    this.loginForm = '';
     this.usernameErrMsg = 'Username is required.';
     this.emailErrMsg = 'Email is required';
     this.passwordErrMsg = 'Password is required';
@@ -363,7 +364,7 @@ angular.module('bimoliveApp')
     // Variables
     MainService.CurrentUser = {};
     
-    MainService.isLogIn = false;
+    MainService.isLogin = sessionStorage.getItem('isLogin');
     
     
     // Getter and Setter
@@ -375,12 +376,17 @@ angular.module('bimoliveApp')
         MainService.CurrentUser = user;
     };
     
-    MainService.getIsLogIn = function() {
-        return MainService.isLogIn;
+    MainService.getIsLogin = function() {
+        return MainService.isLogin;
     };
     
-    MainService.setIsLogIn = function(isLogin) {
-        MainService.isLogIn = isLogin;
+    MainService.setIsLogin = function(isLogin) {
+        if (isLogin) {
+            sessionStorage.setItem('isLogin', isLogin);
+        } else {
+            sessionStorage.removeItem('isLogin');
+        }
+        MainService.isLogin = isLogin;
     };
     
     return MainService;
