@@ -1,5 +1,4 @@
-<nav class="leftNav">
-    <!-- <span class="glyphicon glyphicon-search nav-toggle-btn" aria-hidden="true"></span> -->
+<nav class="leftNav" ng-mouseenter="toggleCtrl.toggleNav(1)" ng-mouseleave="toggleCtrl.toggleNav(0)">
     <div class="row">
         <ul class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="jumbotron" ng-if="!mainCtrl.isLogin">
@@ -7,7 +6,7 @@
                 <li><a href data-toggle="modal" data-target="#signUpModal" mydata="mydata">Sign Up</a></li>
             </div>
             <div class="jumbotron" ng-if="mainCtrl.isLogin">
-                <li id="profile-pic"><img class="img-responsive img-circle" ng-src="images/profile.jpg" alt="profile"></li>
+                <li id="profile-pic"><img class="img-responsive img-circle" ng-src="mainCtrl.currentUser.profile" alt="profile"></li>
                 <li ng-click="mainCtrl.logout()"><a>Log Out</a></li>
             </div>
             <li><a href>Lectures</a></li>
@@ -17,5 +16,4 @@
             <li><a href>Contact</a></li>
         </ul>
     </div>
-    <a href class="nav-toggle-btn" ></a>
 </nav>

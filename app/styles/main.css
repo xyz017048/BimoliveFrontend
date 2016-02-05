@@ -54,18 +54,6 @@ padding: 10px;
 li:hover a{
 background-color: #FFFFFF;
 }
-.nav-toggle-btn {
-display: block;
-position: absolute;
-left: 185px;
-width: 15px;
-top: 0;
-bottom: 0;
-background-color: #262626;
-}
-.nav-toggle-btn:hover {
-background-color: #7E7E7E;
-}
 .well-lg {
 transition: transform 0.4s ease;
 }

@@ -9,13 +9,19 @@ angular.module('bimoliveApp')
  */
 .controller('ToggleCtrl', function () {
     // toggle menu function
-    var bodyEl = $('body'),
-        navToggleBtn = bodyEl.find('.nav-toggle-btn');
+    this.bodyEl = $('body');
+    this.isOpen = 0;
+    this.toggleNav = function (flag) {
+        if (flag === 1 && this.isOpen === 0) {
+            this.bodyEl.toggleClass('active-nav');
+            this.isOpen = 1;
+        }
+        if (flag === 0 && this.isOpen === 1) {
+            this.bodyEl.toggleClass('active-nav');
+            this.isOpen = 0;
+        }
 
-    navToggleBtn.on('click', function (e) {
-        bodyEl.toggleClass('active-nav');
-        e.preventDefault();
-    });
+    };
 })
 /**
  * Directive for top navigation
