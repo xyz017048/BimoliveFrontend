@@ -358,7 +358,11 @@ angular.module('bimoliveApp')
     var MainService = {};
     
     // Variables
-    MainService.CurrentUser = sessionStorage.getItem('user');
+    if (sessionStorage.getItem('user')===null) {
+        MainService.CurrentUser = null;
+    } else {
+        MainService.CurrentUser = JSON.parse(sessionStorage.getItem('user'));
+    }
     MainService.isLogin = sessionStorage.getItem('isLogin');
     
     
@@ -368,11 +372,7 @@ angular.module('bimoliveApp')
     };
     
     MainService.setCurrentUser = function(user) {
-        if (sessionStorage.getItem(user) === null) {
-            sessionStorage.setItem('user', user);
-        } else {
-            sessionStorage.removeItem('user');
-        }
+        sessionStorage.setItem('user', JSON.stringify(user));
         MainService.CurrentUser = user;
     };
     
