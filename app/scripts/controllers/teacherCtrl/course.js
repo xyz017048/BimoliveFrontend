@@ -7,7 +7,7 @@ angular.module('bimoliveApp')
  */
 .controller('CourseCtrl', ['$http', 'MainService', function ($http, MainService) {
     
-    function getMycourses () {
+    function getCourseList () {
         
         // var courses = [];
         
@@ -35,9 +35,15 @@ angular.module('bimoliveApp')
         return [{
             'idCourse': '1234',
             'category': 'CS',
-            'levelNumber': '4500',
+            'levelNumber': '4400',
             'name': 'Senior Porject',
             'image': 'images/thumbnail_pics/0.png'
+        }, {
+            'idCourse': '1235',
+            'category': 'CS',
+            'levelNumber': '4500',
+            'name': 'Senior Porject',
+            'image': 'images/thumbnail_pics/1.png'
         }];
     }
     
@@ -52,7 +58,7 @@ angular.module('bimoliveApp')
     // };
      
     // fetch mycourses from teacher controller
-    this.myCourses = getMycourses();
+    this.myCourses = getCourseList();
     // link function to teache controller
     this.viewNumber = this.getViewNumber();
     
@@ -227,7 +233,3 @@ angular.module('bimoliveApp')
     /////////// end ///////////
     
 }])
-
-.factory('CourseService', ['$http', function ($http) {
-    
-}]);

@@ -74,7 +74,7 @@ angular.module('bimoliveApp')
      * send question to server
      */
     this.sendQuestion = function() {
-        if (!MainService.getIsLogIn()) {
+        if (!MainService.getIsLogin()) {
             alert('login please');
         } else if (this.currentQuestion.trim() !== '') {
             // Assign app object in appScope
