@@ -136,16 +136,12 @@ angular.module('bimoliveApp')
                     appScope.username = data.username;
                     
                     // Inject into MainService
-                    var user = { email: appScope.email,
-                                 idUser: appScope.idUser,
-                                 username: appScope.username };
-                    sessionStorage.setItem('user', user);
-                    MainService.setCurrentUser(user);
+                    MainService.setCurrentUser(data);
                     
                     appScope.isLogin = true;
                     MainService.setIsLogin(true);
                     
-                    appScope.checkIsLoggedIn();
+                    // appScope.checkIsLoggedIn();
                 } else {
                     alert('email or password is incorrect');   
                 }
@@ -355,6 +351,8 @@ angular.module('bimoliveApp')
         }
         return true;
     };
+
+    this.currentUser = MainService.getCurrentUser();
 }])
 
 .factory('MainService', ['$http', function($http) { 
@@ -362,8 +360,11 @@ angular.module('bimoliveApp')
     var MainService = {};
     
     // Variables
-    MainService.CurrentUser = {};
-    
+    if (sessionStorage.getItem('user')===null) {
+        MainService.CurrentUser = null;
+    } else {
+        MainService.CurrentUser = JSON.parse(sessionStorage.getItem('user'));
+    }
     MainService.isLogin = sessionStorage.getItem('isLogin');
     
     
@@ -373,6 +374,7 @@ angular.module('bimoliveApp')
     };
     
     MainService.setCurrentUser = function(user) {
+        sessionStorage.setItem('user', JSON.stringify(user));
         MainService.CurrentUser = user;
     };
     

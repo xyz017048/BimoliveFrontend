@@ -135,7 +135,7 @@ Question ask and answer Part:
                                     "result":           INT (result=0 fail; reuslt=1 success)
                                 }        
 
-Teacher create/update/get courses/lectures:
+Teacher create/update/get [single course/ all courses/ single lecture/all lectures]:
         Get course category: 
                 Request: POST/GET  /getcategory
                 Response:
@@ -172,7 +172,30 @@ Teacher create/update/get courses/lectures:
                                     ...
                                 ]
 
-                     
+
+        Get a single course:
+                Request: POST   /teacher/singlecourse
+                                {
+                                    "idCourse":           INT
+                                }
+
+                Response：      
+                                {
+                                    "idCourse":     INT,
+                                    "idUser":       INT,
+                                    "category":     STRING,
+                                    "levelNumber":  INT,
+                                    "name":         STRING,
+                                    "intro":        STRING,
+                                    "image":        STRING,     (the image path/id of the course)
+                                    "createDate":   STRING,     (format: "yyyy-MM-dd hh:mm:ss" )
+                                    "startDate":    STRING,     (format: "yyyy-MM-dd hh:mm:ss" Here time zone problem)
+                                    "endDate":      STRING,     (format: "yyyy-MM-dd hh:mm:ss")
+                                    "endFlag":      INT         (endFlag = 0, no endDate, make endDate same as startDate;
+                                                             endFlag = 1, real endDate)
+                                }
+                                
+
         Create a course:
                 Request: POST   /teacher/createcourse
                                 {
@@ -218,6 +241,27 @@ Teacher create/update/get courses/lectures:
                                     },
                                     ...
                                 ]
+
+        Get a single Lecture:
+                Request:    POST    /teacher/singlelecture
+                                {
+                                    "idLecture":         INT
+                                }                                 
+                Response:   
+                                {
+                                    "idLecture":        INT,
+                                    "idCourse":         INT,
+                                    "lectureNum":       INT,       
+                                    "topic":            STRING,
+                                    "intro":            STRING,     (may not be required)
+                                    "image":            STRING,     (the image path/id of the lecture, may need a default pic)
+                                    "scheduleDate":     STRING,     (format: "yyyy-MM-dd" Here time zone problem)
+                                    "startTime":        STRING,     (format: "hh:mm")
+                                    "endTime":          STRING,     (format: "hh:mm")
+                                    "createDate":       STRING,     (format: "yyyy-MM-dd hh:mm:ss")
+                                    "status":           STRING,         
+                                    "url":              STRING
+                                }
 
 
         Create a new Lecture:   

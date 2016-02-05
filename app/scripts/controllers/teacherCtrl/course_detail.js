@@ -5,46 +5,49 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('CourseDetailCtrl', ['$http', '$routeParams', function ($http, $routeParams) {
+.controller('CourseDetailCtrl', ['$http', '$routeParams', 'MainService', function ($http, $routeParams, MainService) {
     
-    function getCourseDetail() {
-        return {
-            'idCourse': '1234',
-            'category': 'CS',
-            'levelNumber': '4500',
-            'name': 'Senior Porject',
-            'image': 'images/thumbnail_pics/0.png',
-            'startDate': '2013-03-05',
-            'endDate': '2015-05-12'
-        };
-    }
+    // var courseId = $routeParams.idCourse;
+    this.idCourse = $routeParams.idCourse;
+
+    var appScope = this;
+
+    // currentCourse
+    $http( { 
+        method: 'POST', 
+        url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/singlecourse',
+        headers: {
+            'Content-Type': undefined
+        },
+        data: { idCourse: this.idCourse }
+    } )
+    .success(function(data, status) {
+        appScope.currentCourse = data;
+    })
+    .error(function(data, status) {
+        console.log(data);
+        console.log(status);
+        console.log('Request failed');
+    });
+
     
-    function getLectureList () {
-        return [{
-            'idLecture': '14325',
-            'lectureNum': '1',
-            'topic': 'introduction to bluh bluh',
-            'image': 'images/thumbnail_pics/0.png',
-            'scheduleDate': '2013-03-05',
-            'startTime': '10:00',
-            'endTime': '21:00',
-            'status': 'FIN'
-            
-        }, {
-            'idLecture': '14326',
-            'lectureNum': '2',
-            'topic': 'bluh bluh',
-            'image': 'images/thumbnail_pics/2.png',
-            'scheduleDate': '2013-03-05',
-            'startTime': '10:00',
-            'endTime': '21:00',
-            'status': 'LIVE'
-        }];
-    }
-    
-    this.lectureList = getLectureList();
-    
-    this.currentCourse = getCourseDetail();
+    // lectureList
+    $http( { 
+        method: 'POST', 
+        url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/lectures',
+        headers: {
+            'Content-Type': undefined
+        },
+        data: { idCourse: this.idCourse }
+    } )
+    .success(function(data, status) {
+        appScope.lectureList = data;
+    })
+    .error(function(data, status) {
+        console.log(data);
+        console.log(status);
+        console.log('Request failed');
+    });
     
     /**
      * 
@@ -88,7 +91,7 @@ angular.module('bimoliveApp')
                     'Content-Type': undefined
                 },
                 data: {
-                    idUser: MainCtrl.idUser,
+                    idUser: MainService.idUser,
                 }
             } )
             
