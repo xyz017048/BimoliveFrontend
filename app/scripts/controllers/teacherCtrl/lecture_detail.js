@@ -5,17 +5,30 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('LectureDetailCtrl', ['$http', function ($http) {
-
-    this.currentLecture = {
-            'idLecture': '14325',
-            'lectureNum': '1',
-            'topic': 'introduction to bluh bluh',
-            'image': 'images/thumbnail_pics/0.png',
-            'scheduleDate': '2013-03-05',
-            'startTime': '10:00',
-            'endTime': '21:00',
-            'status': 'FIN'
-            
-        };
+.controller('LectureDetailCtrl', ['$http', '$routeParams', 'MainService', function ($http, $routeParams, MainService) {
+    
+    var appScope = this;
+    this.currentLecture = {};
+   
+    if(MainService.getCurrentUser().roleLevel == 2)
+    {
+        $http( { 
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/singlelecture',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: {
+                idLecture: $routeParams.idLecture
+            }
+        } )
+        
+        .success(function(data, status) {
+            appScope.currentLecture = data;
+        })
+        
+        .error(function(data, status) {
+        });
+    }
+        
 }]);

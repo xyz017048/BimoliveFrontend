@@ -9,42 +9,33 @@ angular.module('bimoliveApp')
     
     function getCourseList () {
         
-        // var courses = [];
+        var courses = [];
         
-        // $http( { 
-        //     method: 'POST', 
-        //     url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/courses',
-        //     headers: {
-        //         'Content-Type': undefined
-        //     },
-        //     data: {
-        //         idUser: MainService.getCurrentUser().idUser
-        //     }
-        // } )
+        if(MainService.getCurrentUser().roleLevel == 2)
+        {
+            $http( { 
+                method: 'POST', 
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/courses',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: {
+                    idUser: MainService.getCurrentUser().idUser
+                }
+            } )
+            
+            .success(function(data, status) {
+                var length = data.length;
+                for (var i = 0; i < length; i++) {
+                    courses.push(data[i]);
+                }
+            })
+            
+            .error(function(data, status) {
+            });
+        }
         
-        // .success(function(data, status) {
-        //     courses = data;
-        // })
-        
-        // .error(function(data, status) {
-        // });
-        
-        // return function() {
-        //     return courses;
-        // };
-        return [{
-            'idCourse': '1234',
-            'category': 'CS',
-            'levelNumber': '4400',
-            'name': 'Senior Porject',
-            'image': 'images/thumbnail_pics/0.png'
-        }, {
-            'idCourse': '1235',
-            'category': 'CS',
-            'levelNumber': '4500',
-            'name': 'Senior Porject',
-            'image': 'images/thumbnail_pics/1.png'
-        }];
+        return courses;
     }
     
     // this is fake! Place holder for function that gets view number from server

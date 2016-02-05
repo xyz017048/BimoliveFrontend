@@ -36,7 +36,7 @@ angular.module('bimoliveApp', [
             controller: 'ProfileCtrl',
             controllerAs: 'profileCtrl'
         })
-        .when('/teacher', {
+        .when('/teacher/:idLecture', {
             templateUrl: 'views/teacherViews/teacherView.html',
             controller: 'TeacherCtrl',
             controllerAs: 'teacherCtrl'

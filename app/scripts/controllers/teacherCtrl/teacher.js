@@ -5,25 +5,22 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('TeacherCtrl', function ($http) {
-
-    function getSectionId() {
-        return 1234;
-    }
-
-    /**
-     * get question queue from server
-     * @param  {[type]} sectionId [description]
-     * @return {[type]}           [description]
-     */
-    function getQuestions(sectionId, isFirst) {
-        var result = questions;
-        var interval = 0;
-        if (!isFirst) {
-            interval = 1;
-        }
+.controller('TeacherCtrl', ['$http', '$routeParams', 'MainService', function ($http, $routeParams, MainService) {
+    
+    var appScope = this;
+    this.sectionId = $routeParams.idLecture;
+    this.questions = [];
+    
+    /*
+    "idQuestion":	INT,
+    "username": 	STRING,
+    "content" : 	STRING,
+                            "status":       STRING,
+    "sendTime":	STRING (format: yyyy-MM-dd hh:mm:ss)
+    */
+    function getQuestions(NotFirst) {
         
-        $http( { 
+        $http( {
             method: 'POST', 
             url: 'http://bimolive.us-west-2.elasticbeanstalk.com/getquestions',
             headers: {
@@ -31,40 +28,35 @@ angular.module('bimoliveApp')
             },
             data: {
                 roleLevel: 2,
-                idLecture: sectionId,
-                interval: interval
+                idLecture: $routeParams.idLecture,
+                interval: NotFirst
             }
         } )
+        
         .success(function(data, status) {
-            for(var n in data) {
-                result.push({ "content": data[n].content, "username": data[n].username});
+            if(data) {
+                var length = data.length;
+                for (var i = 0; i < length; i++) {
+                    appScope.questions.push(data[i]);
+                }
             }
         })
+        
         .error(function(data, status) {
             console.log(data);
             console.log(status);
             console.log('Request failed');
         });
-        questions = result;
-        return result;
     }
     
+    getQuestions(0);
+    
+    setInterval( function() {
+        getQuestions(1);
+    }, 1000 );
+     
     this.setCurrentQuestion = function (question) {
         this.currentQuestion = question;
     };
     
-    this.sectionId = getSectionId();
-
-    var questions = [];
-    this.questions = questions;
-    getQuestions(6, true);
-    var i=0;
-    setInterval( function() {
-        getQuestions(6, false);
-        this.questions = questions;
-    }, 1000 ); 
-
-    // set current question to the first question in the question array
-    this.currentQuestion = this.questions[0];
-    
-});
+}]);
