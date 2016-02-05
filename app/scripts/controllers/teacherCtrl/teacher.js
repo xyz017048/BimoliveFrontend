@@ -49,12 +49,15 @@ angular.module('bimoliveApp')
         });
     }
     
+    // First time get all the questions from the database
     getQuestions(0);
     
+    // Continue getting questions from database
     setInterval( function() {
         getQuestions(1);
     }, 1000 );
      
+    // Set selected question
     this.setCurrentQuestion = function (question) {
         this.currentQuestion = question;
     };
