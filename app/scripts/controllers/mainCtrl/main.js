@@ -351,6 +351,8 @@ angular.module('bimoliveApp')
         }
         return true;
     };
+
+    this.currentUser = MainService.getCurrentUser();
 }])
 
 .factory('MainService', ['$http', function($http) { 
