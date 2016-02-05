@@ -9,7 +9,6 @@ angular.module('bimoliveApp')
 .controller('MainCtrl', ['$http', 'MainService', function ($http, MainService) {
     
     
-    this.videoInfo = this.getLiveLectures;
 
     // This is fake! place holder for the real function
     this.getLiveLectures = function () {
@@ -45,7 +44,8 @@ angular.module('bimoliveApp')
             array.push(video);
         }
         return array;
-    }
+    };
+    this.videoInfo = this.getLiveLectures();
     
     // Log in variables
     this.email = '';

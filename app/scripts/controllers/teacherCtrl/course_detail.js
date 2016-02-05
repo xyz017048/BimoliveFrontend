@@ -5,24 +5,43 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('CourseDetailCtrl', ['$http', 'course', function ($http, course) {
+.controller('CourseDetailCtrl', ['$http', function ($http) {
     
-    this.currentCourse = course.currentCourse;
+    this.currentCourse = {
+            'idCourse': '1234',
+            'category': 'CS',
+            'levelNumber': '4500',
+            'name': 'Senior Porject',
+            'image': 'images/thumbnail_pics/0.png',
+            'startDate': '2013-03-05',
+            'endDate': '2015-05-12'
+        };
 
     
-    function getMycourses () {
-        var array = [];
-        for (var i = 0; i < 10; i++) {
-            var video = { "name": "Course #" + i,
-                "presenter": "Smith" + i,
-                "id": i
-            };
-            array.push(video);
-        }
-        return array;
+    function getLectureList () {
+        return [{
+            'idLecture': '14325',
+            'lectureNum': '1',
+            'topic': 'introduction to bluh bluh',
+            'image': 'images/thumbnail_pics/0.png',
+            'scheduleDate': '2013-03-05',
+            'startTime': '10:00',
+            'endTime': '21:00',
+            'status': 'FIN'
+            
+        }, {
+            'idLecture': '14326',
+            'lectureNum': '2',
+            'topic': 'bluh bluh',
+            'image': 'images/thumbnail_pics/2.png',
+            'scheduleDate': '2013-03-05',
+            'startTime': '10:00',
+            'endTime': '21:00',
+            'status': 'LIVE'
+        }];
     }
     
-    this.lectureList = getMycourses();
+    this.lectureList = getLectureList();
     
     /**
      * 

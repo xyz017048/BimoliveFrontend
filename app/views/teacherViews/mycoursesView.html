@@ -6,15 +6,14 @@
     </div>
     <div class="row" style="display:flex; flex-wrap:wrap;">
         <div ng-repeat="course in courseCtrl.myCourses" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
-            <a ng-href="#/coursedetail">
+            <a ng-href="#/coursedetail/{{course.idCourse}}">
                 <div class="imageWrapper" style="position: relative;">
-                    <img ng-src="images/thumbnail_pics/{{course.id}}.png" class="img-responsive img-thumbnail" alt="1" style="position: relative;"
-                    />
+                    <img ng-src="{{course.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
                 </div>
                 <div class="caption">
-                    <a ng-href="#/coursedetail" ng-click="courseCtrl.setCurrentCourse(course)">{{course.name}}</a>
-                    <p>by {{course.presenter}}</p>
-                    <p>Current View: {{courseCtrl.viewNumber}}</p>
+                    <a ng-href="#/coursedetail/{{course.idCourse}}" ng-click="courseCtrl.setCurrentCourse(course)">{{course.category}} {{course.levelNumber}}: {{course.name}}</a>
+                    <p>Start Date: {{course.startDate}}</p>
+                    <p>End Date: {{course.endDate}}</p>
                 </div>
             </a>
         </div>

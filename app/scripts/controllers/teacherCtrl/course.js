@@ -9,29 +9,36 @@ angular.module('bimoliveApp')
     
     function getMycourses () {
         
-        var courses = [];
+        // var courses = [];
         
-        $http( { 
-            method: 'POST', 
-            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/courses',
-            headers: {
-                'Content-Type': undefined
-            },
-            data: {
-                idUser: MainService.getCurrentUser().idUser
-            }
-        } )
+        // $http( { 
+        //     method: 'POST', 
+        //     url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/courses',
+        //     headers: {
+        //         'Content-Type': undefined
+        //     },
+        //     data: {
+        //         idUser: MainService.getCurrentUser().idUser
+        //     }
+        // } )
         
-        .success(function(data, status) {
-            courses = data;
-        })
+        // .success(function(data, status) {
+        //     courses = data;
+        // })
         
-        .error(function(data, status) {
-        });
+        // .error(function(data, status) {
+        // });
         
-        return function() {
-            return courses;
-        };
+        // return function() {
+        //     return courses;
+        // };
+        return [{
+            'idCourse': '1234',
+            'category': 'CS',
+            'levelNumber': '4500',
+            'name': 'Senior Porject',
+            'image': 'images/thumbnail_pics/0.png'
+        }];
     }
     
     // this is fake! Place holder for function that gets view number from server
@@ -81,11 +88,11 @@ angular.module('bimoliveApp')
             this.newCourseForm.level.$setDirty();
             this.newCourseForm.startDate.$setDirty();
             this.newCourseForm.endDate.$setDirty();
-            return false;   
+            return false;
         } else {
             return true;
         }
-    }
+    };
    
     this.categories = getCategories();
     this.levels = getLevels();

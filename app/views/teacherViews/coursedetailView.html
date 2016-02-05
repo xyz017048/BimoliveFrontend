@@ -12,23 +12,23 @@
         </div>
         <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
             <label class="control-label" for="category" style="font-size: 150%;">Category:</label>
-            <input type="text" class="form-control col-lg-offset-2" id="category" name="category" placeholder="{{courseDetailCtrl.currentCourse.name}}"
-            ng-modle="courseDetailCtrl.currentCourse.name">
+            <input type="text" class="form-control col-lg-offset-2" id="category" name="category" placeholder="{{courseDetailCtrl.currentCourse.category}}"
+            ng-modle="courseDetailCtrl.currentCourse.category">
         </div>
         <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
             <label class="control-label" for="level" style="font-size: 150%;">Level:</label>
-            <input type="text" class="form-control col-lg-offset-2" id="level" name="level" placeholder="{{courseDetailCtrl.currentCourse.name}}"
-            ng-modle="courseDetailCtrl.currentCourse.name">
+            <input type="text" class="form-control col-lg-offset-2" id="level" name="level" placeholder="{{courseDetailCtrl.currentCourse.levelNumber}}"
+            ng-modle="courseDetailCtrl.currentCourse.levelNumber">
         </div>
         <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
             <label class="control-label" for="startDate" style="font-size: 150%;">Start Date:</label>
-            <input type="text" class="form-control col-lg-offset-2" id="startDate" name="startDate" placeholder="{{courseDetailCtrl.currentCourse.name}}"
-            ng-modle="courseDetailCtrl.currentCourse.name">
+            <input type="text" class="form-control col-lg-offset-2" id="startDate" name="startDate" placeholder="{{courseDetailCtrl.currentCourse.startDate}}"
+            ng-modle="courseDetailCtrl.currentCourse.startDate">
         </div>
         <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
             <label class="control-label" for="endDate" style="font-size: 150%;">End Date:</label>
-            <input type="text" class="form-control col-lg-offset-2" id="endDate" name="endDate" placeholder="{{courseDetailCtrl.currentCourse.name}}"
-            ng-modle="courseDetailCtrl.currentCourse.name">
+            <input type="text" class="form-control col-lg-offset-2" id="endDate" name="endDate" placeholder="{{courseDetailCtrl.currentCourse.endDate}}"
+            ng-modle="courseDetailCtrl.currentCourse.endDate">
         </div>
         <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
             <label class="control-label" for="addLectureButton" style="font-size: 150%;">Lectures:</label>
@@ -37,15 +37,16 @@
     <div class="row col-lg-8 col-lg-offset-2 col-md-9 col-md-offset-1 col-sm-9 col-sm-offset-1 col-xs-11 " style="overflow: auto; margin-bottom: 50px; height: 300px;">   
         <div class="row" style="display:flex; flex-wrap:wrap;">
             <div ng-repeat="lecture in courseDetailCtrl.lectureList" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                <a ng-href="#/lecturedetail">
+                <a ng-href="#/lecturedetail/{{lecture.idLecture}}">
                     <div class="imageWrapper" style="position: relative;">
-                        <img ng-src="images/thumbnail_pics/{{lecture.id}}.png" class="img-responsive img-thumbnail" alt="1" style="position: relative;"
+                        <img ng-src="{{lecture.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;"
                         />
                     </div>
                     <div class="caption">
-                        <a ng-href="#/lecturedetail" ng-click="courseDetailCtrl.setCurrentLecture(lecture)">{{lecture.name}}</a>
-                        <p>by {{lecture.presenter}}</p>
-                        <p>Current View: {{lectureDetailCtrl.viewNumber}}</p>
+                        <a ng-href="#/lecturedetail/{{lecture.idLecture}}">Lecture #{{lecture.lectureNum}}: {{lecture.topic}}</a>
+                        <p>Date: {{lecture.scheduleDate}}</p>
+                        <p>Start Time: {{lecture.startTime}}</p>
+                        <p>End Time: {{lecture.endTime}}</p>
                     </div>
                 </a>
             </div>

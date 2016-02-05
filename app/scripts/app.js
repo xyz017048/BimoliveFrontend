@@ -46,12 +46,12 @@ angular.module('bimoliveApp', [
             controller: 'CourseCtrl',
             controllerAs: 'courseCtrl'
         })
-        .when('/coursedetail', {
+        .when('/coursedetail/:idCourse', {
             templateUrl: 'views/teacherViews/coursedetailView.html',
             controller: 'CourseDetailCtrl',
             controllerAs: 'courseDetailCtrl'
         })
-        .when('/lecturedetail', {
+        .when('/lecturedetail/:idLecture', {
             templateUrl: 'views/teacherViews/lecturedetailView.html',
             controller: 'LectureDetailCtrl',
             controllerAs: 'lectureDetailCtrl'
