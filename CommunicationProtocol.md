@@ -48,7 +48,7 @@ Registration:
 				"regisDate":            STRING
 			}
 
-Login:
+Login:  (teacher: admin@gmail.com, admin;  student: student@gmail.com,  student)
 	Request: POST   /login
 			{
 				"email":                STRING,
@@ -74,7 +74,17 @@ Login:
 				"regisDate":            STRING
 			}
 
-account setting, apply to be a teacher
+account setting, apply to be a teacher (change key)
+
+Teacher generate a key:
+                Request: POST   /teacher/generatekey
+                                {
+                                    "idUser":           INT
+                                }
+                Response:
+                                {
+                                    "keyString":        STRING
+                                }
 
 Question ask and answer Part:
 	For student view to send a question:
@@ -96,7 +106,7 @@ Question ask and answer Part:
                                 {
                                     "roleLevel":        INT, (1:student; 2:teacher)
                                     "idLecture":        INT,
-                                    "interval":         INT (seconds, if interval == 0, get all questions with 'answer' and 'solve' status for student or 'new' status for teacher
+                                    "interval":         INT (seconds, if interval == 0, get all questions with 'answer' status for student or 'new' status for teacher
 												from this lecture;
 										else, get questions between current time and current time - interval)
                                 }
@@ -114,18 +124,18 @@ Question ask and answer Part:
 					...
 				]
                          
-        Teacher makes an action on a question: (Once the teacher answers the question, he/she must click the "solve" button to close the dialog box. No other way ALLOWED to close it.)
+        Teacher makes an action on a question: 
                 Request: POST   /teacher/questionaction
                                 {
                                     "idQuestion":       INT,
-                                    "status":           STRING (can be "answer", "solve", "ban","kick")
+                                    "status":           STRING (can be "answer", "ban","kick")
                                 }
                 Response:
                                 {
                                     "result":           INT (result=0 fail; reuslt=1 success)
                                 }        
 
-Teacher create/get courses/lectures:
+Teacher create/update/get courses/lectures:
         Get course category: 
                 Request: POST/GET  /getcategory
                 Response:
@@ -182,6 +192,7 @@ Teacher create/get courses/lectures:
                                     "result":           INT (result=0 fail; reuslt=1 success)
                                 }
 
+        Teacher update a course:
 
         Get all lectures of one course: when you click on one course, you will request all lectures of this course.
                 Request:    POST    /teacher/lectures
@@ -225,8 +236,57 @@ Teacher create/get courses/lectures:
                                 {
                                     "result":           INT (result=0 fail; reuslt=1 success)
                                 }
+        Teacher update a lecture:
 
-get all live videos
+Teacher start a lecture:
+            Request: POST   /teacher/startlecture
+                            {
+                                "idUser":       INT,
+                                "idLecture":    INT
+                            }
+            Response:
+                            {
+                                "result":       INT     (result=0 fail; reuslt=1 success)
+                            }
+
+Teacher upload a video: (change status = "replay", url = where in amazon cloud)
+
+Get all live videos:
+            Request: GET/POST   /livevideos
+            ResPonse:       
+                        [
+                            {
+                                "teacherFirstName":     STRING,
+                                "teacherLastName":      STRING,
+                                "courseName"            STRING,
+                                "lectureNum":           INT, 
+                                "idLecture":            INT,
+                                "topic":                STRING,
+                                "intro":                STRING,     (may be empty)
+                                "image":                STRING,     (the image path/id of the lecture, may need a default pic)
+                                "url":                  STRING      (this is actually the key)
+                            },
+                            ...
+                            ...
+                        ]
 
 
-get all replay videos
+get all replay videos:
+            Request: GET/POST   /replayvideos
+            ResPonse:       
+                        [
+                            {
+                                "teacherFirstName":     STRING,
+                                "teacherLastName":      STRING,
+                                "courseName"            STRING,
+                                "lectureNum":           INT, 
+                                "idLecture":            INT,
+                                "topic":                STRING,
+                                "intro":                STRING,     (may be empty)
+                                "image":                STRING,     (the image path/id of the lecture, may need a default pic)
+                                "url":                  STRING      (this is the url on amazon cloud)
+                            },
+                            ...
+                            ...
+                        ]
+
