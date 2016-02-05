@@ -5,9 +5,10 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('CourseDetailCtrl', ['$http', function ($http) {
+.controller('CourseDetailCtrl', ['$http', '$routeParams', function ($http, $routeParams) {
     
-    this.currentCourse = {
+    function getCourseDetail() {
+        return {
             'idCourse': '1234',
             'category': 'CS',
             'levelNumber': '4500',
@@ -16,7 +17,7 @@ angular.module('bimoliveApp')
             'startDate': '2013-03-05',
             'endDate': '2015-05-12'
         };
-
+    }
     
     function getLectureList () {
         return [{
@@ -42,6 +43,8 @@ angular.module('bimoliveApp')
     }
     
     this.lectureList = getLectureList();
+    
+    this.currentCourse = getCourseDetail();
     
     /**
      * 
