@@ -58,8 +58,16 @@ angular.module('bimoliveApp')
     }, 1000 );
      
     // Set selected question
-    this.setCurrentQuestion = function (question) {
+    this.setCurrentQuestion = function (question, index) {
         this.currentQuestion = question;
+        this.questionIndex = index;
     };
     
+    this.removeQuestion = function () {
+        this.questions.splice(this.questionIndex, 1);
+        /////remove question ///////
+    };
+    this.answerQuestion = function () {
+        /////answer question///////
+    };
 }]);

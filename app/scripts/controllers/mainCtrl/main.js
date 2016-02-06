@@ -6,7 +6,7 @@ angular.module('bimoliveApp')
 /**
  * Controller for main view
  */
-.controller('MainCtrl', ['$http', 'MainService', function ($http, MainService) {
+.controller('MainCtrl', ['$http', 'MainService', '$location', function ($http, MainService, $location) {
     
     
 
@@ -139,6 +139,7 @@ angular.module('bimoliveApp')
                     MainService.setCurrentUser(data);
                     
                     appScope.isLogin = true;
+                    appScope.currentUser = MainService.getCurrentUser();
                     MainService.setIsLogin(true);
                     
                     // appScope.checkIsLoggedIn();
@@ -164,8 +165,9 @@ angular.module('bimoliveApp')
     this.logout = function() {
         this.isLogin = false;
         MainService.setIsLogin(false);
-        this.currentUser = null;
+        this.currentUser = {};
         MainService.setCurrentUser(null);
+        $location.url('/');
     };
     
     this.checkIsSignUpValid = function () {
@@ -363,7 +365,7 @@ angular.module('bimoliveApp')
     
     // Variables
     if (sessionStorage.getItem('user')===null) {
-        MainService.CurrentUser = null;
+        MainService.CurrentUser = {};
     } else {
         MainService.CurrentUser = JSON.parse(sessionStorage.getItem('user'));
     }

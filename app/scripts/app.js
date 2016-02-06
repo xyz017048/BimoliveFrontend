@@ -22,9 +22,7 @@ angular.module('bimoliveApp', [
 .config(function ($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: 'views/mainViews/main.html',
-            controller: 'MainCtrl',
-            controllerAs: 'mainCtrl'
+            templateUrl: 'views/mainViews/main.html'
         })
         .when('/about', {
             templateUrl: 'views/otherViews/about.html',
