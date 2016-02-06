@@ -4,6 +4,7 @@ Base URL:
 
 All request and responses are in JSON.
 
+*********************************   Sign up/Sign in     ******************************
 Sign up - Check Username:
 	Request: POST   /usernameCheck
 			{
@@ -74,6 +75,7 @@ Login:  (teacher: admin@gmail.com, admin;  student: student@gmail.com,  student)
 				"regisDate":            STRING
 			}
 
+*********************************   Apply to be a teacher   **********************************
 account setting, apply to be a teacher (change key)
 
 Teacher generate a key:
@@ -86,6 +88,8 @@ Teacher generate a key:
                                     "keyString":        STRING
                                 }
 
+
+*********************************   Question send/get/answer/delete/ban/kick    **********************
 Question ask and answer Part:
 	For student view to send a question:
 		Request: POST /student/sendquestion
@@ -135,6 +139,8 @@ Question ask and answer Part:
                                     "result":           INT (result=0 fail; reuslt=1 success)
                                 }        
 
+
+**************************  Teacher create/get/update course(s)/lecture(s)  ************************
 Teacher create/update/get [single course/ all courses/ single lecture/all lectures]:
         Get course category: 
                 Request: POST/GET  /getcategory
@@ -176,7 +182,8 @@ Teacher create/update/get [single course/ all courses/ single lecture/all lectur
         Get a single course:
                 Request: POST   /teacher/singlecourse
                                 {
-                                    "idCourse":           INT
+                                    "idCourse":           INT,
+                                    "idUser":             INT
                                 }
 
                 Response：      
@@ -245,7 +252,8 @@ Teacher create/update/get [single course/ all courses/ single lecture/all lectur
         Get a single Lecture:
                 Request:    POST    /teacher/singlelecture
                                 {
-                                    "idLecture":         INT
+                                    "idUser":           INT,
+                                    "idLecture":         INT,
                                 }                                 
                 Response:   
                                 {
@@ -295,6 +303,8 @@ Teacher start a lecture:
 
 Teacher upload a video: (change status = "replay", url = where in amazon cloud)
 
+
+*************************** Student get all live/replay videos  ***************************
 Get all live videos:
             Request: GET/POST   /livevideos
             ResPonse:       
@@ -315,7 +325,7 @@ Get all live videos:
                         ]
 
 
-get all replay videos:
+Get all replay videos:
             Request: GET/POST   /replayvideos
             ResPonse:       
                         [
@@ -334,3 +344,4 @@ get all replay videos:
                             ...
                         ]
 
+************************    Student get course/lecture info ***************************
