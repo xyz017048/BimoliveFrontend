@@ -164,6 +164,7 @@ angular.module('bimoliveApp')
     this.logout = function() {
         this.isLogin = false;
         MainService.setIsLogin(false);
+        this.currentUser = MainService.getCurrentUser();
     };
     
     this.checkIsSignUpValid = function () {
