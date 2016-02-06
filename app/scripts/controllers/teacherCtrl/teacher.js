@@ -63,11 +63,51 @@ angular.module('bimoliveApp')
         this.questionIndex = index;
     };
     
+    /**
+     * 
+     */    
     this.removeQuestion = function () {
-        this.questions.splice(this.questionIndex, 1);
-        /////remove question ///////
+        $http( {
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/questionaction',
+            headers: {
+                    'Content-Type': undefined
+            },
+            data: {
+                idQuestion: this.currentQuestion.idQuestion,
+                status:  'delete'  
+            }
+        } )
+        
+        .success(function(data, status) {
+            appScope.questions.splice(appScope.questionIndex, 1);
+        })
+        
+        .error(function(data, status) {
+        });
     };
+    
+    /**
+     * Answer questions
+     */
     this.answerQuestion = function () {
-        /////answer question///////
+        $http( {
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/questionaction',
+            headers: {
+                    'Content-Type': undefined
+            },
+            data: {
+                idQuestion: this.currentQuestion.idQuestion,
+                status:  'answer'  
+            }
+        } )
+        
+        .success(function(data, status) {
+            appScope.questions.splice(appScope.questionIndex, 1);
+        })
+        
+        .error(function(data, status) {
+        });
     };
 }]);
