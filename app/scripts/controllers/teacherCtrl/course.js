@@ -11,7 +11,7 @@ angular.module('bimoliveApp')
         
         var courses = [];
         
-        if(MainService.getCurrentUser().roleLevel == 2)
+        if(MainService.getCurrentUser().roleLevel === 2)
         {
             $http( { 
                 method: 'POST', 
