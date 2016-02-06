@@ -7,7 +7,6 @@ angular.module('bimoliveApp')
  */
 .controller('CourseDetailCtrl', ['$http', '$routeParams', 'MainService', function ($http, $routeParams, MainService) {
     
-    // var courseId = $routeParams.idCourse;
     this.idCourse = $routeParams.idCourse;
 
     var appScope = this;
@@ -42,6 +41,7 @@ angular.module('bimoliveApp')
     } )
     .success(function(data, status) {
         appScope.lectureList = data;
+
     })
     .error(function(data, status) {
         console.log(data);
@@ -49,62 +49,44 @@ angular.module('bimoliveApp')
         console.log('Request failed');
     });
     
-    /**
-     * 
-     */
-    this.createNewCourse = function () {
-        if (this.checkNewCourseValid()) {
-            // Assign app object in appScope
-            
+    this.createNewLecture = function () {
+        // if (this.checkNewLectureValid()) {
             var appScope = this;
-            /*
-            Get All my Courses:  
-                Request: POST   /teacher/courses
-                                {
-                                    "idUser":           INT
-                                }
-
-                Response：      may be an empty list, order by "createDate" desc
-                                [
-                                    {
-                                        "idCourse":     INT,
-                                        "idUser":       INT,
-                                        "category":     STRING,
-                                        "levelNumber":  INT,
-                                        "name":         STRING,
-                                        "intro":        STRING,
-                                        "image":        STRING,     (the image path/id of the course)
-                                        "createDate":   STRING,
-                                        "startDate":    STRING,     (format: "yyyy-MM-dd hh:mm:ss" Here time zone problem)
-                                        "endDate":      STRING,     (format: "yyyy-MM-dd hh:mm:ss")
-                                        "endFlag":      INT         (endFlag = 0, no endDate, make endDate same as startDate;
-                                                                 endFlag = 1, real endDate)
-                                    },
-                                    ...
-                                ]
-             */
-            // Serveice
             $http( { 
                 method: 'POST', 
-                url: 'http://bimolive.us-west-2.elasticbeanstalk.com//teacher/courses',
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/createlecture',
                 headers: {
                     'Content-Type': undefined
                 },
                 data: {
-                    idUser: MainService.idUser,
+                    "idCourse": this.idCourse,
+                    "lectureNum": this.lectureList.length + 1,
+                    "topic": this.newLecture.name,
+                    "intro": "",
+                    "image": "",
+                    "scheduleDate": "2017-01-21",
+                    "startTime": "11:11",
+                    "endTime": "11:12"
                 }
             } )
-            
             .success(function(data, status) {
+                if(data.result) {
+                    appScope.clearForm();
+                } else {
+                    console.log("success but got " + data.result);
+                }
             })
-            
             .error(function(data, status) {
+                console.log(data);
+                console.log(status);
+                console.log('Request failed');
             });
-            
-            this.clearForm();
-        }
-    };
+        // }
+    }
 
+    this.clearForm = function() {
+        this.newLecture.name = '';
+    }
 }])
 
 .factory('lectureDetail', function () {

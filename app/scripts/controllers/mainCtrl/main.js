@@ -164,6 +164,8 @@ angular.module('bimoliveApp')
     this.logout = function() {
         this.isLogin = false;
         MainService.setIsLogin(false);
+        this.currentUser = null;
+        MainService.setCurrentUser(null);
     };
     
     this.checkIsSignUpValid = function () {
@@ -374,7 +376,11 @@ angular.module('bimoliveApp')
     };
     
     MainService.setCurrentUser = function(user) {
-        sessionStorage.setItem('user', JSON.stringify(user));
+        if (user!==null) {
+            sessionStorage.setItem('user', JSON.stringify(user));
+        } else {
+            sessionStorage.removeItem('user');
+        }
         MainService.CurrentUser = user;
     };
     
