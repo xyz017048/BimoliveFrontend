@@ -8,44 +8,24 @@ angular.module('bimoliveApp')
  */
 .controller('MainCtrl', ['$http', 'MainService', function ($http, MainService) {
     
-    
-
-    // This is fake! place holder for the real function
-    this.getLiveLectures = function () {
-        // // Assign app object in appScope
-        // var appScope = this;
-        
-        // // Serveice
-        // $http( { 
-        //     method: 'POST', 
-        //     url: 'http://bimolive.us-west-2.elasticbeanstalk.com/lecture',
-        //      headers: {
-        //         'Content-Type': undefined
-        //     },
-        //     data: { type: 'live', count: 'all' }
-        // } )
-        
-        // .success(function(data, status) {
-        //     return data;
-        // })
-        
-        // .error(function(data, status) {
-        //     console.log(data);
-        //     console.log(status);
-        //     console.log('Request failed');
-        // });
-
-        var array = [];
-        for (var i = 0; i < 11; i++) {
-            var video = { "name": "video #" + i,
-                "presenter": "Smith" + i,
-                "id": i
-            };
-            array.push(video);
+    var appScope = this;
+    // getLiveLectures (videoInfo)
+    $http( { 
+        method: 'POST', 
+        url: 'http://bimolive.us-west-2.elasticbeanstalk.com/livevideos',
+        headers: {
+            'Content-Type': undefined
         }
-        return array;
-    };
-    this.videoInfo = this.getLiveLectures();
+    } )
+    .success(function(data, status) {
+        // put video to UI
+        appScope.videoInfo = data;
+    })
+    .error(function(data, status) {
+        console.log(data);
+        console.log(status);
+        console.log('Request failed');
+    });
     
     // Log in variables
     this.email = '';
