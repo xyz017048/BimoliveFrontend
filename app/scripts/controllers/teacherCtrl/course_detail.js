@@ -18,7 +18,10 @@ angular.module('bimoliveApp')
         headers: {
             'Content-Type': undefined
         },
-        data: { idCourse: this.idCourse }
+        data: { 
+            idCourse: this.idCourse, 
+            idUser: MainService.getCurrentUser().idUser
+        }
     } )
     .success(function(data, status) {
         appScope.currentCourse = data;
@@ -37,7 +40,10 @@ angular.module('bimoliveApp')
         headers: {
             'Content-Type': undefined
         },
-        data: { idCourse: this.idCourse }
+        data: { 
+            idCourse: this.idCourse,
+            idUser: MainService.getCurrentUser().idUser
+        }
     } )
     .success(function(data, status) {
         appScope.lectureList = data;
