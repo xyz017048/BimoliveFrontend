@@ -345,3 +345,36 @@ Get all replay videos:
                         ]
 
 ************************    Student get course/lecture info ***************************
+
+Student Get a single Lecture:         NOTE: if 'status' == 'wait', student can only see the info of this lecture.
+                                            if 'status' == 'live', show the live video to the student, and can send a question if login
+                                            if 'status' == 'replay', show the video to the student, all answered questions should display in the question panel,
+                                                                      and disable sending question channel.
+                Request:    POST    /student/singlelecture
+                                {
+                                    "idLecture":         INT,
+                                }                                 
+                Response:   
+                                {
+                                    "teacherFirstName":     STRING,
+                                    "teacherLastName":      STRING,
+                                    "lectureInfo":          {
+                                                                "idLecture":        INT,
+                                                                "idCourse":         INT,
+                                                                "lectureNum":       INT,       
+                                                                "topic":            STRING,
+                                                                "intro":            STRING,     (may not be required)
+                                                                "image":            STRING,     (the image path/id of the lecture, may need a default pic)
+                                                                "scheduleDate":     STRING,     (format: "yyyy-MM-dd" Here time zone problem)
+                                                                "startTime":        STRING,     (format: "hh:mm")
+                                                                "endTime":          STRING,     (format: "hh:mm")
+                                                                "createDate":       STRING,     (format: "yyyy-MM-dd hh:mm:ss")
+                                                                "status":           STRING,         
+                                                                "url":              STRING
+                                                            }
+                                }
+
+
+In replay mode, get all answered questions:
+
+
