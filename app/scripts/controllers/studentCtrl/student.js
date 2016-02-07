@@ -8,27 +8,36 @@ angular.module('bimoliveApp')
 
 .controller('StudentCtrl', ['$routeParams', '$http', 'MainService', function ($routeParams, $http, MainService) {
 
-    var sectionId = $routeParams.id; //the current video id
-    this.idLecture = sectionId;
-
+    this.idLecture = $routeParams.id; //the current video id
     // this is fake! Place holder for the real function that
     // gets the video info from server
-    function getCurrentVideo (sectionId) {
-        var video = { "name": "video #" + sectionId,
-                "presenter": "Smith" + sectionId,
-                "id": sectionId,
-                "viewNumber": 100
-        };
-        return video;
-    }
+    this.currentLecture = {};
+    var appScope = this;
+    $http({
+        method: 'POST',
+        url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/singlelecture',
+        headers: {
+            'Content-Type': undefined
+        },
+        data: {
+            idLecture: $routeParams.id
+        }
+    })
+
+    .success(function (data, status) {
+        appScope.currentLecture = data;
+    })
+
+    .error(function (data, status) {
+    });
 
     this.currentQuestion = '';
     var questions = [];
     this.questions = questions;
-    getQuestions(sectionId, true);
+    getQuestions(this.idLecture, true);
     var i=0;
     setInterval( function() {
-        getQuestions(sectionId, false);
+        getQuestions(this.idLecture, false);
         this.questions = questions;
     }, 1000 ); 
 
@@ -37,7 +46,7 @@ angular.module('bimoliveApp')
      * @param  {[type]} sectionId [description]
      * @return {[type]}           [description]
      */
-    function getQuestions(sectionId, isFirst) {
+    function getQuestions(idLecture, isFirst) {
         var result = questions;
         var interval = 0;
         if (!isFirst) {
@@ -52,7 +61,7 @@ angular.module('bimoliveApp')
             },
             data: {
                 roleLevel: 1,
-                idLecture: sectionId,
+                idLecture: idLecture,
                 interval: interval
             }
         } )
@@ -75,7 +84,7 @@ angular.module('bimoliveApp')
      */
     this.sendQuestion = function() {
         if (!MainService.getIsLogin()) {
-            alert('login please');
+            alert('Plese Login');
         } else if (this.currentQuestion.trim() !== '') {
             // Assign app object in appScope
             var appScope = this;
@@ -107,15 +116,9 @@ angular.module('bimoliveApp')
             });
         }
     };
-
-    this.key = 'live0';
     
-    // call the function that connect the server and get 
-    // all video info and store in currentVideo
-    this.currentVideo = getCurrentVideo(sectionId);
-    
-    this.streamVideo = function () {
-        var live_url = 'rtmp://' + '52.34.242.6' + '/live' + '/' + this.key;
+    this.streamVideo = function (key) {
+        var live_url = 'rtmp://' + '52.34.242.6' + '/live' + '/' + key;
         var videoPlayer = jwplayer('videoPlayer');
         var video = document.getElementById('video');
         videoPlayer.setup({

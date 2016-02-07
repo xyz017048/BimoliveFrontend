@@ -10,7 +10,7 @@ angular.module('bimoliveApp')
     var appScope = this;
     this.currentLecture = {};
    
-    if(MainService.getCurrentUser().roleLevel == 2)
+    if(MainService.getCurrentUser().roleLevel === 2)
     {
         $http( { 
             method: 'POST', 
@@ -19,7 +19,8 @@ angular.module('bimoliveApp')
                 'Content-Type': undefined
             },
             data: {
-                idLecture: $routeParams.idLecture
+                idLecture: $routeParams.idLecture,
+                idUser: MainService.getCurrentUser().idUser
             }
         } )
         

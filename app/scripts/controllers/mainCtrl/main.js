@@ -19,7 +19,24 @@ angular.module('bimoliveApp')
     } )
     .success(function(data, status) {
         // put video to UI
-        appScope.videoInfo = data;
+        appScope.liveVideos = data;
+    })
+    .error(function(data, status) {
+        console.log(data);
+        console.log(status);
+        console.log('Request failed');
+    });
+    
+    $http( { 
+        method: 'POST', 
+        url: 'http://bimolive.us-west-2.elasticbeanstalk.com/replayvideos',
+        headers: {
+            'Content-Type': undefined
+        }
+    } )
+    .success(function(data, status) {
+        // put video to UI
+        appScope.replayVideos = data;
     })
     .error(function(data, status) {
         console.log(data);
@@ -117,10 +134,10 @@ angular.module('bimoliveApp')
                     
                     // Inject into MainService
                     MainService.setCurrentUser(data);
-                    
                     appScope.isLogin = true;
-                    appScope.currentUser = MainService.getCurrentUser();
                     MainService.setIsLogin(true);
+                    appScope.currentUser = MainService.getCurrentUser();
+
                     
                     // appScope.checkIsLoggedIn();
                 } else {
@@ -353,8 +370,12 @@ angular.module('bimoliveApp')
     
     
     // Getter and Setter
-    MainService.getCurrentUser = function() {
-        return MainService.CurrentUser;
+    MainService.getCurrentUser = function () {
+        if (MainService.isLogin) {
+            return MainService.CurrentUser;
+        } else {
+            return false;
+        }
     };
     
     MainService.setCurrentUser = function(user) {
