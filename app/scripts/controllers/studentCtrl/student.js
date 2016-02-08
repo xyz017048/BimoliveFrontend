@@ -62,8 +62,8 @@ angular.module('bimoliveApp')
     this.questions = [];
     getQuestions(0);
     setInterval( function() {
-        getQuestions(1);
-    }, 1000 ); 
+        getQuestions(2);
+    }, 2000 ); 
 
     /**
      * send question to server
