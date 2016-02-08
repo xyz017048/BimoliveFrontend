@@ -6,15 +6,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">New Lecture</h4>
+                <h4 class="modal-title">Lecture #{{courseDetailCtrl.lectureList.length + 1}}</h4>
             </div>
             <div class="modal-body">
                 <form name="courseDetailCtrl.newLectureForm" id="newLectureForm" novalidate>
                     <div class="form-group" ng-class="{ 'has-error' : courseDetailCtrl.newLectureForm.newLectureName.$invalid && !courseDetailCtrl.newLectureForm.newLectureName.$pristine }">
                         <label class="control-label" for="newLectureName">Lecture topic</label>
-                        <input type="text" class="form-control" id="newLectureName" name="newLectureName" placeholder="Lecture topic" ng-model="courseDetailCtrl.newLecture.name"
+                        <input type="text" class="form-control" id="newLectureName" name="newLectureName" placeholder="Lecture topic" ng-model="courseDetailCtrl.newLecture.topic"
                         required>
-                        <p ng-show="courseDetailCtrl.newLectureForm.newLectureName.$invalid && !courseDetailCtrl.newLectureForm.newLectureName.$pristine" class="help-block">Course name is required.</p>
+                        <p ng-show="courseDetailCtrl.newLectureForm.newLectureName.$invalid && !courseDetailCtrl.newLectureForm.newLectureName.$pristine" class="help-block">Lecture topic is required.</p>
                     </div>
                 </form>
             </div>

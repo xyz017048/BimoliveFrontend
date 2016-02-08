@@ -8,58 +8,81 @@ angular.module('bimoliveApp')
 .controller('CourseDetailCtrl', ['$http', '$routeParams', 'MainService', function ($http, $routeParams, MainService) {
     
     this.idCourse = $routeParams.idCourse;
-
-    var appScope = this;
-
-    // currentCourse
-    $http( { 
-        method: 'POST', 
-        url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/singlecourse',
-        headers: {
-            'Content-Type': undefined
-        },
-        data: { 
-            idCourse: this.idCourse, 
-            idUser: MainService.getCurrentUser().idUser
-        }
-    } )
-    .success(function(data, status) {
-        appScope.currentCourse = data;
-    })
-    .error(function(data, status) {
-        console.log(data);
-        console.log(status);
-        console.log('Request failed');
-    });
-
     
-    // lectureList
-    $http( { 
-        method: 'POST', 
-        url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/lectures',
-        headers: {
-            'Content-Type': undefined
-        },
-        data: { 
-            idCourse: this.idCourse,
-            idUser: MainService.getCurrentUser().idUser
-        }
-    } )
-    .success(function(data, status) {
-        appScope.lectureList = data;
+    function newLectureObject() {
+        return {'topic': '',
+        'intro': '',
+        'level': '',
+        'scheduleDate': '',
+        'startTime': '',
+        'endDate': ''};
+    }
+    
+    this.init = function () {
+        this.getCurrentCourse();
+        this.newLectureForm = '';
+        this.newLecture = newLectureObject();
+    };
+    
+    var appScope = this;
+    
+    this.getCurrentCourse = function () {
+        // currentCourse
+        $http( { 
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/singlecourse',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: { 
+                idCourse: this.idCourse, 
+                idUser: MainService.getCurrentUser().idUser
+            }
+        } )
+        .success(function(data, status) {
+            appScope.currentCourse = data;
+            appScope.getLectureList();
+        })
+        .error(function(data, status) {
+            console.log(data);
+            console.log(status);
+            console.log('Request failed');
+        });
+    };
 
-    })
-    .error(function(data, status) {
-        console.log(data);
-        console.log(status);
-        console.log('Request failed');
-    });
+    this.getLectureList = function () {
+        $http( { 
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/lectures',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: { 
+                idCourse: this.idCourse,
+                idUser: MainService.getCurrentUser().idUser
+            }
+        } )
+        .success(function(data, status) {
+            appScope.lectureList = data;
+
+        })
+        .error(function(data, status) {
+            console.log(data);
+            console.log(status);
+            console.log('Request failed');
+        });
+    };
+    
+    // FAKE, place holder for a function foring checking valivation
+    this.checkNewLectureValid = function () {
+        return true;
+    };
     
     this.createNewLecture = function () {
-        // if (this.checkNewLectureValid()) {
+        if (this.checkNewLectureValid()) {
             var appScope = this;
-            $http( { 
-                method: 'POST', 
+            $http({
+                method: 'POST',
                 url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/createlecture',
                 headers: {
                     'Content-Type': undefined
@@ -67,32 +90,36 @@ angular.module('bimoliveApp')
                 data: {
                     "idCourse": this.idCourse,
                     "lectureNum": this.lectureList.length + 1,
-                    "topic": this.newLecture.name,
+                    "topic": this.newLecture.topic,
                     "intro": "",
                     "image": "",
                     "scheduleDate": "2017-01-21",
                     "startTime": "11:11",
                     "endTime": "11:12"
                 }
-            } )
-            .success(function(data, status) {
-                if(data.result) {
+            })
+            .success(function (data, status) {
+                if (data.result) {
                     appScope.clearForm();
                 } else {
                     console.log("success but got " + data.result);
                 }
             })
-            .error(function(data, status) {
+            .error(function (data, status) {
                 console.log(data);
                 console.log(status);
                 console.log('Request failed');
             });
-        // }
-    }
+        }
+    };
 
-    this.clearForm = function() {
-        this.newLecture.name = '';
-    }
+    this.clearForm = function () {
+        this.newLecture = newLectureObject();
+        $('#addLectureModal').modal('hide');
+        this.newLectureForm.$setPristine();
+        this.getLectureList();
+    };
+    
 }])
 
 .factory('lectureDetail', function () {

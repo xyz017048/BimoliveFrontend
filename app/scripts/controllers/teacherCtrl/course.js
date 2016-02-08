@@ -111,7 +111,7 @@ angular.module('bimoliveApp')
     /**
      * 
      */
-    this.createNewCourse1 = function () {
+    this.addCourseToServer = function () {
         
         var appScope = this;
         var appScopeCourse = this.newCourse;
