@@ -9,6 +9,7 @@ angular.module('bimoliveApp')
     
     var appScope = this;
     this.currentLecture = {};
+    this.isFinished = false;
    
     if(MainService.getCurrentUser().roleLevel === 2)
     {
@@ -26,6 +27,9 @@ angular.module('bimoliveApp')
         
         .success(function(data, status) {
             appScope.currentLecture = data;
+            if (data.status === 'replay') {
+                appScope.isFinished = true; 
+            }
         })
         
         .error(function(data, status) {

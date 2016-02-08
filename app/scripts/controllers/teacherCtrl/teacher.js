@@ -54,8 +54,8 @@ angular.module('bimoliveApp')
     
     // Continue getting questions from database
     setInterval( function() {
-        getQuestions(1);
-    }, 1000 );
+        getQuestions(2);
+    }, 2000 );
      
     // Set selected question
     this.setCurrentQuestion = function (question, index) {
