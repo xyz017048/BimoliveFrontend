@@ -8,10 +8,9 @@ angular.module('bimoliveApp')
 
 .controller('StudentCtrl', ['$routeParams', '$http', 'MainService', function ($routeParams, $http, MainService) {
 
-    this.idLecture = $routeParams.id; //the current video id
-    // this is fake! Place holder for the real function that
-    // gets the video info from server
+    this.idLecture = $routeParams.id;
     this.currentLecture = {};
+
     var appScope = this;
     $http({
         method: 'POST',
@@ -23,37 +22,19 @@ angular.module('bimoliveApp')
             idLecture: $routeParams.id
         }
     })
-
     .success(function (data, status) {
         appScope.currentLecture = data;
         appScope.streamVideo();
     })
-
     .error(function (data, status) {
     });
 
-    this.currentQuestion = '';
-    var questions = [];
-    this.questions = questions;
-    getQuestions(this.idLecture, true);
-    var i=0;
-    setInterval( function() {
-        getQuestions(this.idLecture, false);
-        this.questions = questions;
-    }, 1000 ); 
-
     /**
-     * get question queue from server
-     * @param  {[type]} sectionId [description]
-     * @return {[type]}           [description]
+     * [getQuestions description]
+     * @param  {[type]} notFirst [description]
+     * @return {[type]}          [description]
      */
-    function getQuestions(idLecture, isFirst) {
-        var result = questions;
-        var interval = 0;
-        if (!isFirst) {
-            interval = 1;
-        }
-        
+    function getQuestions(notFirst) {
         $http( { 
             method: 'POST', 
             url: 'http://bimolive.us-west-2.elasticbeanstalk.com/getquestions',
@@ -62,13 +43,13 @@ angular.module('bimoliveApp')
             },
             data: {
                 roleLevel: 1,
-                idLecture: idLecture,
-                interval: interval
+                idLecture: $routeParams.id,
+                interval: notFirst
             }
         } )
         .success(function(data, status) {
-            for(var n in data) {
-                result.push({ "content": data[n].content, "username": data[n].username});
+            for (var q in data) {
+                appScope.questions.push(data[q]);
             }
         })
         .error(function(data, status) {
@@ -76,9 +57,13 @@ angular.module('bimoliveApp')
             console.log(status);
             console.log('Request failed');
         });
-        questions = result;
-        return result;
     }
+
+    this.questions = [];
+    getQuestions(0);
+    setInterval( function() {
+        getQuestions(1);
+    }, 1000 ); 
 
     /**
      * send question to server
