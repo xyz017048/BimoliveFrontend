@@ -132,7 +132,7 @@ Question ask and answer Part:
                 Request: POST   /teacher/questionaction
                                 {
                                     "idQuestion":       INT,
-                                    "status":           STRING (can be "answer", "ban","kick")
+                                    "status":           STRING (can be "delete","answer", "ban","kick")
                                 }
                 Response:
                                 {
