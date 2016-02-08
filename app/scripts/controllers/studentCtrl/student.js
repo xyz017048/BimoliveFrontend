@@ -118,7 +118,7 @@ angular.module('bimoliveApp')
     };
     
     this.streamVideo = function (key) {
-        var live_url = 'rtmp://' + '52.34.242.6' + '/live' + '/' + key;
+        var live_url = 'rtmp://' + '52.25.9.241' + '/live' + '/' + key;
         var videoPlayer = jwplayer('videoPlayer');
         var video = document.getElementById('video');
         videoPlayer.setup({
