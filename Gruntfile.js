@@ -98,7 +98,6 @@ module.exports = function (grunt) {
         options: {
           port: 80,
           hostname: '0.0.0.0',
-          open: true,
           middleware: function (connect) {
             return [
               connect.static('.tmp'),
