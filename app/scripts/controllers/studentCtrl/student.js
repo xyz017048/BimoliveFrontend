@@ -26,6 +26,7 @@ angular.module('bimoliveApp')
 
     .success(function (data, status) {
         appScope.currentLecture = data;
+        appScope.streamVideo();
     })
 
     .error(function (data, status) {
@@ -117,8 +118,8 @@ angular.module('bimoliveApp')
         }
     };
     
-    this.streamVideo = function (key) {
-        var live_url = 'rtmp://' + '52.25.9.241' + '/live' + '/' + key;
+    this.streamVideo = function () {
+        var live_url = 'rtmp://' + '52.25.9.241' + '/live' + '/' + this.currentLecture.lectureModel.url;
         var videoPlayer = jwplayer('videoPlayer');
         var video = document.getElementById('video');
         videoPlayer.setup({
