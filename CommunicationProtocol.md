@@ -249,7 +249,7 @@ Teacher create/update/get [single course/ all courses/ single lecture/all lectur
                                     ...
                                 ]
 
-        Get a single Lecture:
+        Get a single Lecture: a lecture can has status = "wait"/"live"/"finish"/"replay"
                 Request:    POST    /teacher/singlelecture
                                 {
                                     "idUser":           INT,
@@ -296,10 +296,23 @@ Teacher start a lecture:
                                 "idUser":       INT,
                                 "idLecture":    INT
                             }
-            Response:
+            Response:   May receive 403 error, if the teacher don't hold this lecture.
                             {
                                 "result":       INT     (result=0 fail; reuslt=1 success)
                             }
+
+Teacher ends a live lecture:
+            Request: POST   /teacher/endlecture
+                            {
+                                "idUser":       INT,
+                                "idLecture":    INT
+                            }
+            Response:   May receive 403 error, if the teacher don't hold this lecture
+                            or this lecture is not live.
+                            {
+                                "result":       INT     (result=0 fail; reuslt=1 success)
+                            }
+
 
 Teacher upload a video: (change status = "replay", url = where in amazon cloud)
 
