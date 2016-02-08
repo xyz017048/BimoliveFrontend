@@ -94,6 +94,27 @@ module.exports = function (grunt) {
           }
         }
       },
+      run: {
+        options: {
+          port: 80,
+          hostname: '0.0.0.0',
+          open: true,
+          middleware: function (connect) {
+            return [
+              connect.static('.tmp'),
+              connect().use(
+                '/bower_components',
+                connect.static('./bower_components')
+              ),
+              connect().use(
+                '/app/styles',
+                connect.static('./app/styles')
+              ),
+              connect.static(appConfig.app)
+            ];
+          }
+        }
+      },
       test: {
         options: {
           port: 9001,
@@ -438,6 +459,21 @@ module.exports = function (grunt) {
       'concurrent:server',
       'postcss:server',
       'connect:livereload',
+      'watch'
+    ]);
+  });
+  
+  grunt.registerTask('run', 'Compile then start a connect web server', function (target) {
+    if (target === 'dist') {
+      return grunt.task.run(['build', 'connect:dist:keepalive']);
+    }
+
+    grunt.task.run([
+      'clean:server',
+      'wiredep',
+      'concurrent:server',
+      'postcss:server',
+      'connect:run',
       'watch'
     ]);
   });

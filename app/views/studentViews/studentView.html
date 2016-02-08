@@ -13,7 +13,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-            <div class="embed-responsive embed-responsive-16by9" id="video" ng-init="studentCtrl.streamVideo(studentCtrl.currentLecture.idTeacher)">
+            <div class="embed-responsive embed-responsive-16by9" id="video" ng-init="studentCtrl.streamVideo(studentCtrl.currentLecture.url)">
                 <div class="embed-responsive-item" id="videoPlayer"></div>
             </div>
             <form class="input-group input-group-lg" ng-submit="studentCtrl.sendQuestion()">
