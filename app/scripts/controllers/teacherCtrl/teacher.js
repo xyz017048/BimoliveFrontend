@@ -15,7 +15,7 @@ angular.module('bimoliveApp')
     "idQuestion":	INT,
     "username": 	STRING,
     "content" : 	STRING,
-                            "status":       STRING,
+    "status":       STRING,
     "sendTime":	STRING (format: yyyy-MM-dd hh:mm:ss)
     */
     function getQuestions(NotFirst) {
@@ -110,4 +110,30 @@ angular.module('bimoliveApp')
         .error(function(data, status) {
         });
     };
+    
+    /**
+     * End lecture
+     * Change the status of the lecture
+     */
+    this.endLecture = function () {
+        $http( {
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/endlecture',
+            headers: {
+                    'Content-Type': undefined
+            },
+            data: {
+                idUser: MainService.getCurrentUser().idUser,
+                idLecture: $routeParams.idLecture
+            }
+        } )
+        
+        .success(function(data, status) {
+            
+        })
+        
+        .error(function(data, status) {
+        });
+    };
+    
 }]);
