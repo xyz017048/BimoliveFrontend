@@ -98,6 +98,7 @@ module.exports = function (grunt) {
         options: {
           port: 80,
           hostname: '0.0.0.0',
+          keepalive: true,
           middleware: function (connect) {
             return [
               connect.static('.tmp'),
@@ -472,8 +473,7 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'postcss:server',
-      'connect:run',
-      'watch'
+      'connect:run'
     ]);
   });
 
