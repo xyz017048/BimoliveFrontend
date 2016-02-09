@@ -27,7 +27,7 @@ angular.module('bimoliveApp')
         
         .success(function(data, status) {
             appScope.currentLecture = data;
-            if (data.status === 'replay') {
+            if (data.status === 'finish' || data.status === 'replay') {
                 appScope.isFinished = true; 
             }
         })
@@ -35,5 +35,26 @@ angular.module('bimoliveApp')
         .error(function(data, status) {
         });
     }
+    
+    this.startLecture = function () {
+        $http({
+            method: 'POST',
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/startlecture',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: {
+                idUser: MainService.getCurrentUser().idUser,
+                idLecture: $routeParams.idLecture
+            }
+        })
+
+        .success(function (data, status) {
+            
+        })
+
+        .error(function (data, status) {
+        });
+    };
         
 }]);

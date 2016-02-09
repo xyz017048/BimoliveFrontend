@@ -27,7 +27,7 @@
         </div>
     </div>
     <br>
-        <a ng-href="#/teacher/{{lectureDetailCtrl.currentLecture.idLecture}}" ng-if="!lectureDetailCtrl.isFinished"> 
+        <a ng-href="#/teacher/{{lectureDetailCtrl.currentLecture.idLecture}}" ng-if="!lectureDetailCtrl.isFinished" ng-click="lectureDetailCtrl.startLecture()"> 
             <button type="button" class="btn btn-primary btn-lg center-block">START LECTURE</button> 
         </a>
         <a ng-if="lectureDetailCtrl.isFinished"> <button type="button" class="btn btn-primary btn-lg center-block">REPLAY</button> </a>
