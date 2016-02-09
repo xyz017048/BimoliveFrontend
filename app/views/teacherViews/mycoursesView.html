@@ -4,7 +4,7 @@
         <h1>My Courses
         </h1>
     </div>
-    <div class="row" style="display:flex; flex-wrap:wrap;">
+    <div class="row" style="display:flex; flex-wrap:wrap;" ng-init="courseCtrl.getCourseList()">
         <div ng-repeat="course in courseCtrl.myCourses" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
             <a ng-href="#/coursedetail/{{course.idCourse}}">
                 <div class="imageWrapper" style="position: relative;">

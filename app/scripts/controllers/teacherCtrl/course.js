@@ -7,12 +7,14 @@ angular.module('bimoliveApp')
  */
 .controller('CourseCtrl', ['$http', 'MainService', function ($http, MainService) {
     
-    function getCourseList () {
-        
-        var courses = [];
+    this.myCourses = [];
+    var appScope = this;
+    
+    this.getCourseList = function () {
         
         if(MainService.getCurrentUser().roleLevel === 2)
         {
+            appScope.myCourses = [];
             $http( { 
                 method: 'POST', 
                 url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/courses',
@@ -24,10 +26,11 @@ angular.module('bimoliveApp')
                 }
             } )
             
-            .success(function(data, status) {
+            .success(function (data, status) {
+                // appScope.myCourses = [];
                 var length = data.length;
                 for (var i = 0; i < length; i++) {
-                    courses.push(data[i]);
+                    appScope.myCourses.push(data[i]);
                 }
             })
             
@@ -35,7 +38,6 @@ angular.module('bimoliveApp')
             });
         }
         
-        return courses;
     }
     
     // this is fake! Place holder for function that gets view number from server
@@ -49,7 +51,7 @@ angular.module('bimoliveApp')
     // };
      
     // fetch mycourses from teacher controller
-    this.myCourses = getCourseList();
+
     // link function to teache controller
     this.viewNumber = this.getViewNumber();
     
@@ -69,7 +71,7 @@ angular.module('bimoliveApp')
     
     // FAKE !
     function getCategories() {
-        return ['CS', 'ECE', 'CE'];
+        return ['CS', 'ACCTG'];
     }
     
     // FAKE !
@@ -113,7 +115,6 @@ angular.module('bimoliveApp')
      */
     this.addCourseToServer = function () {
         
-        var appScope = this;
         var appScopeCourse = this.newCourse;
         
         if (this.checkNewCourseValid()) {
@@ -147,10 +148,11 @@ angular.module('bimoliveApp')
                       appScope.dateFormat(appScopeCourse.endDate)
                     );
                 alert(data.result);
-                */
-                if (data.result) {
-                    alert('You have sucessfully created a course');
-                }
+                // */
+                // if (data.result) {
+                //     alert('You have sucessfully created a course');
+                // }
+                appScope.getCourseList();
             })
             
             .error(function(data, status) {
@@ -223,4 +225,4 @@ angular.module('bimoliveApp')
     };
     /////////// end ///////////
     
-}])
+}]);
