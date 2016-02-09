@@ -104,7 +104,7 @@ angular.module('bimoliveApp')
         } else {
             return true;
         }
-    }
+    };
     
     /**
      * Validate the email and password

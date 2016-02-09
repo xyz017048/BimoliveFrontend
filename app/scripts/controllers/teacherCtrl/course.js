@@ -129,7 +129,7 @@ angular.module('bimoliveApp')
                     levelNumber: appScopeCourse.level,
                     name: appScopeCourse.name,
                     intro: '1',
-                    image: '1',
+                    image: 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/course_pics/course_default_pic.png',
                     startDate: appScope.dateFormat(appScopeCourse.startDate),
                     endDate: appScope.dateFormat(appScopeCourse.endDate),
                     endFlag: 1

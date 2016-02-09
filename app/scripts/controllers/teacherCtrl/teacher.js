@@ -5,7 +5,7 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('TeacherCtrl', ['$http', '$routeParams', 'MainService', function ($http, $routeParams, MainService) {
+.controller('TeacherCtrl', ['$http', '$routeParams', 'MainService', '$location', function ($http, $routeParams, MainService, $location) {
     
     var appScope = this;
     this.sectionId = $routeParams.idLecture;
@@ -129,11 +129,11 @@ angular.module('bimoliveApp')
         })
 
         .success(function (data, status) {
-
+            
         })
 
         .error(function (data, status) {
-        });
+            });
     };
             
 
@@ -164,4 +164,10 @@ angular.module('bimoliveApp')
         .error(function(data, status) {
         });
     }
+    
+    this.redirectPage = function () {
+        $('#redirectModal').on('hidden.bs.modal', function (e) {
+            $location.url('/mycourses');
+        });
+    };
 }]);
