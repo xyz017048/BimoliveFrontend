@@ -10,7 +10,7 @@
         <h1>Live Now
         </h1>
     </div>
-    <div class="row" style="display:flex; flex-wrap:wrap;">
+    <div class="row" style="display:flex; flex-wrap:wrap;" ng-init="mainCtrl.init()">
         <div ng-repeat="video in mainCtrl.liveVideos track by $index" ng-if="$index < 8" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
             <a ng-href="#/student/{{video.idLecture}}">
                 <div class="imageWrapper" style="position: relative;">

@@ -9,40 +9,49 @@ angular.module('bimoliveApp')
 .controller('MainCtrl', ['$http', 'MainService', '$location', function ($http, MainService, $location) {
     
     var appScope = this;
-    // getLiveLectures (videoInfo)
-    $http( { 
-        method: 'POST', 
-        url: 'http://bimolive.us-west-2.elasticbeanstalk.com/livevideos',
-        headers: {
-            'Content-Type': undefined
-        }
-    } )
-    .success(function(data, status) {
-        // put video to UI
-        appScope.liveVideos = data;
-    })
-    .error(function(data, status) {
-        console.log(data);
-        console.log(status);
-        console.log('Request failed');
-    });
     
-    $http( { 
-        method: 'POST', 
-        url: 'http://bimolive.us-west-2.elasticbeanstalk.com/replayvideos',
-        headers: {
-            'Content-Type': undefined
-        }
-    } )
-    .success(function(data, status) {
-        // put video to UI
-        appScope.replayVideos = data;
-    })
-    .error(function(data, status) {
-        console.log(data);
-        console.log(status);
-        console.log('Request failed');
-    });
+    this.init = function () {
+        this.getLiveVideo();
+        this.getReplayVideo();
+    };
+    // getLiveLectures (videoInfo)
+    this.getLiveVideo = function () {
+        $http( { 
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/livevideos',
+            headers: {
+                'Content-Type': undefined
+            }
+        } )
+        .success(function(data, status) {
+            // put video to UI
+            appScope.liveVideos = data;
+        })
+        .error(function(data, status) {
+            console.log(data);
+            console.log(status);
+            console.log('Request failed');
+        });
+    };
+    
+    this.getReplayVideo = function () {
+        $http( { 
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/replayvideos',
+            headers: {
+                'Content-Type': undefined
+            }
+        } )
+        .success(function(data, status) {
+            // put video to UI
+            appScope.replayVideos = data;
+        })
+        .error(function(data, status) {
+            console.log(data);
+            console.log(status);
+            console.log('Request failed');
+        });
+    };
     
     // Log in variables
     this.email = '';
