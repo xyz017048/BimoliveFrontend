@@ -104,7 +104,12 @@ angular.module('bimoliveApp')
     };
     
     this.streamVideo = function () {
-        var live_url = 'rtmp://' + '52.25.9.241' + '/live' + '/' + this.currentLecture.lectureModel.url;
+        var live_url = '';
+        if (this.currentLecture.lectureModel.status === 'live') {
+            live_url = 'rtmp://' + '52.25.9.241' + '/live' + '/' + this.currentLecture.lectureModel.url;
+        } else if (this.currentLecture.lectureModel.status === 'replay') {
+            live_url = this.currentLecture.lectureModel.url;
+        }
         var videoPlayer = jwplayer('videoPlayer');
         var video = document.getElementById('video');
         videoPlayer.setup({
