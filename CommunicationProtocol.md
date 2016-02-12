@@ -110,9 +110,9 @@ Question ask and answer Part:
                                 {
                                     "roleLevel":        INT, (1:student; 2:teacher)
                                     "idLecture":        INT,
-                                    "interval":         INT (seconds, if interval == 0, get all questions with 'answer' status for student or 'new' status for teacher
+                                    "idQuestion":       INT (if idQuestion == -1, get all questions with 'answer' status for student or 'new' status for teacher
 												from this lecture;
-										else, get questions between current time and current time - interval)
+										else, get questions after this idQuestion)
                                 }
                 Response:   it is possible to receive empty response.
                         note: for teacher, the questions are order by sendTime
