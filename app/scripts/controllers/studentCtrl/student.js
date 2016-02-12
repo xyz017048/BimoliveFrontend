@@ -12,6 +12,7 @@ angular.module('bimoliveApp')
     this.currentLecture = {};
 
     var appScope = this;
+
     $http({
         method: 'POST',
         url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/singlelecture',
@@ -31,10 +32,10 @@ angular.module('bimoliveApp')
 
     /**
      * [getQuestions description]
-     * @param  {[type]} notFirst [description]
-     * @return {[type]}          [description]
+     * @param  {[type]} idQuestion [description]
+     * @return {[type]}            [description]
      */
-    function getQuestions(notFirst) {
+    function getQuestions(idQuestion) {
         $http( { 
             method: 'POST', 
             url: 'http://bimolive.us-west-2.elasticbeanstalk.com/getquestions',
@@ -44,13 +45,17 @@ angular.module('bimoliveApp')
             data: {
                 roleLevel: 1,
                 idLecture: $routeParams.id,
-                interval: notFirst
+                idQuestion: idQuestion
             }
         } )
         .success(function(data, status) {
             for (var q in data) {
                 appScope.questions.push(data[q]);
+                lastId = data[q].idQuestion;
             }
+            setTimeout(function () {
+                getQuestions(lastId)
+            }, 1000);
         })
         .error(function(data, status) {
             console.log(data);
@@ -60,10 +65,8 @@ angular.module('bimoliveApp')
     }
 
     this.questions = [];
-    getQuestions(0);
-    setInterval( function() {
-        getQuestions(2);
-    }, 2000 ); 
+    var lastId = -1;
+    getQuestions(lastId);
 
     /**
      * send question to server

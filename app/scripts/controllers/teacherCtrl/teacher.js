@@ -9,16 +9,13 @@ angular.module('bimoliveApp')
     
     var appScope = this;
     this.sectionId = $routeParams.idLecture;
-    this.questions = [];
-    
-    /*
-    "idQuestion":	INT,
-    "username": 	STRING,
-    "content" : 	STRING,
-    "status":       STRING,
-    "sendTime":	STRING (format: yyyy-MM-dd hh:mm:ss)
+
+   /**
+    * [getQuestions description]
+    * @param  {[type]} idQuestion [description]
+    * @return {[type]}            [description]
     */
-    function getQuestions(NotFirst) {
+    function getQuestions(idQuestion) {
         
         $http( {
             method: 'POST', 
@@ -29,33 +26,34 @@ angular.module('bimoliveApp')
             data: {
                 roleLevel: 2,
                 idLecture: $routeParams.idLecture,
-                interval: NotFirst
+                idQuestion: idQuestion
             }
         } )
-        
         .success(function(data, status) {
-            if(data) {
-                var length = data.length;
-                for (var i = 0; i < length; i++) {
-                    appScope.questions.push(data[i]);
-                }
+            for (var q in data) {
+                appScope.questions.push(data[q]);
+                lastId = data[q].idQuestion;
             }
+            setTimeout(function () {
+                getQuestions(lastId)
+            }, 1000);
         })
-        
         .error(function(data, status) {
             console.log(data);
             console.log(status);
             console.log('Request failed');
         });
     }
-    
+
+    this.questions = [];
+    var lastId = -1;
     // First time get all the questions from the database
-    getQuestions(0);
+    getQuestions(lastId);
     
     // Continue getting questions from database
-    setInterval( function() {
-        getQuestions(2);
-    }, 2000 );
+    // setInterval( function() {
+    //     getQuestions(2);
+    // }, 2000 );
      
     // Set selected question
     this.setCurrentQuestion = function (question, index) {
