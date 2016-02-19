@@ -17,8 +17,9 @@
                 </div>
 
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="teacherCtrl.answerQuestion()">Answer</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="teacherCtrl.removeQuestion()">Delete</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="teacherCtrl.answerQuestion('answer')">Answer</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="teacherCtrl.removeQuestion('delete')">Delete</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="teacherCtrl.answerQuestion('ban')">Ban</button>
                 </div>
 
             </div>
