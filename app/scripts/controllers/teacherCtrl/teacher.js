@@ -35,7 +35,7 @@ angular.module('bimoliveApp')
                 lastId = data[q].idQuestion;
             }
             setTimeout(function () {
-                getQuestions(lastId)
+                getQuestions(lastId);
             }, 1000);
         })
         .error(function(data, status) {
@@ -57,6 +57,9 @@ angular.module('bimoliveApp')
      
     // Set selected question
     this.setCurrentQuestion = function (question, index) {
+        if (question.status !== 'answer') {
+            question.status = 'read'; // change the question's status to read once the teacher views it.   
+        }
         this.currentQuestion = question;
         this.questionIndex = index;
     };
@@ -102,7 +105,7 @@ angular.module('bimoliveApp')
         } )
         
         .success(function(data, status) {
-            appScope.questions.splice(appScope.questionIndex, 1);
+            appScope.currentQuestion.status = 'answer';
         })
         
         .error(function(data, status) {

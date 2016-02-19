@@ -21,8 +21,10 @@
         ng-repeat="question in teacherCtrl.questions track by $index">
             <a href class="list-group-item" data-toggle="modal" data-target="#questionModal" mydata="question.content" ng-click="teacherCtrl.setCurrentQuestion(question, $index)">
                 <h4 class="list-group-itme-heading">
-                Question from: {{question.username}}
-            </h4>
+                    <span class="label label-primary" ng-if="question.status == 'new'">New</span>
+                    <span class="label label-success" ><span class="glyphicon glyphicon-ok" ng-if="question.status == 'answer'"></span></span>
+                    Question from: {{question.username}}
+                </h4>
                 <p class="list-group-item-text">
                     {{question.content}}
                 </p>
