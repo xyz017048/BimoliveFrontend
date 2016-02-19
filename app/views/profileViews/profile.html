@@ -1,0 +1,48 @@
+<br>
+<div class="container">
+    <div class="page-header">
+        <h1 ng-if="profileCtrl.user.roleLevel == 1">Student Account Setting
+            <button type="button" class="btn btn-lg btn-default">Apply to teach</button>
+        </h1>
+        <h1 ng-if="profileCtrl.user.roleLevel == 2">Teacher Account Setting</h1>
+        
+    </div>
+    <div class="row row-centered" >
+        <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+            <form ng-submit="profileCtrl.updateToServer()">
+                <div class="form-group">
+                    <label class="control-label" for="profile">Profile picture</label>
+                    <img class="img-circle center-block" style="max-width: 25%" ng-src="{{profileCtrl.user.profile}}">
+                    <br>
+                    <button type="button" class="btn btn-lg btn-default btn-block" data-toggle="modal" data-target="#uploadProfilePicModal" >Upload picture</button>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="email">Email address</label>
+                    <input class="form-control" id="email" placeholder="{{profileCtrl.user.email}}" ng-model="profileCtrl.user.email">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="username">User name</label>
+                    <input class="form-control" id="username" placeholder="{{profileCtrl.user.username}}" ng-model="profileCtrl.user.username">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="firstName">First name</label>
+                    <input class="form-control" id="firstName" placeholder="{{profileCtrl.user.firstName}}" ng-model="profileCtrl.user.firstName">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="lastName">Last name</label>
+                    <input class="form-control" id="lastName" placeholder="{{profileCtrl.user.lastName}}" ng-model="profileCtrl.user.lastName">
+                </div>
+                <input type="submit" ng-hide="1">
+            </form>
+            <button type="submit" class="btn btn-lg btn-default" ng-click="profileCtrl.resetData()">
+                <span class="glyphicon glyphicon-repeat"></span> Reset
+            </button>
+            <button type="submit" class="btn btn-lg btn-primary" ng-click="profileCtrl.updateToServer()">
+                <span class="glyphicon glyphicon-upload"></span> Update
+            </button>
+        </div>
+    </div>
+</div>
+
+<!--add course modal-->
+<div ng-include="'views/modalViews/uploadProfilePicModal.html'"></div>

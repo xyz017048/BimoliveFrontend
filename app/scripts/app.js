@@ -30,7 +30,7 @@ angular.module('bimoliveApp', [
             controllerAs: 'aboutCtrl'
         })
         .when('/profile', {
-            templateUrl: 'views/otherViews/profile.html',
+            templateUrl: 'views/profileViews/profile.html',
             controller: 'ProfileCtrl',
             controllerAs: 'profileCtrl'
         })

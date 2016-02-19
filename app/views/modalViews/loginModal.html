@@ -9,7 +9,7 @@
                 <h4 class="modal-title">Log In</h4>
             </div>
             <div class="modal-body">
-                <form name="mainCtrl.loginForm" id="loginForm" novalidate>
+                <form name="mainCtrl.loginForm" id="loginForm" ng-submit="mainCtrl.login()" novalidate>
                     <div class="form-group" ng-class="{ 'has-error' : mainCtrl.loginForm.email.$invalid && !mainCtrl.loginForm.email.$pristine }">
                         <label class="control-label" for="email">Email Address</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="Email" ng-model="mainCtrl.email" required>
@@ -20,6 +20,7 @@
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="mainCtrl.password" required>
                         <p ng-show="mainCtrl.loginForm.password.$invalid && !mainCtrl.loginForm.password.$pristine" class="help-block"> Password is required. </p>
                     </div>
+                    <input type="submit" ng-hide="1">
                 </form>
             </div>
             <div class="modal-footer">
