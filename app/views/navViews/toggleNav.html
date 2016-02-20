@@ -6,7 +6,9 @@
                 <li><a href data-toggle="modal" data-target="#signUpModal" mydata="mydata">Sign Up</a></li>
             </div>
             <div class="jumbotron" ng-if="mainCtrl.isLogin">
-                <a ng-href="#/profile"><li id="profile-pic" ><img class="img-responsive img-circle" ng-src="{{mainCtrl.currentUser.profile}}" alt="profile"></li></a>
+                <a ng-href="#/profile"><li id="profile-pic" ><img class="img-responsive img-circle" ng-src="{{mainCtrl.currentUser.profile}}" alt="profile">
+                <li style="text-align: center; color:#f1f1f1;">Teacher</li></li></a>
+                <br>
                 <li><a ng-href="#/profile">Account Setting</a></li>
                 <li ng-click="mainCtrl.logout()"><a>Log Out</a></li>
             </div>

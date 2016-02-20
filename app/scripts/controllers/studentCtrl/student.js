@@ -109,7 +109,7 @@ angular.module('bimoliveApp')
     this.streamVideo = function () {
         var live_url = '';
         if (this.currentLecture.lectureModel.status === 'live') {
-            live_url = 'rtmp://' + '52.25.9.241' + '/live' + '/' + this.currentLecture.lectureModel.url;
+            live_url = 'rtmp://' + '52.36.183.186' + '/live' + '/' + this.currentLecture.lectureModel.url;
         } else if (this.currentLecture.lectureModel.status === 'replay') {
             live_url = this.currentLecture.lectureModel.url;
         }
@@ -126,6 +126,31 @@ angular.module('bimoliveApp')
                 name: "seven"
             }
         });
+        
+        videoPlayer.onError(function(e) {
+            alert('error: ' + e); 
+        });
+        
+        videoPlayer.onComplete(function() {
+            alert('complete');
+        });
+        
+        videoPlayer.onPause(function() {
+            alert('pause');
+        });
+        
+        videoPlayer.on('error', function() {
+            alert('error2');
+        });
+        
+        videoPlayer.on('complete', function() {
+            alert('complete2');
+        });
+        
+        videoPlayer.on('pause', function() {
+            alert('pause2');
+        });
+        
     };
 
     /**

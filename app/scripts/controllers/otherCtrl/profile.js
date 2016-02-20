@@ -16,7 +16,6 @@ angular.module('bimoliveApp')
     };
     
     this.resetData = function () {
-        this.user = '';  
         this.user = Object.create(MainService.getCurrentUser()); // Reset the user object
     };
 }]);

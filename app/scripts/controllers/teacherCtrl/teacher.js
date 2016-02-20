@@ -54,11 +54,36 @@ angular.module('bimoliveApp')
     // setInterval( function() {
     //     getQuestions(2);
     // }, 2000 );
+    
+    /**
+     * Answer questions
+     */
+    this.answerQuestion = function (questionStatus) {
+        $http( {
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/questionaction',
+            headers: {
+                    'Content-Type': undefined
+            },
+            data: {
+                idQuestion: this.currentQuestion.idQuestion,
+                status:  questionStatus
+            }
+        } )
+        
+        .success(function(data, status) {
+            appScope.currentQuestion.status = questionStatus;
+        })
+        
+        .error(function(data, status) {
+        });
+    };
      
     // Set selected question
     this.setCurrentQuestion = function (question, index) {
         if (question.status !== 'answer') {
-            question.status = 'read'; // change the question's status to read once the teacher views it.   
+            question.status = 'read';
+            this.answerQuestion('read');
         }
         this.currentQuestion = question;
         this.questionIndex = index;
@@ -82,30 +107,6 @@ angular.module('bimoliveApp')
         
         .success(function(data, status) {
             appScope.questions.splice(appScope.questionIndex, 1);
-        })
-        
-        .error(function(data, status) {
-        });
-    };
-    
-    /**
-     * Answer questions
-     */
-    this.answerQuestion = function () {
-        $http( {
-            method: 'POST', 
-            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/questionaction',
-            headers: {
-                    'Content-Type': undefined
-            },
-            data: {
-                idQuestion: this.currentQuestion.idQuestion,
-                status:  'answer'  
-            }
-        } )
-        
-        .success(function(data, status) {
-            appScope.currentQuestion.status = 'answer';
         })
         
         .error(function(data, status) {

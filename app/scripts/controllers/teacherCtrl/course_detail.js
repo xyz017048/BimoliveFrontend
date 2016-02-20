@@ -40,7 +40,8 @@ angular.module('bimoliveApp')
             }
         } )
         .success(function(data, status) {
-            appScope.currentCourse = data;
+            appScope.currentCourse = Object.create(data);
+            appScope.defaultCourse = Object.create(data);
             appScope.getLectureList();
         })
         .error(function(data, status) {
@@ -71,6 +72,15 @@ angular.module('bimoliveApp')
             console.log(status);
             console.log('Request failed');
         });
+    };
+    
+    // FAKE, update course detail to server
+    this.updateToServer = function () {
+        alert('old: ' + this.defaultCourse.name + ' new: ' + this.currentCourse.name);
+    };
+    
+    this.resetData = function () {
+        this.currentCourse = Object.create(this.defaultCourse);
     };
     
     // FAKE, place holder for a function foring checking valivation
