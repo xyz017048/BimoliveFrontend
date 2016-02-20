@@ -31,7 +31,7 @@ angular.module('bimoliveApp')
     });
 
     /**
-     * [getQuestions description]
+     * get Question with last idQuestion
      * @param  {[type]} idQuestion [description]
      * @return {[type]}            [description]
      */
@@ -127,4 +127,158 @@ angular.module('bimoliveApp')
             }
         });
     };
+
+    /**
+     * student follow course at lecture page
+     * @return {[type]} [description]
+     */
+    function followCourse() {
+        if (!MainService.getIsLogin()) {
+            alert('Plese Login');
+        } else if (this.currentQuestion.trim() !== '') {
+            // Assign app object in appScope
+            var appScope = this;
+            var user = MainService.getCurrentUser();
+            $http( { 
+                method: 'POST', 
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/followcourse',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: {
+                    idUser: user.idUser,
+                    idCourse: -1,
+                    idLecture: this.idLecture
+                }
+            } )
+            .success(function(data, status) {
+                if(data.result) {
+                    appScope.currentLecture.followCourse = 1;
+                } else {
+                    console.log("success but got " + data.result);
+                }
+            })
+            .error(function(data, status) {
+                console.log(data);
+                console.log(status);
+                console.log('Request failed');
+            });
+        }
+    }
+
+    /**
+     * student unfollow course at lecture page
+     * @return {[type]} [description]
+     */
+    function unfollowCourse() {
+        if (!MainService.getIsLogin()) {
+            alert('Plese Login');
+        } else if (this.currentQuestion.trim() !== '') {
+            // Assign app object in appScope
+            var appScope = this;
+            var user = MainService.getCurrentUser();
+            $http( { 
+                method: 'POST', 
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/unfollowcourse',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: {
+                    idUser: user.idUser,
+                    idCourse: -1,
+                    idLecture: this.idLecture
+                }
+            } )
+            .success(function(data, status) {
+                if(data.result) {
+                    appScope.currentLecture.followCourse = 0;
+                } else {
+                    console.log("success but got " + data.result);
+                }
+            })
+            .error(function(data, status) {
+                console.log(data);
+                console.log(status);
+                console.log('Request failed');
+            });
+        }
+    }
+
+    /**
+     * student follow teacher at lecture page
+     * @return {[type]} [description]
+     */
+    function followTeacher() {
+        if (!MainService.getIsLogin()) {
+            alert('Plese Login');
+        } else if (this.currentQuestion.trim() !== '') {
+            // Assign app object in appScope
+            var appScope = this;
+            var user = MainService.getCurrentUser();
+            $http( { 
+                method: 'POST', 
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/followteacher',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: {
+                    idUser: user.idUser,
+                    idCourse: -1,
+                    idLecture: this.idLecture,
+                    idTeacher: -1
+                }
+            } )
+            .success(function(data, status) {
+                if(data.result) {
+                    appScope.currentLecture.followTeacher = 1;
+                } else {
+                    console.log("success but got " + data.result);
+                }
+            })
+            .error(function(data, status) {
+                console.log(data);
+                console.log(status);
+                console.log('Request failed');
+            });
+        }
+    }
+
+    /**
+     * student follow teacher at lecture page
+     * @return {[type]} [description]
+     */
+    function unfollowTeacher() {
+        if (!MainService.getIsLogin()) {
+            alert('Plese Login');
+        } else if (this.currentQuestion.trim() !== '') {
+            // Assign app object in appScope
+            var appScope = this;
+            var user = MainService.getCurrentUser();
+            $http( { 
+                method: 'POST', 
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/unfollowteacher',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: {
+                    idUser: user.idUser,
+                    idCourse: -1,
+                    idLecture: this.idLecture,
+                    idTeacher: -1
+                }
+            } )
+            .success(function(data, status) {
+                if(data.result) {
+                    appScope.currentLecture.followTeacher = 0;
+                } else {
+                    console.log("success but got " + data.result);
+                }
+            })
+            .error(function(data, status) {
+                console.log(data);
+                console.log(status);
+                console.log('Request failed');
+            });
+        }
+    }
 }]);

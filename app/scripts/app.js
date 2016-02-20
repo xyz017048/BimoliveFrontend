@@ -59,6 +59,11 @@ angular.module('bimoliveApp', [
             controller: 'StudentCtrl',
             controllerAs: 'studentCtrl'
         })
+        .when('/admin', {
+            templateUrl: 'views/adminViews/adminView.html',
+            controller: 'AdminCtrl',
+            controllerAs: 'adminCtrl'
+        })
         .otherwise({
             redirectTo: '/'
         });
