@@ -5,34 +5,70 @@
         </h1>
     </div>
     <div class="row">
-        <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
-            <label class="control-label" for="courseName" style="font-size: 150%;">Course Name:</label>
-            <input type="text" class="form-control col-lg-offset-2" id="courseName" name="courseName" placeholder="{{courseDetailCtrl.currentCourse.name}}"
-            ng-modle="courseDetailCtrl.currentCourse.name">
+        <div class="col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+            <form ng-submit="courseDetailCtrl.updateToServer()">
+                <div class="form-group">
+                    <label class="control-label" for="image">Course picture:</label>
+                    <div class="thumbnail col-lg-offset-4">
+                        <img class="img-responsive img-thumbnail" ng-src="{{courseDetailCtrl.currentCourse.image}}">
+                    </div>
+                    <button type="button" class="btn btn-lg btn-default btn-block col-lg-offset-2" data-toggle="modal" data-target="#uploadProfilePicModal" >Upload picture</button>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="name">Course name:</label>
+                    <input type="text" class="form-control col-lg-offset-2" id="name" name="name" placeholder="{{courseDetailCtrl.currentCourse.name}}"
+                    ng-model="courseDetailCtrl.currentCourse.name">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="category">Category:</label>
+                    <input type="text" class="form-control col-lg-offset-2" id="category" name="category" placeholder="{{courseDetailCtrl.currentCourse.category}}"
+                    ng-model="courseDetailCtrl.currentCourse.category">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="level">Level:</label>
+                    <input type="text" class="form-control col-lg-offset-2" id="level" name="level" placeholder="{{courseDetailCtrl.currentCourse.levelNumber}}"
+                    ng-model="courseDetailCtrl.currentCourse.levelNumber">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="permissionCode">Permission code:</label>
+                    <input type="text" class="form-control col-lg-offset-2" id="permissionCode" name="permissionCode" placeholder="{{courseDetailCtrl.currentCourse.permissionCode}}"
+                    ng-model="courseDetailCtrl.currentCourse.permissionCode">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="startDate">Start date:</label>
+                    <input type="text" class="form-control col-lg-offset-2" id="startDate" name="startDate" placeholder="{{courseDetailCtrl.currentCourse.startDate}}"
+                    ng-model="courseDetailCtrl.currentCourse.startDate">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="endDate">End date:</label>
+                    <input type="text" class="form-control col-lg-offset-2" id="endDate" name="endDate" placeholder="{{courseDetailCtrl.currentCourse.endDate}}"
+                    ng-model="courseDetailCtrl.currentCourse.endDate">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="createDate">Date created:</label>
+                    <input type="text" class="form-control col-lg-offset-2" id="createDate" name="createDate" placeholder="{{courseDetailCtrl.currentCourse.createDate}}"
+                    ng-model="courseDetailCtrl.currentCourse.createDate">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="intro">Course description:</label>
+                    <textarea class="form-control col-lg-offset-2" rows="5" id="intro" name="intro" placeholder="{{courseDetailCtrl.currentCourse.intro}}" 
+                    ng-model="courseDetailCtrl.currentCourse.intro"></textarea>
+                </div>
+                <div class="control-group col-lg-offset-5 col-md-offset-3 col-sm-offset-3">
+                    <button type="button" class="btn btn-lg btn-default" ng-click="courseDetailCtrl.resetData()">
+                        <span class="glyphicon glyphicon-repeat"></span> Reset
+                    </button>
+                    <button type="submit" class="btn btn-lg btn-primary"">
+                        <span class="glyphicon glyphicon-upload"></span> Update
+                    </button>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="control-label" for="addLectureButton">Lectures:</label>
+                </div>
+            </form>
         </div>
-        <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
-            <label class="control-label" for="category" style="font-size: 150%;">Category:</label>
-            <input type="text" class="form-control col-lg-offset-2" id="category" name="category" placeholder="{{courseDetailCtrl.currentCourse.category}}"
-            ng-modle="courseDetailCtrl.currentCourse.category">
-        </div>
-        <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
-            <label class="control-label" for="level" style="font-size: 150%;">Level:</label>
-            <input type="text" class="form-control col-lg-offset-2" id="level" name="level" placeholder="{{courseDetailCtrl.currentCourse.levelNumber}}"
-            ng-modle="courseDetailCtrl.currentCourse.levelNumber">
-        </div>
-        <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
-            <label class="control-label" for="startDate" style="font-size: 150%;">Start Date:</label>
-            <input type="text" class="form-control col-lg-offset-2" id="startDate" name="startDate" placeholder="{{courseDetailCtrl.currentCourse.startDate}}"
-            ng-modle="courseDetailCtrl.currentCourse.startDate">
-        </div>
-        <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
-            <label class="control-label" for="endDate" style="font-size: 150%;">End Date:</label>
-            <input type="text" class="form-control col-lg-offset-2" id="endDate" name="endDate" placeholder="{{courseDetailCtrl.currentCourse.endDate}}"
-            ng-modle="courseDetailCtrl.currentCourse.endDate">
-        </div>
-        <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
-            <label class="control-label" for="addLectureButton" style="font-size: 150%;">Lectures:</label>
-        </div>
+        
     </div>
     <div class="row col-lg-8 col-lg-offset-2 col-md-9 col-md-offset-1 col-sm-9 col-sm-offset-1 col-xs-11 " style="overflow: auto; margin-bottom: 50px; height: 300px;">   
         <div class="row" style="display:flex; flex-wrap:wrap;">
@@ -65,3 +101,6 @@
 
 <!--add course modal-->
 <div ng-include="'views/modalViews/addlectureModal.html'"></div>
+
+<!--upload picture modal-->
+<div ng-include="'views/modalViews/uploadProfilePicModal.html'"></div>
