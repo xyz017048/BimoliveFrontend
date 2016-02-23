@@ -12,6 +12,8 @@ angular.module('bimoliveApp')
     this.currentLecture = {};
 
     var appScope = this;
+    var user = MainService.getCurrentUser();
+    
 
     $http({
         method: 'POST',
@@ -29,6 +31,29 @@ angular.module('bimoliveApp')
     })
     .error(function (data, status) {
     });
+    
+    this.sentQuestions = [];
+    /**
+     * What questions that student has sent to the teacher
+     */
+    function sentQuestions() {
+        $http({
+            method: 'POST',
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/questions',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: {
+                idUser: user.idUser,
+                idLecture: $routeParams.id
+            }
+        })
+        .success(function (data, status) {
+            appScope.sentQuestions = data;
+        })
+        .error(function (data, status) {
+        });
+    }
 
     /**
      * get Question with last idQuestion
@@ -103,6 +128,10 @@ angular.module('bimoliveApp')
                 console.log(status);
                 console.log('Request failed');
             });
+            
+            
+            // Display sent questions
+            sentQuestions();
         }
     };
     
@@ -127,29 +156,29 @@ angular.module('bimoliveApp')
             }
         });
         
-        videoPlayer.onError(function(e) {
-            alert('error: ' + e); 
-        });
+        // videoPlayer.onError(function(e) {
+        //     alert('error: ' + e); 
+        // });
         
-        videoPlayer.onComplete(function() {
-            alert('complete');
-        });
+        // videoPlayer.onComplete(function() {
+        //     alert('complete');
+        // });
         
-        videoPlayer.onPause(function() {
-            alert('pause');
-        });
+        // videoPlayer.onPause(function() {
+        //     alert('pause');
+        // });
         
-        videoPlayer.on('error', function() {
-            alert('error2');
-        });
+        // videoPlayer.on('error', function() {
+        //     alert('error2');
+        // });
         
-        videoPlayer.on('complete', function() {
-            alert('complete2');
-        });
+        // videoPlayer.on('complete', function() {
+        //     alert('complete2');
+        // });
         
-        videoPlayer.on('pause', function() {
-            alert('pause2');
-        });
+        // videoPlayer.on('pause', function() {
+        //     alert('pause2');
+        // });
         
     };
 
