@@ -75,9 +75,6 @@ Login:  (teacher: teacher@gmail.com, teacher;  student: student@gmail.com,  stud
 				"regisDate":            STRING
 			}
 
-*********************************   Apply to be a teacher   **********************************
-account setting, apply to be a teacher (change key)
-
 Teacher generate a key:
                 Request: POST   /teacher/generatekey
                                 {
@@ -110,7 +107,7 @@ Question ask and answer Part:
                                 {
                                     "roleLevel":        INT, (1:student; 2:teacher)
                                     "idLecture":        INT,
-                                    "idQuestion":       INT (if idQuestion == -1, get all questions with 'answer' status for student or 'new/read' status for teacher
+                                    "idQuestion":       INT (if idQuestion == -1, get all questions with 'answer/ban' status for student or 'new/read/answer' status for teacher
 												from this lecture;
 										else, get questions after this idQuestion)
                                 }
@@ -118,21 +115,22 @@ Question ask and answer Part:
                         note: for teacher, the questions are order by sendTime
                               for student, the questions are order by changeTime, which means the answering time.
                                 [
-					{
-						"idQuestion":	INT,
-						"username": 	STRING,
-						"content" : 	STRING,
-                                                "status":       STRING,
-						"sendTime":	STRING (format: yyyy-MM-dd hh:mm:ss)
-					},
-					...
-				]
-                         
+                                    {
+                                        "lectureStatus":    STRING,  (live,replay,finish)
+                                        "idQuestion":       INT,
+                                        "username":         STRING,
+                                        "content" :         STRING,
+                                        "status":           STRING,
+                                        "sendTime":         STRING (format: yyyy-MM-dd hh:mm:ss)
+                                    },
+                                    ...
+                                ]
+                                
         Teacher makes an action on a question: 
                 Request: POST   /teacher/questionaction
                                 {
                                     "idQuestion":       INT,
-                                    "status":           STRING (can be "read","delete","answer", "ban","kick")
+                                    "status":           STRING (can be "read","delete","answer", "ban")
                                 }
                 Response:
                                 {
@@ -427,7 +425,8 @@ Student Get a single Lecture:         NOTE: if 'status' == 'wait', student can o
                                                                 "status":           STRING,         
                                                                 "url":              STRING
                                                             },
-                                    "followStatus":         INT (0/1)
+                                    "followCourse":         INT (0/1),
+                                    "followTeacher":        INT (0/1)
                                 }
 
 
@@ -455,7 +454,7 @@ Student get all my followed courses:
                                                                     "endFlag":          INT,         (endFlag = 0, no endDate, make endDate same as startDate;
                                                                                                         endFlag = 1, real endDate)
                                                                 },
-                                        "followStatus":         INT (0/1)
+                                        "followCourse":         INT (0/1)
                                     },
                                     ...
                                     ...
@@ -540,8 +539,50 @@ Student unfollow a teacher:
                                 {
                                     "result":       INT     (result=0 fail; reuslt=1 success)
                                 }
-  
 
+
+*********************************   Apply to be a teacher   **********************************
+Apply to be a teacher
+                Request: POST   /teacherapply
+                                {
+                                        "idUser": 		INT,
+                                        "firstName":            STRING,
+                                        "lastName":		STRING,
+                                        "profile": 		STRING,
+                                        "introWords":           STRING,
+                                        "resume":               STRING, 
+                                        "company":              STRING, 
+                                        "jobTitle":             STRING
+                                } 
+
+                Response:  
+                                {
+                                        "result":               INT  (0/1)
+                                }
+
+
+********************************  Account update  ***************************
+User Account update: (need to do)
+                Request: POST   /accountupdate
+                                {
+                                        "idUser": 		INT,
+                                        "roleLevel":            STRING,
+                                        "email":  		STRING,    (need to check email unique)
+                                        "username":             STRING,    (need to check username unique)
+                                        "firstName":            STRING,
+                                        "lastName":		STRING,
+                                        "profile": 		STRING,
+                                        "introWords":           STRING,
+                                        "resume":               STRING, (if role is student, be "")
+                                        "company":              STRING, (if role is student, be "")
+                                        "jobTitle":             STRING  (if role is student, be "")
+                                } 
+
+                Response:  User may not exits, receive 403 error
+                                {
+                                        "result":               INT  (0/1)
+                                }
+  
 **************************************** Permission code ******************************************                         
 permission code
 
@@ -551,4 +592,10 @@ student new table     idUser, idCourse, status(0,1 means)
 get all my asked questions
 
 
+check student has the permission to visit a course
+
+get teacher info
+
+
+get all courses(order by created date desc)
 
