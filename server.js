@@ -1,7 +1,7 @@
 const express = require('express'),
       app     = express();
 
-var port = process.env.PORT || 9000; 
+var port = process.env.PORT || 8080; 
 
 app.set('views', __dirname + '/app');
 app.set('view engine', 'jade');
