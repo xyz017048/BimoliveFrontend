@@ -81,12 +81,12 @@ angular.module('bimoliveApp')
      
     // Set selected question
     this.setCurrentQuestion = function (question, index) {
+        this.currentQuestion = question;
+        this.questionIndex = index;
         if (question.status !== 'answer') {
             question.status = 'read';
             this.answerQuestion('read');
         }
-        this.currentQuestion = question;
-        this.questionIndex = index;
     };
     
     /**

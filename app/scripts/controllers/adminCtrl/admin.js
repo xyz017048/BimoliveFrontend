@@ -46,11 +46,11 @@ angular.module('bimoliveApp')
      
     // Set selected question
     this.setCurrentRequest = function (request, index) {
+        this.currentRequest = request;
+        this.requestIndex = index;
         if (question.status !== 'approve') {
             question.status = 'read'; // change the question's status to read once the teacher views it.   
         }
-        this.currentRequest = request;
-        this.requestIndex = index;
     };
 
     this.declineRequest = function () {
