@@ -548,21 +548,21 @@ Apply to be a teacher
                                         "idUser": 		INT,
                                         "firstName":            STRING,
                                         "lastName":		STRING,
-                                        "profile": 		STRING,
+                                        "profile": 		STRING,  (require upload the applicant's formal picture)
                                         "introWords":           STRING,
                                         "resume":               STRING, 
                                         "company":              STRING, 
                                         "jobTitle":             STRING
                                 } 
 
-                Response:  
+                Response:  User may not exits, receive 403 error
                                 {
                                         "result":               INT  (0/1)
                                 }
 
 
 ********************************  Account update  ***************************
-User Account update: (need to do)
+User Account update:
                 Request: POST   /accountupdate
                                 {
                                         "idUser": 		INT,
@@ -571,7 +571,7 @@ User Account update: (need to do)
                                         "username":             STRING,    (need to check username unique)
                                         "firstName":            STRING,
                                         "lastName":		STRING,
-                                        "profile": 		STRING,
+                                        "profile": 		STRING,  (if profile is not changed, send the original one)
                                         "introWords":           STRING,
                                         "resume":               STRING, (if role is student, be "")
                                         "company":              STRING, (if role is student, be "")
@@ -582,20 +582,52 @@ User Account update: (need to do)
                                 {
                                         "result":               INT  (0/1)
                                 }
-  
+
+User Change Password: (wondering whether need the old password)
+                Request: POST   /changepassword
+                                {
+                                    "idUser":       INT,
+                                    "password":     STRING          (front end needs check re-enter password)
+                                }
+
+                Response:   User may not exits, receive 403 error
+                                {
+                                        "result":               INT  (0/1)
+                                }    
+
+
+**************************************** Student get all my asked questions ************************
+For student to get all my questions::
+                Request: POST   /student/questions
+                                {
+                                    "idUser":           INT,
+                                    "idLecture":        INT
+                                }
+
+                Response:   it is possible to receive empty response. Order by sendTime
+                                [
+                                    {
+                                        "lectureStatus":    STRING,  (live,replay,finish)
+                                        "idQuestion":       INT,
+                                        "username":         STRING,
+                                        "content" :         STRING,
+                                        "status":           STRING,
+                                        "sendTime":         STRING (format: yyyy-MM-dd hh:mm:ss)
+                                    },
+                                    ...
+                                ]
+                                
+
 **************************************** Permission code ******************************************                         
 permission code
 
 student new table     idUser, idCourse, status(0,1 means)
 
 
-get all my asked questions
-
-
 check student has the permission to visit a course
 
 get teacher info
 
-
 get all courses(order by created date desc)
 
+approve/decline/get the apply
