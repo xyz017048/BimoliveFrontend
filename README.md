@@ -13,7 +13,7 @@ Install nodejs and npm if you haven't installed before
 Install things on your machine
 ```bash
 sudo npm install -g grunt-cli bower yo generator-karma generator-angular
-sudo npm install karma jasmine-core phantomjs --save-dev
+sudo npm install
 ```
 
 Change directory to bimoliveFrontEnd directory
@@ -24,6 +24,16 @@ cd bimoliveAngularFrontEnd
 ## Build & development
 
 Run `grunt` for building and `grunt serve` for preview.
+
+Run html2jade to compile a jade file
+```bash
+html2jade index.html > index.jade
+```
+
+Run server
+```bash
+node server.js
+```
 
 ## Testing
 

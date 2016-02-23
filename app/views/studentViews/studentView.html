@@ -22,6 +22,13 @@
                     <button class="btn btn-default" type="submit">Ask Question!</button>
                 </span>
             </form>
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" ng-if="!studentCtrl.live">
+                <ul class="list-group" id="question_display" style="overflow-y:auto;height:440px;bottom:0;" ng-repeat="sentQuestion in studentCtrl.sentQuestions">
+                    <a href class="list-group-item">
+                        <p class="list-group-item-text">{{sentQuestion.content}}</p>
+                    </a>
+                <ul>
+            </div>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" ng-if="!studentCtrl.live">
             <ul class="list-group" id="question_display" style="overflow-y:auto;height:440px;bottom:0;">
