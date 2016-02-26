@@ -36,7 +36,7 @@ angular.module('bimoliveApp')
             }
             setTimeout(function () {
                 getQuestions(lastId);
-            }, 1000);
+            }, 5000);
         })
         .error(function(data, status) {
             console.log(data);
