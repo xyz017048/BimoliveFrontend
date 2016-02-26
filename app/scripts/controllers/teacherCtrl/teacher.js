@@ -26,7 +26,7 @@ angular.module('bimoliveApp')
             data: {
                 roleLevel: 2,
                 idLecture: $routeParams.idLecture,
-                idQuestion: idQuestion
+                idQuestion: lastId
             }
         } )
         .success(function(data, status) {
