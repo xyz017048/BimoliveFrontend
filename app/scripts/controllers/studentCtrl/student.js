@@ -22,6 +22,7 @@ angular.module('bimoliveApp')
             'Content-Type': undefined
         },
         data: {
+            idUser: user.idUser,
             idLecture: $routeParams.id
         }
     })
@@ -74,8 +75,12 @@ angular.module('bimoliveApp')
         } )
         .success(function(data, status) {
             for (var q in data) {
-                appScope.questions.push(data[q]);
-                lastId = data[q].idQuestion;
+                if (data[q].lectureStatus !== 'finish') {
+                    appScope.questions.push(data[q]);
+                    lastId = data[q].idQuestion;
+                } else {
+                    appScope.streamVideo();
+                }
             }
             setTimeout(function () {
                 getQuestions(lastId)
@@ -104,8 +109,6 @@ angular.module('bimoliveApp')
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
         } else if (this.currentQuestion.trim() !== '') {
-            // Assign app object in appScope
-            var appScope = this;
             var user = MainService.getCurrentUser();
             $http( { 
                 method: 'POST', 
@@ -145,6 +148,8 @@ angular.module('bimoliveApp')
             live_url = 'rtmp://' + '52.36.183.186' + '/live' + '/' + this.currentLecture.lectureModel.url;
         } else if (this.currentLecture.lectureModel.status === 'replay') {
             live_url = this.currentLecture.lectureModel.url;
+        } else if (this.currentLecture.lectureModel.status === 'finish') {
+            alert('finish');
         }
         var videoPlayer = jwplayer('videoPlayer');
         var video = document.getElementById('video');
@@ -193,9 +198,7 @@ angular.module('bimoliveApp')
     function followCourse() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
-        } else if (this.currentLecture.followCourse !== 1) {
-            // Assign app object in appScope
-            var appScope = this;
+        } else if (appScope.currentLecture.followCourse !== 1) {
             var user = MainService.getCurrentUser();
             $http( { 
                 method: 'POST', 
@@ -206,7 +209,7 @@ angular.module('bimoliveApp')
                 data: {
                     idUser: user.idUser,
                     idCourse: -1,
-                    idLecture: this.idLecture
+                    idLecture: appScope.idLecture
                 }
             } )
             .success(function(data, status) {
@@ -231,9 +234,7 @@ angular.module('bimoliveApp')
     function unfollowCourse() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
-        } else if (this.currentLecture.followCourse !== 0) {
-            // Assign app object in appScope
-            var appScope = this;
+        } else if (appScope.currentLecture.followCourse !== 0) {
             var user = MainService.getCurrentUser();
             $http( { 
                 method: 'POST', 
@@ -244,7 +245,7 @@ angular.module('bimoliveApp')
                 data: {
                     idUser: user.idUser,
                     idCourse: -1,
-                    idLecture: this.idLecture
+                    idLecture: appScope.idLecture
                 }
             } )
             .success(function(data, status) {
@@ -269,9 +270,7 @@ angular.module('bimoliveApp')
     function followTeacher() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
-        } else if (this.currentLecture.followTeacher !== 1) {
-            // Assign app object in appScope
-            var appScope = this;
+        } else if (appScope.currentLecture.followTeacher !== 1) {
             var user = MainService.getCurrentUser();
             $http( { 
                 method: 'POST', 
@@ -282,7 +281,7 @@ angular.module('bimoliveApp')
                 data: {
                     idUser: user.idUser,
                     idCourse: -1,
-                    idLecture: this.idLecture,
+                    idLecture: appScope.idLecture,
                     idTeacher: -1
                 }
             } )
@@ -308,9 +307,7 @@ angular.module('bimoliveApp')
     function unfollowTeacher() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
-        } else if (this.currentLecture.followTeacher !== 0) {
-            // Assign app object in appScope
-            var appScope = this;
+        } else if (appScope.currentLecture.followTeacher !== 0) {
             var user = MainService.getCurrentUser();
             $http( { 
                 method: 'POST', 
@@ -321,7 +318,7 @@ angular.module('bimoliveApp')
                 data: {
                     idUser: user.idUser,
                     idCourse: -1,
-                    idLecture: this.idLecture,
+                    idLecture: appScope.idLecture,
                     idTeacher: -1
                 }
             } )
