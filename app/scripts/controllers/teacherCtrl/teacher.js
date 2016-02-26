@@ -32,7 +32,7 @@ angular.module('bimoliveApp')
         .success(function(data, status) {
             for (var q in data) {
                 appScope.questions.push(data[q]);
-                lastId = data[q].lastId;
+                lastId = data[q].idQuestion;
             }
             setTimeout(function () {
                 getQuestions(lastId);
