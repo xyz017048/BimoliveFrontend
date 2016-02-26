@@ -15,7 +15,7 @@ angular.module('bimoliveApp')
     * @param  {[type]} idQuestion [description]
     * @return {[type]}            [description]
     */
-    function getQuestions(idQuestion) {
+    function getQuestions(lastId) {
         
         $http( {
             method: 'POST', 
@@ -32,7 +32,7 @@ angular.module('bimoliveApp')
         .success(function(data, status) {
             for (var q in data) {
                 appScope.questions.push(data[q]);
-                lastId = data[q].idQuestion;
+                lastId = data[q].lastId;
             }
             setTimeout(function () {
                 getQuestions(lastId);
