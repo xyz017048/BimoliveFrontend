@@ -6,7 +6,7 @@ angular.module('bimoliveApp')
  * Controller for student view
  */
 
-.controller('StudentCtrl', ['$routeParams', '$http', 'MainService', function ($routeParams, $http, MainService) {
+.controller('StudentCtrl', ['$routeParams', '$http', 'MainService', '$location', '$window', function ($routeParams, $http, MainService, $location, $window) {
 
     this.idLecture = $routeParams.id;
     this.currentLecture = {};
@@ -27,7 +27,6 @@ angular.module('bimoliveApp')
     })
     .success(function (data, status) {
         appScope.currentLecture = data;
-        appScope.streamVideo();
     })
     .error(function (data, status) {
     });
@@ -120,7 +119,7 @@ angular.module('bimoliveApp')
                 if(data.result) {
                     appScope.currentQuestion = '';
                 } else {
-                    console.log("success but got " + data.result);
+                    console.log('success but got ' + data.result);
                 }
             })
             .error(function(data, status) {
@@ -147,12 +146,12 @@ angular.module('bimoliveApp')
         videoPlayer.setup({
             file: live_url,
             flashplayer: 'scripts/jwplayer/jwplayer.flash.swf',
-            controlbar: "bottom",
+            controlbar: 'bottom',
             width: video.offsetWidth,
             height: video.offsetHeight,
             autostart: true,
             skin: {
-                name: "seven"
+                name: 'seven'
             }
         });
         
@@ -209,7 +208,7 @@ angular.module('bimoliveApp')
                 if(data.result) {
                     appScope.currentLecture.followCourse = 1;
                 } else {
-                    console.log("success but got " + data.result);
+                    console.log('success but got ' + data.result);
                 }
             })
             .error(function(data, status) {
@@ -247,7 +246,7 @@ angular.module('bimoliveApp')
                 if(data.result) {
                     appScope.currentLecture.followCourse = 0;
                 } else {
-                    console.log("success but got " + data.result);
+                    console.log('success but got ' + data.result);
                 }
             })
             .error(function(data, status) {
@@ -286,7 +285,7 @@ angular.module('bimoliveApp')
                 if(data.result) {
                     appScope.currentLecture.followTeacher = 1;
                 } else {
-                    console.log("success but got " + data.result);
+                    console.log('success but got ' + data.result);
                 }
             })
             .error(function(data, status) {
@@ -325,7 +324,7 @@ angular.module('bimoliveApp')
                 if(data.result) {
                     appScope.currentLecture.followTeacher = 0;
                 } else {
-                    console.log("success but got " + data.result);
+                    console.log('success but got ' + data.result);
                 }
             })
             .error(function(data, status) {
@@ -335,4 +334,57 @@ angular.module('bimoliveApp')
             });
         }
     }
+    /**
+     * Modal Use functions
+     */
+    this.showPermissionModal = function () {
+        $(window).load(function () {
+            $('#permissioncodeModal').modal({ keyboard: false, backdrop: 'static' });
+            $('#permissioncodeModal').modal('show');
+        });
+        
+        $(document).on('keydown', function (e) {
+            if (e.which === 8 && !$(e.target).is('input, textarea')) {
+                e.preventDefault();
+            }
+        });
+        
+    };
+    this.permissioncode = '';
+    this.showLoader = false;
+    this.isPermitted = false;
+    this.notPermitted = false;
+    
+    this.submitPermission = function () {
+        this.showLoader = true;
+        // check with server, if permission code is right, do this
+        if (this.checkPermission()) {
+            this.permissioncode = '';
+            this.isPermitted = true;
+            $('#permissioncodeModal').modal('hide');   
+        } else {
+            this.notPermitted = true;
+        }
+        this.showLoader = false;
+    };
+    
+    // FAKE !!! return true if permission is good, false if permission denied
+    this.checkPermission = function () {
+        if (this.permissioncode === '1') {
+            return true;
+        } else {
+            return false;   
+        }
+    };
+    
+    // redirect to the page before 
+    this.redirectBack = function () {
+        $('#permissioncodeModal').on('hidden.bs.modal', function (e) {
+            $location.url($window.history.back(1));
+        });
+    };
+    
+    $('#permissioncodeModal').modal({ keyboard: false, backdrop: 'static' });
+            $('#permissioncodeModal').modal('show');
+    
 }]);
