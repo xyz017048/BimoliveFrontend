@@ -72,6 +72,11 @@ angular.module('bimoliveApp')
      * send question to server
      */
     this.sendQuestion = function() {
+        followCourse();
+        followTeacher();
+        unfollowTeacher();
+        unfollowCourse();
+        unfollowCourse();
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
         } else if (this.currentQuestion.trim() !== '') {
@@ -160,7 +165,7 @@ angular.module('bimoliveApp')
     function followCourse() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
-        } else if (this.currentQuestion.trim() !== '') {
+        } else if (this.currentLecture.followCourse !== 1) {
             // Assign app object in appScope
             var appScope = this;
             var user = MainService.getCurrentUser();
@@ -198,7 +203,7 @@ angular.module('bimoliveApp')
     function unfollowCourse() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
-        } else if (this.currentQuestion.trim() !== '') {
+        } else if (this.currentLecture.followCourse !== 0) {
             // Assign app object in appScope
             var appScope = this;
             var user = MainService.getCurrentUser();
@@ -236,7 +241,7 @@ angular.module('bimoliveApp')
     function followTeacher() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
-        } else if (this.currentQuestion.trim() !== '') {
+        } else if (this.currentLecture.followTeacher !== 1) {
             // Assign app object in appScope
             var appScope = this;
             var user = MainService.getCurrentUser();
@@ -275,7 +280,7 @@ angular.module('bimoliveApp')
     function unfollowTeacher() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
-        } else if (this.currentQuestion.trim() !== '') {
+        } else if (this.currentLecture.followTeacher !== 0) {
             // Assign app object in appScope
             var appScope = this;
             var user = MainService.getCurrentUser();
