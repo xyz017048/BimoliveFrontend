@@ -8,6 +8,7 @@ angular.module('bimoliveApp')
  */
 .controller('ProfileCtrl', ['MainService', '$http', function (MainService, $http) {
     
+    var appScope = this;
     this.user = Object.create(MainService.getCurrentUser()); // Copy the user object from main service 
     
     this.updateToServer = function () {
@@ -26,11 +27,11 @@ angular.module('bimoliveApp')
 	        headers: {
 	            'Content-Type': undefined
 	        },
-	        data: this.user
+	        data: JSON.stringify(this.user.__proto__)
 	    })
 	    .success(function (data, status) {
             if(data.result) {
-                appScope.user.roleLevel = 2;
+            	alert('Apply success! Waiting for approve');
             } else {
                 console.log('success but got ' + data.result);
             }
