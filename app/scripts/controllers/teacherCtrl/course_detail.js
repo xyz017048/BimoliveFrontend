@@ -5,7 +5,13 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('CourseDetailCtrl', ['$http', '$routeParams', 'MainService', function ($http, $routeParams, MainService) {
+.controller('CourseDetailCtrl', ['$http', '$routeParams', 'MainService', '$location', '$window', function ($http, $routeParams, MainService, $location, $window) {
+    
+    // if the user has not log in, redirect back and show the log in modal
+    if (!MainService.getIsLogin()) {
+        $location.url($window.history.back(1));
+        $('#loginModal').modal('show'); 
+    }
     
     this.idCourse = $routeParams.idCourse;
     

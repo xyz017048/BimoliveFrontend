@@ -5,11 +5,15 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('FollowCtrl', ['$http', 'MainService', function ($http, MainService) {
+.controller('FollowCtrl', ['$http', 'MainService', '$location', '$window', function ($http, MainService, $location, $window) {
+    
+    // if the user has not log in, redirect back and show the log in modal
+    if (!MainService.getIsLogin()) {
+        $location.url($window.history.back(1));
+        $('#loginModal').modal('show'); 
+    }
     
     var appScope = this;
-    this.currentLecture = {};
-    this.isFinished = false;
    
     if(MainService.getCurrentUser().roleLevel === 2)
     {
@@ -20,7 +24,6 @@ angular.module('bimoliveApp')
                 'Content-Type': undefined
             },
             data: {
-                idLecture: $routeParams.idLecture,
                 idUser: MainService.getCurrentUser().idUser
             }
         } )
@@ -35,26 +38,5 @@ angular.module('bimoliveApp')
         .error(function(data, status) {
         });
     }
-    
-    this.startLecture = function () {
-        $http({
-            method: 'POST',
-            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/startlecture',
-            headers: {
-                'Content-Type': undefined
-            },
-            data: {
-                idUser: MainService.getCurrentUser().idUser,
-                idLecture: $routeParams.idLecture
-            }
-        })
-
-        .success(function (data, status) {
-            
-        })
-
-        .error(function (data, status) {
-        });
-    };
         
 }]);

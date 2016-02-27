@@ -6,7 +6,13 @@ angular.module('bimoliveApp')
 /**
  * Controller for profile view
  */
-.controller('ProfileCtrl', ['MainService', '$http', function (MainService, $http) {
+.controller('ProfileCtrl', ['MainService', '$http', '$location', '$window', function (MainService, $http, $location, $window) {
+    
+    // if the user has not log in, redirect back and show the log in modal
+    if (!MainService.getIsLogin()) {
+        $location.url($window.history.back(1));
+        $('#loginModal').modal('show'); 
+    }
     
     var appScope = this;
     this.user = Object.create(MainService.getCurrentUser()); // Copy the user object from main service 
