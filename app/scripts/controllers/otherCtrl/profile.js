@@ -35,8 +35,9 @@ angular.module('bimoliveApp')
 	        },
 	        data: JSON.stringify(this.user.__proto__)
 	    })
-	    .success(function (data, status) {
-            if(data.result) {
+        .success(function (data, status) {
+            $('#applyToTeachModal').modal('hide'); 
+            if (data.result) {
             	alert('Apply success! Waiting for approve');
             } else {
                 console.log('success but got ' + data.result);

@@ -2,7 +2,7 @@
 <div class="container">
     <div class="page-header">
         <h1 ng-if="profileCtrl.user.roleLevel == 1">Student Account Setting
-            <button type="button" class="btn btn-lg btn-default" ng-click="profileCtrl.teacherApply()">Apply to teach</button>
+            <button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#applyToTeachModal" >Apply to teach</button>
         </h1>
         <h1 ng-if="profileCtrl.user.roleLevel == 2">Teacher Account Setting</h1>
         
@@ -47,3 +47,5 @@
 
 <!--Upload profile pic modal-->
 <div ng-include="'views/modalViews/uploadProfilePicModal.html'"></div>
+<!--Applt to teach modal-->
+<div ng-include="'views/modalViews/applyToTeachModal.html'"></div>
