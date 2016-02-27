@@ -80,7 +80,7 @@ angular.module('bimoliveApp')
         });
     };
     
-    // FAKE, update course detail to server
+    // FAKE, update course detail to server, !!!!! check role before updating to server !!!!!
     this.updateToServer = function () {
         alert('old: ' + this.defaultCourse.name + ' new: ' + this.currentCourse.name);
     };

@@ -14,29 +14,28 @@ angular.module('bimoliveApp')
     }
     
     var appScope = this;
-   
-    if(MainService.getCurrentUser().roleLevel === 2)
-    {
-        $http( { 
-            method: 'POST', 
-            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/singlelecture',
+    this.followedCourses = [];
+    
+    this.getFollowedCourses = function () {
+        $http({
+            method: 'POST',
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/followedcourses',
             headers: {
                 'Content-Type': undefined
             },
             data: {
                 idUser: MainService.getCurrentUser().idUser
             }
-        } )
-        
-        .success(function(data, status) {
-            appScope.currentLecture = data;
-            if (data.status === 'finish' || data.status === 'replay') {
-                appScope.isFinished = true; 
+        })
+
+        .success(function (data, status) {
+            if (data.length > 0) {
+                appScope.followedCourses = data;
             }
         })
-        
-        .error(function(data, status) {
+
+        .error(function (data, status) {
         });
-    }
+    };
         
 }]);

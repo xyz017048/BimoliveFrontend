@@ -1,11 +1,11 @@
 <nav class="leftNav" ng-mouseenter="toggleCtrl.toggleNav(1)" ng-mouseleave="toggleCtrl.toggleNav(0)">
     <div class="row">
-        <ul class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <ul class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x: hidden;">
             <div class="jumbotron" ng-if="!mainCtrl.isLogin">
                 <li><a href data-toggle="modal" data-target="#loginModal" mydata="mydata">Log In</a></li>
                 <li><a href data-toggle="modal" data-target="#signUpModal" mydata="mydata">Sign Up</a></li>
             </div>
-            <div class="jumbotron" ng-if="mainCtrl.isLogin">
+            <div class="jumbotron" ng-if="mainCtrl.isLogin" style="padding-top:20px;">
                 <a ng-href="#/profile">
                     <li id="profile-pic" >
                         <img class="img-responsive img-circle" ng-src="{{mainCtrl.currentUser.profile}}" alt="profile">
@@ -20,6 +20,8 @@
             <li><a ng-href="#/mycourses" ng-if="mainCtrl.currentUser.roleLevel === 2">My Courses</a></li>
             <li><a ng-href="#/followedTeachers" >Followed Teachers</a></li>
             <li><a ng-href="#/followedCourses" >Followed Courses</a></li>
+            <li><a ng-href="#/allTeachers" >All Teachers</a></li>
+            <li><a ng-href="#/allCourses" >All Courses</a></li>
         </ul>
     </div>
 </nav>

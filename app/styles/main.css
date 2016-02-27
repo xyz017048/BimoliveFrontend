@@ -4,6 +4,9 @@ overflow-x: hidden;
 }
 .jumbotron {
 background-color: #ffffff;
+margin-top: 0px;
+padding-top: 0px;
+padding-bottom: 0px;
 }
 .thumbnail:hover img{
 opacity: 0.8;
@@ -29,6 +32,7 @@ padding-bottom: 22.5%;
 }
 .leftNav {
 position: fixed;
+overflow: hidden;
 z-index: 1000;
 top: 0;
 bottom: 0;
@@ -42,7 +46,8 @@ transform:translate3d(0, 0, 0);
 }
 .leftNav ul{
 list-style: none;
-margin-top: 100px;
+margin-top: 55px;
+overflow: auto;
 }
 .leftNav ul li a{
 text-decoration: none;

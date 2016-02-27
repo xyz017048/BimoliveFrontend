@@ -69,6 +69,26 @@ angular.module('bimoliveApp', [
             controller: 'FollowCtrl',
             controllerAs: 'followCtrl'
         })
+        .when('/allCourses', {
+            templateUrl: 'views/studentViews/allCoursesView.html',
+            controller: 'AllCtrl',
+            controllerAs: 'allCtrl'
+        })
+        .when('/allTeachers', {
+            templateUrl: 'views/studentViews/allTeachersView.html',
+            controller: 'AllCtrl',
+            controllerAs: 'allCtrl'
+        })
+        .when('/courseInfo/:id', {
+            templateUrl: 'views/studentViews/courseInfoView.html',
+            controller: 'InfoCtrl',
+            controllerAs: 'infoCtrl'
+        })
+        .when('/teacherInfo/:id', {
+            templateUrl: 'views/studentViews/teacherInfoView.html',
+            controller: 'InfoCtrl',
+            controllerAs: 'InfoCtrl'
+        })
         .when('/admin', {
             templateUrl: 'views/adminViews/adminView.html',
             controller: 'AdminCtrl',
