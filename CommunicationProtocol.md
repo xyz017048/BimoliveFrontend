@@ -560,6 +560,45 @@ Apply to be a teacher
                                         "result":               INT  (0/1)
                                 }
 
+Get the apply requests
+                Request: POST   /getrequests
+                                {
+                                    "idUser":       INT, admin for check
+                                    "idRequest":    INT (if idRequest == -1, get all requests with not 'declare' or 'approve' status
+                                        else, get questions after this idQuestion)
+                                }
+                Response:   it is possible to receive empty response.
+                        note: order by sendTime
+                                [
+                                    { // 我需要这些信息怎么回来看你
+                                        "requestStatus":    STRING,  (new, read)
+                                        "idRequest":       INT,
+                                        { // the whole info from userBasic or teacherapply
+                                            "idUser":       INT,
+                                            "firstName":            STRING,
+                                            "lastName":     STRING,
+                                            "profile":      STRING,  (require upload the applicant's formal picture)
+                                            "introWords":           STRING,
+                                            "resume":               STRING, 
+                                            "company":              STRING, 
+                                            "jobTitle":             STRING
+                                        }
+                                    },
+                                    ...
+                                ]
+
+Change request status
+                Request: POST   /processrequest
+                                {
+                                        "idUser":       INT, admin who make the change, need record
+                                        "idRequest"     INT,
+                                        "status"        STRING, "approve, decline, read"
+                                } 
+
+                Response:  User may not exits, receive 403 error
+                                {
+                                        "result":               INT  (0/1)
+                                }
 
 ********************************  Account update  ***************************
 User Account update:
@@ -629,5 +668,3 @@ check student has the permission to visit a course
 get teacher info
 
 get all courses(order by created date desc)
-
-approve/decline/get the apply

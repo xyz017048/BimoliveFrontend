@@ -9,7 +9,7 @@ angular.module('bimoliveApp')
     
     var appScope = this;
 
-    function getRequests(idRequest) {
+    function getRequests(lastId) {
         
         $http( {
             method: 'POST', 
@@ -18,7 +18,8 @@ angular.module('bimoliveApp')
                     'Content-Type': undefined
             },
             data: {
-                idUser: MainService.getCurrentUser().idUser
+                idUser: MainService.getCurrentUser().idUser,
+                idRequest: lastId
             }
         } )
         .success(function(data, status) {
@@ -48,19 +49,44 @@ angular.module('bimoliveApp')
     this.setCurrentRequest = function (request, index) {
         this.currentRequest = request;
         this.requestIndex = index;
-        if (question.status !== 'approve') {
-            question.status = 'read'; // change the question's status to read once the teacher views it.   
+        if (request.status === 'new') {
+            // request.status = 'read'; // change the question's status to read once the teacher views it.   
+            this.processRequest('read');
         }
+    };
+
+    this.processRequest = function (status) {
+        $http( {
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/processrequest',
+            headers: {
+                    'Content-Type': undefined
+            },
+            data: {
+                idUser: MainService.getCurrentUser().idUser,
+                idRequest: this.currentRequest.idRequest,
+                status:  status 
+            }
+        } )
+        .success(function(data, status) {
+            appScope.currentRequest.status = status;
+        })
+        .error(function(data, status) {
+            console.log(data);
+            console.log(status);
+            console.log('Request failed');
+        });
     };
 
     this.declineRequest = function () {
         $http( {
             method: 'POST', 
-            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/admin/requestaction',
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/processrequest',
             headers: {
                     'Content-Type': undefined
             },
             data: {
+                idUser: MainService.getCurrentUser().idUser,
                 idRequest: this.currentRequest.idRequest,
                 status:  'decline'  
             }
@@ -75,27 +101,7 @@ angular.module('bimoliveApp')
         });
     };
 
-    this.approveRequest = function () {
-        $http( {
-            method: 'POST', 
-            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/admin/requestaction',
-            headers: {
-                    'Content-Type': undefined
-            },
-            data: {
-                idRequest: this.currentRequest.idRequest,
-                status:  'approve'  
-            }
-        } )
-        .success(function(data, status) {
-            appScope.currentRequest.status = 'approve';
-        })
-        .error(function(data, status) {
-            console.log(data);
-            console.log(status);
-            console.log('Request failed');
-        });
-    };      
+    this.approveRequest = this.processRequest('approve');      
 
     this.currentLecture = {};
    
