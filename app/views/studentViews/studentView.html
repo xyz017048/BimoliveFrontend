@@ -1,4 +1,5 @@
 <br>
+<div ng-init="studentCtrl.getLecture()"></div>
 <div class="container" ng-init="studentCtrl.showPermissionModal()" ng-show="studentCtrl.isPermitted">
     <div class="page-header">
         <h1>{{studentCtrl.currentLecture.lectureModel.topic}}
@@ -13,7 +14,7 @@
 <div class="container" ng-if="studentCtrl.isPermitted" >
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-            <div class="embed-responsive embed-responsive-16by9" id="video" ng-init="studentCtrl.streamVideo()">
+            <div class="embed-responsive embed-responsive-16by9" id="video">
                 <div class="embed-responsive-item" id="videoPlayer"></div>
             </div>
             <form class="input-group input-group-lg" ng-submit="studentCtrl.sendQuestion()">
