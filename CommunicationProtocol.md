@@ -72,7 +72,8 @@ Login:  (teacher: teacher@gmail.com, teacher;  student: student@gmail.com,  stud
 				"lastLogin":            STRING,
 				"profile": 		STRING,
 				"introWords":           STRING,
-				"regisDate":            STRING
+				"regisDate":            STRING,
+                                "applyStatus":          STRING   (note: 'applyStatus' == "new/read" means the user is waiting for approval)
 			}
 
 Teacher generate a key:
@@ -86,7 +87,7 @@ Teacher generate a key:
                                 }
 
 
-*********************************   Question send/get/answer/delete/ban/kick    **********************
+*********************************   Question send/get/answer/delete/ban    **********************
 Question ask and answer Part:
 	For student view to send a question:
 		Request: POST /student/sendquestion
@@ -394,7 +395,7 @@ Get all replay videos:
                             ...
                         ]
 
-************************    Student get course/lecture info ***************************
+************************    Student get course/lecture/teacher info ***************************
 
 Student Get a single Lecture:         NOTE: if 'status' == 'wait', student can only see the info of this lecture. display scheduled time.
                                             if 'status' == 'live', display detail info, has a button says 'view', then show the live video to the student, and can send a question if login
@@ -429,7 +430,34 @@ Student Get a single Lecture:         NOTE: if 'status' == 'wait', student can o
                                     "followTeacher":        INT (0/1)
                                 }
 
+Student Get a single course:
+                Request: POST   /student/singlecourse
+                                {
+                                    "idCourse":           INT,
+                                    "idUser":             INT
+                                }
 
+                Response：      receive 403 means there is no such course.
+                                {
+                                    "teacherFirstName":     STRING,
+                                    "teacherLastName":      STRING,
+                                    "courseInfo":           {
+                                                                "idCourse":         INT,
+                                                                "idUser":           INT,        (teacher id)
+                                                                "category":         STRING,
+                                                                "levelNumber":      INT,
+                                                                "name":             STRING,
+                                                                "intro":            STRING,
+                                                                "image":            STRING,     (the image path/id of the course)
+                                                                "createDate":       STRING,     (format: "yyyy-MM-dd hh:mm:ss" )
+                                                                "startDate":        STRING,     (format: "yyyy-MM-dd hh:mm:ss" Here time zone problem)
+                                                                "endDate":          STRING,     (format: "yyyy-MM-dd hh:mm:ss")
+                                                                "endFlag":          INT,         (endFlag = 0, no endDate, make endDate same as startDate;
+                                                                                                    endFlag = 1, real endDate)
+                                                            },
+                                    "followCourse":         INT (0/1)
+                                }
+                                
 Student get all my followed courses:
                 Request:    POST    /student/followedcourses
                                 {
@@ -468,10 +496,51 @@ Student get all my followed teachers:
                                 }
                                 
                 Response:   
-                                {
-                                    
-                                }
+                                [
+                                    {
+                                        "email":  		STRING,    
+                                        "username":             STRING,   
+                                        "firstName":            STRING,
+                                        "lastName":		STRING,
+                                        "profile": 		STRING,  
+                                        "introWords":           STRING,
+                                        "resume":               STRING, 
+                                        "company":              STRING, 
+                                        "jobTitle":             STRING 
+                                    }
+                                    ...
+                                    ...
+                                ]
                             
+Student get all courses:
+                Request:    POST    /student/courses
+                                {
+                                    "idUser":           INT
+                                }
+                              
+                Response:   
+                                [
+                                    {
+                                        "teacherFirstName":     STRING,
+                                        "teacherLastName":      STRING,
+                                        "courseInfo":           {
+                                                                    "idCourse":         INT,
+                                                                    "category":         STRING,
+                                                                    "levelNumber":      INT,
+                                                                    "name":             STRING,
+                                                                    "intro":            STRING,
+                                                                    "image":            STRING,     (the image path/id of the course)
+                                                                    "createDate":       STRING,     (format: "yyyy-MM-dd hh:mm:ss" )
+                                                                    "startDate":        STRING,     (format: "yyyy-MM-dd hh:mm:ss" Here time zone problem)
+                                                                    "endDate":          STRING,     (format: "yyyy-MM-dd hh:mm:ss")
+                                                                    "endFlag":          INT,         (endFlag = 0, no endDate, make endDate same as startDate;
+                                                                                                        endFlag = 1, real endDate)
+                                                                }
+                                    },
+                                    ...
+                                    ...
+                                ]
+
 
 In replay mode, get all answered questions:
 
@@ -560,45 +629,6 @@ Apply to be a teacher
                                         "result":               INT  (0/1)
                                 }
 
-Get the apply requests
-                Request: POST   /getrequests
-                                {
-                                    "idUser":       INT, admin for check
-                                    "idRequest":    INT (if idRequest == -1, get all requests with not 'declare' or 'approve' status
-                                        else, get questions after this idQuestion)
-                                }
-                Response:   it is possible to receive empty response.
-                        note: order by sendTime
-                                [
-                                    { // 我需要这些信息怎么回来看你
-                                        "requestStatus":    STRING,  (new, read)
-                                        "idRequest":       INT,
-                                        { // the whole info from userBasic or teacherapply
-                                            "idUser":       INT,
-                                            "firstName":            STRING,
-                                            "lastName":     STRING,
-                                            "profile":      STRING,  (require upload the applicant's formal picture)
-                                            "introWords":           STRING,
-                                            "resume":               STRING, 
-                                            "company":              STRING, 
-                                            "jobTitle":             STRING
-                                        }
-                                    },
-                                    ...
-                                ]
-
-Change request status
-                Request: POST   /processrequest
-                                {
-                                        "idUser":       INT, admin who make the change, need record
-                                        "idRequest"     INT,
-                                        "status"        STRING, "approve, decline, read"
-                                } 
-
-                Response:  User may not exits, receive 403 error
-                                {
-                                        "result":               INT  (0/1)
-                                }
 
 ********************************  Account update  ***************************
 User Account update:
@@ -656,15 +686,51 @@ For student to get all my questions::
                                     ...
                                 ]
                                 
+***************************  Admin get all applications **********************
+Administrator get all teacher applications
+                Request: POST   /admin/teacherapplications
+                                {
+                                    "idAdmin":          INT,  (means the the admin role who logged in)
+                                    "idUser":           INT (if idUser == -1, request all applications, otherwise, request the application of the idUser)
+                                }
+
+                Response:   it is possible to receive empty response.
+                                [
+                                    {
+                                        "idUser": 		INT,  (this is the applicant)
+                                        "firstName":            STRING,
+                                        "lastName":		STRING,
+                                        "profile": 		STRING,  (require upload the applicant's formal picture)
+                                        "introWords":           STRING,
+                                        "resume":               STRING, 
+                                        "company":              STRING, 
+                                        "jobTitle":             STRING,
+                                        "applyStatus":          STRING    (new/read)
+                                    } ,
+                                    ...
+                                ]
+                
+Admin makes an decision on a application: 
+                Request: POST   /admin/applicationdecision
+                                {
+                                    "idAdmin":              INT,
+                                    "idUser":               INT,
+                                    "applyStatus":          STRING (can be "read","approval","decline")
+                                }
+                Response:
+                                {
+                                    "result":           INT (result=0 fail; reuslt=1 success)
+                                }        
 
 **************************************** Permission code ******************************************                         
 permission code
-
-student new table     idUser, idCourse, status(0,1 means)
-
 
 check student has the permission to visit a course
 
 get teacher info
 
-get all courses(order by created date desc)
+start lecture record datetime
+
+search 
+
+make question content unique
