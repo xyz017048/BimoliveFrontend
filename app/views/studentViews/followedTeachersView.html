@@ -1,0 +1,20 @@
+<br>
+<div class="container">
+    <div class="page-header">
+        <h1>Followed Teachers
+        </h1>
+    </div>
+    <div class="row" style="display:flex; flex-wrap:wrap;" ng-init="followCtrl.getFollowedTeachers()">
+        <h3 class="text-center" ng-if="followCtrl.followedTeachers.length <= 0">You have not yet followed any one, <a ng-href="#/allCourses">click here to find some great teachers!</a></h3>
+        <div ng-repeat="teacher in followCtrl.followedTeachers" class="thumbnail col-lg-2 col-md-2 col-sm-3 col-xs-4">
+            <a ng-href="#/teacherInfo/{{teacher.idUser}}">
+                <div class="imageWrapper" style="position: relative;">
+                    <img ng-src="{{teacher.profile}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
+                </div>
+                <div class="caption">
+                    <a ng-href="#/teacherInfo/{{teacher.idUser}}">{{teacher.jobTitle}}: {{teacher.firstName}} {{teacher.lastName}}</a>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

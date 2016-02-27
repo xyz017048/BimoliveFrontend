@@ -37,5 +37,29 @@ angular.module('bimoliveApp')
         .error(function (data, status) {
         });
     };
+    
+    this.followedTeachers = [];
+    
+    this.getFollowedTeachers = function () {
+        $http({
+            method: 'POST',
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/followedteachers',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: {
+                idUser: MainService.getCurrentUser().idUser
+            }
+        })
+
+        .success(function (data, status) {
+            if (data.length > 0) {
+                appScope.followedTeachers = data;
+            }
+        })
+
+        .error(function (data, status) {
+        });
+    };
         
 }]);
