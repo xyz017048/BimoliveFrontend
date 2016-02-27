@@ -427,7 +427,8 @@ Student Get a single Lecture:         NOTE: if 'status' == 'wait', student can o
                                                                 "url":              STRING
                                                             },
                                     "followCourse":         INT (0/1),
-                                    "followTeacher":        INT (0/1)
+                                    "followTeacher":        INT (0/1),
+                                    "permitStatus":         INT (0/1)
                                 }
 
 Student Get a single course:
@@ -497,7 +498,8 @@ Student get all my followed teachers:
                                 
                 Response:   
                                 [
-                                    {
+                                    {   
+                                        "idUser":               INT,
                                         "email":  		STRING,    
                                         "username":             STRING,   
                                         "firstName":            STRING,
@@ -511,6 +513,30 @@ Student get all my followed teachers:
                                     ...
                                     ...
                                 ]
+
+Student get a teacher info:
+                Request:    POST    /student/teacherinfo
+                                {
+                                    "idUser":              INT,
+                                    "idTeacher":           INT
+                                }
+                                
+                Response:    403 if teacher does not exist.
+                                {
+                                    "teacherInfo":      {   
+                                                            "idUser":               INT,
+                                                            "email":                STRING,    
+                                                            "username":             STRING,   
+                                                            "firstName":            STRING,
+                                                            "lastName":             STRING,
+                                                            "profile":              STRING,  
+                                                            "introWords":           STRING,
+                                                            "resume":               STRING, 
+                                                            "company":              STRING, 
+                                                            "jobTitle":             STRING 
+                                                        },
+                                    "followTeacher":    INT (0/1)
+                                }
                             
 Student get all courses:
                 Request:    POST    /student/courses
@@ -723,14 +749,20 @@ Admin makes an decision on a application:
                                 }        
 
 **************************************** Permission code ******************************************                         
-permission code
+Student inputs permission code to enroll a course:
+ 
+                Request:    POST   /student/permissioncode
+                                {
+                                    "idUser":       INT,
+                                    "idLecture":    INT,
+                                    "code"          STRING
+                                }
 
-check student has the permission to visit a course
-
-get teacher info
+                Response:   
+                                {
+                                    "result":       INT     (result=0 fail; reuslt=1 success)
+                                }
 
 start lecture record datetime
 
 search 
-
-make question content unique
