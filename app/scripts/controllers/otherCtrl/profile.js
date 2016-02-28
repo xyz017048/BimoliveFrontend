@@ -50,34 +50,38 @@ angular.module('bimoliveApp')
     
     $("#file").change(function (event) {
         var files = event.target.files;
-        this.file = files[0];
-        
+        appScope.file = files[0];
+        this.url = '';
         AWS.config.update({ accessKeyId: 'AKIAIJG57SRTCKPYBGJA', secretAccessKey: '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' });
         AWS.config.region = 'us-west-2';
         var bucket = new AWS.S3({ params: { Bucket: 'bimolive-pictures' } });
-        if(this.file) {
-            var params = { Key: this.file.name, ContentType: this.file.type, Body: this.file, ServerSideEncryption: 'AES256', ACL: 'public-read'};
+        if(appScope.file) {
+            var params = { Key: 'profile_pics/' + appScope.user.idUser, ContentType: appScope.file.type, Body: appScope.file, ServerSideEncryption: 'AES256', ACL: 'public-read'};
         
-            bucket.putObject(params, function(err, data) {
-            if(err) {
-                // There Was An Error With Your S3 Config
-                alert(err.message);
-                return false;
-            }
-            else {
-                // Success!
-                alert('Upload Done');
-            }
+            bucket.putObject(params, function (err, data) {
+            
+                console.log(data);
+                if(err) {
+                    // There Was An Error With Your S3 Config
+                    alert(err.message);
+                    return false;
+                }
+                else {
+                    // Success!
+                    alert('Upload Done');
+                }
             })
             .on('httpUploadProgress',function(progress) {
                 // Log Progress Information
                 console.log(Math.round(progress.loaded / progress.total * 100) + '% done');
-                });
+            });
         }
         else {
             // No File Selected
             alert('No File Selected');
         }
     });
+    
+    this.url = 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/profile_pics/' + this.user.idUser;
     
 }]);
