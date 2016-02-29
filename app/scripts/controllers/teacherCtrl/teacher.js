@@ -147,7 +147,7 @@ angular.module('bimoliveApp')
 
     this.currentLecture = {};
     this.isFinished = false;
-   
+    // init
     if(MainService.getCurrentUser().roleLevel === 2)
     {
         $http( { 

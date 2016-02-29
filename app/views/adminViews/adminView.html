@@ -12,14 +12,14 @@
         <h3 class="text-center" ng-if="adminCtrl.requests.length > 0">Requests:</h3>
         <ul id="requests" class="list-group col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12"
         ng-repeat="request in adminCtrl.requests track by $index">
-            <a href class="list-group-item" data-toggle="modal" data-target="#requestModal" mydata="request.content" ng-click="adminCtrl.setCurrentRequests(request, $index)">
+            <a href class="list-group-item" data-toggle="modal" data-target="#requestModal" mydata="request.content" ng-click="adminCtrl.setCurrentRequest(request, $index)">
                 <h4 class="list-group-itme-heading">
-                    <span class="label label-primary" ng-if="request.status == 'new'">New</span>
-                    <span class="label label-success" ><span class="glyphicon glyphicon-ok" ng-if="request.status == 'approve'"></span></span>
+                    <span class="label label-primary" ng-if="request.applyStatus === 'new'">New</span>
+                    <span class="label label-success" ><span class="glyphicon glyphicon-ok" ng-if="request.applyStatus === 'approve'"></span></span>
                     Request from: {{request.username}}
                 </h4>
                 <p class="list-group-item-text">
-                    {{request.content}}
+                    The job title is: {{request.jobTitle}}
                 </p>
             </a>
         </ul>

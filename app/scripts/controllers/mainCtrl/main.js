@@ -269,9 +269,11 @@ angular.module('bimoliveApp')
                         if(data.result) {
                             appScope.isLogin = true;
                             MainService.setIsLogin(true);
+                            // Inject into MainService
+                            MainService.setCurrentUser(data);
+                            appScope.currentUser = data;
                         }
                     })
-                    
                     .error(function(data, status) {
                     });
                     

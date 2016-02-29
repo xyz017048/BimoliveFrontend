@@ -16,6 +16,7 @@ angular.module('bimoliveApp')
     
     this.idLecture = $routeParams.id;
     this.currentLecture = {};
+    this.isLive = false;
 
     var appScope = this;
     var user = MainService.getCurrentUser();
@@ -34,6 +35,9 @@ angular.module('bimoliveApp')
         })
         .success(function (data, status) {
             appScope.currentLecture = data;
+            appScope.isLive = (data.lectureInfo.status === 'live');
+            // get question after get lecture
+            getQuestions(lastId);
             if (appScope.isPermitted) {
                 appScope.streamVideo();
             }
@@ -43,6 +47,8 @@ angular.module('bimoliveApp')
     };
     
     this.sentQuestions = [];
+    // Display sent questions
+    sentQuestions();
     /**
      * What questions that student has sent to the teacher
      */
@@ -65,6 +71,8 @@ angular.module('bimoliveApp')
         });
     }
 
+    appScope.questions = [];
+    var lastId = -1;
     /**
      * get Question with last idQuestion
      * @param  {[type]} idQuestion [description]
@@ -85,16 +93,17 @@ angular.module('bimoliveApp')
         } )
         .success(function(data, status) {
             for (var q in data) {
-                if (data[q].lectureStatus !== 'finish') {
-                    appScope.questions.push(data[q]);
-                    lastId = data[q].idQuestion;
-                } else {
-                    appScope.streamVideo();
-                }
+                appScope.questions.push(data[q]);
+                lastId = data[q].idQuestion;
+                appScope.currentLecture.lectureInfo.status = data[q].lectureStatus;
             }
-            setTimeout(function () {
-                getQuestions(lastId)
-            }, 5000);
+            if (appScope.currentLecture.lectureInfo.status === 'live') {
+                setTimeout(function () {
+                    getQuestions(lastId)
+                }, 5000);
+            } else { // it is not 'live' change video
+                appScope.streamVideo();
+            }
         })
         .error(function(data, status) {
             console.log(data);
@@ -103,19 +112,10 @@ angular.module('bimoliveApp')
         });
     }
 
-    this.questions = [];
-    var lastId = -1;
-    getQuestions(lastId);
-
     /**
      * send question to server
      */
     this.sendQuestion = function() {
-        followCourse();
-        followTeacher();
-        unfollowTeacher();
-        unfollowCourse();
-        unfollowCourse();
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
         } else if (this.currentQuestion.trim() !== '') {
@@ -146,7 +146,6 @@ angular.module('bimoliveApp')
                 console.log('Request failed');
             });
             
-            
             // Display sent questions
             sentQuestions();
         }
@@ -154,11 +153,11 @@ angular.module('bimoliveApp')
     
     this.streamVideo = function () {
         var live_url = '';
-        if (this.currentLecture.lectureModel.status === 'live') {
-            live_url = 'rtmp://' + '52.36.183.186' + '/live' + '/' + this.currentLecture.lectureModel.url;
-        } else if (this.currentLecture.lectureModel.status === 'replay') {
-            live_url = this.currentLecture.lectureModel.url;
-        } else if (this.currentLecture.lectureModel.status === 'finish') {
+        if (this.currentLecture.lectureInfo.status === 'live') {
+            live_url = 'rtmp://' + '52.36.183.186' + '/live' + '/' + this.currentLecture.lectureInfo.url;
+        } else if (this.currentLecture.lectureInfo.status === 'replay') {
+            live_url = this.currentLecture.lectureInfo.url;
+        } else if (this.currentLecture.lectureInfo.status === 'finish') {
             alert('finish');
         }
         var videoPlayer = jwplayer('videoPlayer');
