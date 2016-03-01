@@ -411,5 +411,67 @@ angular.module('bimoliveApp')
         MainService.isLogin = isLogin;
     };
     
+    /**
+     * upload function, file is the file object
+     * filePurpose is the purpose of this file, 
+     * possible values: 'profile', 'resume', 'course', 'lecture'
+     * courseId is optional for uploading course and lecture
+     * lectureId is opitional for uploading lecture
+     * it will return a url of the uploaded file, it will return '' if anything goes wrong.
+     */
+    MainService.upload = function (file, filePurpose, courseId, lectureId) {
+        this.showLoader = true;
+        AWS.config.update({ accessKeyId: 'AKIAIJG57SRTCKPYBGJA', secretAccessKey: '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' });
+        AWS.config.region = 'us-west-2';
+        var bucket = new AWS.S3({ params: { Bucket: 'bimolive-pictures' } });
+        if (file) {
+            var key = '';
+            if (filePurpose === 'profile') {
+                key = 'profile_pics/' + MainService.getCurrentUser().idUser;
+            } else if (filePurpose === 'resume') {
+                key = 'resume/' + MainService.getCurrentUser().idUser;
+            } else if (filePurpose === 'course') { 
+                if (courseId) {
+                    key = 'course_pics/' + courseId + 'course';
+                } else {
+                    return '';
+                }
+            } else if (filePurpose === 'lecture') {
+                if (courseId) {
+                    key = 'course_pics/' + courseId + '/' + lectureId;
+                } else {
+                    return '';
+                }
+            } else {
+                alert('Upload Failed');
+                return '';
+            }
+            
+            var params = { Key: key, ContentType: file.type, Body: file, ServerSideEncryption: 'AES256', ACL: 'public-read'};
+            bucket.putObject(params, function (err, data) {
+                if(err) {
+                    // There Was An Error With Your S3 Config
+                    alert(err.message);
+                }
+                else {
+                    // Success!
+                    alert('Upload Done');
+                }
+            })
+            .on('httpUploadProgress', function (progress) {
+                if (Math.round(progress.loaded / progress.total * 100)) {
+                    // appScope.showLoader = false;
+                }
+            });
+            
+            return 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key;
+        }
+        else {
+            // No File Selected
+            alert('No File Selected');
+            return '';
+        }
+    };
+    
     return MainService;
 }]);

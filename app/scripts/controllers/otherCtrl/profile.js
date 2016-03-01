@@ -15,7 +15,8 @@ angular.module('bimoliveApp')
     }
     
     var appScope = this;
-    this.user = Object.create(MainService.getCurrentUser()); // Copy the user object from main service 
+    this.showLoader = false;
+    this.user = JSON.parse(JSON.stringify(MainService.getCurrentUser())); // Copy the user object from main service 
     
     this.updateToServer = function () {
         alert(this.user.email + ' ' +
@@ -23,7 +24,7 @@ angular.module('bimoliveApp')
     };
     
     this.resetData = function () {
-        this.user = Object.create(MainService.getCurrentUser()); // Reset the user object
+        this.user = JSON.parse(JSON.stringify(MainService.getCurrentUser())); // Reset the user object
     };
 
     this.teacherApply = function () {
@@ -33,12 +34,13 @@ angular.module('bimoliveApp')
 	        headers: {
 	            'Content-Type': undefined
 	        },
-	        data: JSON.stringify(this.user.__proto__)
+	        data: this.user
 	    })
         .success(function (data, status) {
             $('#applyToTeachModal').modal('hide'); 
             if (data.result) {
-            	alert('Apply success! Waiting for approve');
+                alert('Apply success! Waiting for approve');
+                MainService.setCurrentUser(appScope.user);
             } else {
                 console.log('success but got ' + data.result);
             }
@@ -47,41 +49,10 @@ angular.module('bimoliveApp')
 	    });
     };
     
-    
-    $("#file").change(function (event) {
+    $("#profile").change(function (event) {
         var files = event.target.files;
         appScope.file = files[0];
-        this.url = '';
-        AWS.config.update({ accessKeyId: 'AKIAIJG57SRTCKPYBGJA', secretAccessKey: '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' });
-        AWS.config.region = 'us-west-2';
-        var bucket = new AWS.S3({ params: { Bucket: 'bimolive-pictures' } });
-        if(appScope.file) {
-            var params = { Key: 'profile_pics/' + appScope.user.idUser, ContentType: appScope.file.type, Body: appScope.file, ServerSideEncryption: 'AES256', ACL: 'public-read'};
-        
-            bucket.putObject(params, function (err, data) {
-            
-                console.log(data);
-                if(err) {
-                    // There Was An Error With Your S3 Config
-                    alert(err.message);
-                    return false;
-                }
-                else {
-                    // Success!
-                    alert('Upload Done');
-                }
-            })
-            .on('httpUploadProgress',function(progress) {
-                // Log Progress Information
-                console.log(Math.round(progress.loaded / progress.total * 100) + '% done');
-            });
-        }
-        else {
-            // No File Selected
-            alert('No File Selected');
-        }
+        appScope.url = MainService.upload(appScope.file, 'profile');
     });
-    
-    this.url = 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/profile_pics/' + this.user.idUser;
     
 }]);
