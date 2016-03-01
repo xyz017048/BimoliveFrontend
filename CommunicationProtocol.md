@@ -73,6 +73,9 @@ Login:  (teacher: teacher@gmail.com, teacher;  student: student@gmail.com,  stud
 				"profile": 		STRING,
 				"introWords":           STRING,
 				"regisDate":            STRING,
+                                "resume":               STRING,
+                                "company":              STRING,
+                                "jobTitle":             STRING,
                                 "applyStatus":          STRING   (note: 'applyStatus' == "new/read" means the user is waiting for approval)
 			}
 
