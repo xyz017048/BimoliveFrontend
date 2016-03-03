@@ -93,9 +93,13 @@ angular.module('bimoliveApp')
         } )
         .success(function(data, status) {
             for (var q in data) {
-                appScope.questions.push(data[q]);
-                lastId = data[q].idQuestion;
-                appScope.currentLecture.lectureInfo.status = data[q].lectureStatus;
+                if (data[q].idQuestion !== 0) {
+                    appScope.questions.push(data[q]);
+                }
+                if (q === data.length - 1 + "") {
+                    lastId = data[q].idQuestion;
+                    appScope.currentLecture.lectureInfo.status = data[q].lectureStatus;
+                }
             }
             if (appScope.currentLecture.lectureInfo.status === 'live') {
                 setTimeout(function () {
