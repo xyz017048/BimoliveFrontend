@@ -49,10 +49,16 @@ angular.module('bimoliveApp')
 	    });
     };
     
-    $("#profile").change(function (event) {
+    $('#profile').change(function (event) {
         var files = event.target.files;
-        appScope.file = files[0];
-        appScope.url = MainService.upload(appScope.file, 'profile');
+        var profile_pic = files[0];
+        appScope.user.profile = MainService.upload(profile_pic, 'profile');
+    });
+    
+    $('#resume').change(function (event) {
+        var files = event.target.files;
+        var resume = files[0];
+        appScope.user.resume = MainService.upload(resume, 'resume');
     });
     
 }]);
