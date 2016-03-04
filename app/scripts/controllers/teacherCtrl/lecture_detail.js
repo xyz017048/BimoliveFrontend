@@ -56,10 +56,11 @@ angular.module('bimoliveApp')
         })
 
         .success(function (data, status) {
-            
+            $location.url('/teacher/' + appScope.currentLecture.idLecture);
         })
 
         .error(function (data, status) {
+            alert('Start Lecture Failed!');
         });
     };
         
