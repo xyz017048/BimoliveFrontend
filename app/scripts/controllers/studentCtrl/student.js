@@ -155,16 +155,52 @@ angular.module('bimoliveApp')
         }
     };
     
+    var videoPlayer;
     this.streamVideo = function () {
+        
+        var myBlob = new Blob([
+                'WEBVTT\n\n'+
+                'Chapter 1\n'+
+                '00:00:00.000 --> 00:01:42.000\n'+
+                'Opening credits\n\n'+
+
+                'Chapter 2\n'+
+                '00:01:42.000 --> 00:04:44.000\n'+
+                'A dangerous quest\n\n'+
+
+                'Chapter 3\n'+
+                '00:04:44.000 --> 00:05:50.000\n'+
+                'The attack\n\n'+
+
+                'Chapter 4\n'+
+                '00:05:50.000 --> 00:08:24.000\n'+
+                'In pursuit\n\n'+
+
+                'Chapter 5\n'+
+                '00:08:24.000 --> 00:10:13.000\n'+
+                'Cave Fight\n\n'+
+
+                'Chapter 6\n'+
+                '00:10:13.000 --> 00:12:24.000\n'+
+                'Eye to eye\n\n'+
+
+                'Chapter 7\n'+
+                '00:12:24.000 --> 00:14:48.000\n'+
+                'Ending Credits'
+        ], {type : "text/vtt"});
+        
+        var chaptersFile = window.URL.createObjectURL(myBlob); 
+        
         var live_url = '';
         if (this.currentLecture.lectureInfo.status === 'live') {
             live_url = 'rtmp://' + '52.36.183.186' + '/live' + '/' + this.currentLecture.lectureInfo.url;
         } else if (this.currentLecture.lectureInfo.status === 'replay') {
             live_url = this.currentLecture.lectureInfo.url;
+            live_url = 'https://content.jwplatform.com/videos/q1fx20VZ-kNspJqnJ.mp4';
         } else if (this.currentLecture.lectureInfo.status === 'finish') {
             alert('finish');
         }
-        var videoPlayer = jwplayer('videoPlayer');
+        videoPlayer = jwplayer('videoPlayer');
         var video = document.getElementById('video');
         videoPlayer.setup({
             file: live_url,
@@ -175,32 +211,42 @@ angular.module('bimoliveApp')
             autostart: true,
             skin: {
                 name: 'seven'
-            }
+            },
+            tracks: [{
+                file: chaptersFile,
+                kind: 'chapters'
+            }]
         });
         
-        // videoPlayer.onError(function(e) {
-        //     alert('error: ' + e); 
-        // });
+        videoPlayer.on('ready', function(e) {
+            replayVideo();
+        });
         
-        // videoPlayer.onComplete(function() {
-        //     alert('complete');
-        // });
+        videoPlayer.on('time', function(e) {
         
-        // videoPlayer.onPause(function() {
-        //     alert('pause');
-        // });
-        
-        // videoPlayer.on('error', function() {
-        //     alert('error2');
-        // });
-        
-        // videoPlayer.on('complete', function() {
-        //     alert('complete2');
-        // });
-        
-        // videoPlayer.on('pause', function() {
-        //     alert('pause2');
-        // });
+            var modifiers = document.getElementById('questions').getElementsByTagName('button');
+            for(var i = 0, len = modifiers.length-1; i < len; ++i) {
+                
+                // Special case
+                if(timeTag[len][0] < e.position && e.position < e.duration) {
+                    modifiers[len-1].classList.remove('list-group-item-info');
+                    modifiers[len].classList.add('list-group-item-info');
+                    continue;
+                } else {
+                    modifiers[len].classList.remove('list-group-item-info');
+                }
+                
+                if(timeTag[i][0] < e.position && e.position < timeTag[i+1][0]) {
+                    modifiers[i].classList.add('list-group-item-info');
+                } else {
+                    modifiers[i].classList.remove('list-group-item-info');  
+                }
+            }
+            
+            // console.log(timeTag[len-1][0]);
+            // console.log(timeTag[len][0]);
+            // console.log(e.position);
+        });
         
     };
 
@@ -432,5 +478,70 @@ angular.module('bimoliveApp')
             $('#permissioncodeModal').modal('show');   
         }
     }, 100);
+    
+    
+    ///////////////////
+    var questionPanel;
+    var timeTag;
+    
+    /**
+     * Replay video
+     */
+    function replayVideo() {
+        
+        // Retreive the questionPanal Div element
+        questionPanel = document.getElementById('questionPanel');
+        
+        // Create a timeTag array, tending to get data from db
+        // Funtion needed
+        timeTag = [
+            [0, 'Opening credits'],
+            [102, 'A dangerous quest'],
+            [284, 'The attack'],
+            [350, 'In pursuit'],
+            [504, 'Cave Fight'],
+            [613, 'Eye to Eye'],
+            [744, 'Ending Credits']
+        ];
+        
+        // Create a question ul
+        var ulElement = document.createElement('ul');
+        ulElement.classList.add('list-group');
+        ulElement.setAttribute('style', 'overflow-y: auto; height: 440px; bottom: 0;');
+        ulElement.setAttribute('id', 'questions');
+        
+        // Appending list elements and adding click event at the same time
+        for (var i = 0, trackLength = timeTag.length; i < trackLength; i++) {
 
+            var aElement = document.createElement('button');
+            aElement.classList.add('list-group-item');
+            // Set timeTag value
+            aElement.setAttribute('data-start', timeTag[i][0]);
+            // Bind click event
+            aElement.addEventListener("click", seek);
+            
+            var h4Element = document.createElement('h4');
+            h4Element.classList.add('list-group-item-heading');
+            h4Element.innerHTML = timeTag[i][1];
+            
+            var pElement = document.createElement('p');
+            pElement.classList.add('list-group-item-text');
+            pElement.innerHTML = 'blah';
+            
+            ulElement.appendChild(aElement);
+            aElement.appendChild(h4Element);
+            aElement.appendChild(pElement);
+        }
+        questionPanel.appendChild(ulElement);
+        
+        console.log(i);
+    }
+
+    function seek() {
+        if(videoPlayer) {
+            videoPlayer.seek(this.getAttribute('data-start'));
+            videoPlayer.play(true);
+        }
+    }
+    
 }]);
