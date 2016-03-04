@@ -103,10 +103,10 @@ angular.module('bimoliveApp')
             }
             if (appScope.currentLecture.lectureInfo.status === 'live') {
                 setTimeout(function () {
-                    getQuestions(lastId)
+                    getQuestions(lastId);
                 }, 5000);
             } else { // it is not 'live' change video
-                appScope.streamVideo();
+                // appScope.streamVideo();
             }
         })
         .error(function(data, status) {
@@ -220,7 +220,8 @@ angular.module('bimoliveApp')
         
         videoPlayer.on('ready', function(e) {
             if(!appScope.isLive) {
-                replayVideo();
+                // replayVideo();
+                getAllAnwseredQuestions();
             }
         });
         
@@ -430,7 +431,7 @@ angular.module('bimoliveApp')
             this.setPermission();
             $('#permissioncodeModal').modal('hide');   
             $('#permissioncodeModal').on('hidden.bs.modal', function (e) {
-                appScope.streamVideo();
+                appScope.getLecture();
             });
             
         } else {
@@ -478,6 +479,8 @@ angular.module('bimoliveApp')
         if (!appScope.getPermission()) {
             $('#permissioncodeModal').modal({ keyboard: false, backdrop: 'static' });
             $('#permissioncodeModal').modal('show');   
+        } else {
+            appScope.getLecture();
         }
     }, 100);
     
@@ -489,22 +492,22 @@ angular.module('bimoliveApp')
     /**
      * Replay video
      */
-    function replayVideo() {
+    this.replayVideo = function() {
         
         // Retreive the questionPanal Div element
         questionPanel = document.getElementById('questionPanel');
         
         // Create a timeTag array, tending to get data from db
         // Funtion needed
-        timeTag = [
-            [0, 'Opening credits'],
-            [102, 'A dangerous quest'],
-            [284, 'The attack'],
-            [350, 'In pursuit'],
-            [504, 'Cave Fight'],
-            [613, 'Eye to Eye'],
-            [744, 'Ending Credits']
-        ];
+        // timeTag = [
+        //     [0, 'Opening credits', 'blah'],
+        //     [102, 'A dangerous quest'],
+        //     [284, 'The attack'],
+        //     [350, 'In pursuit'],
+        //     [504, 'Cave Fight'],
+        //     [613, 'Eye to Eye'],
+        //     [744, 'Ending Credits']
+        // ];
         
         // Create a question ul
         var ulElement = document.createElement('ul');
@@ -543,6 +546,72 @@ angular.module('bimoliveApp')
         if(videoPlayer) {
             videoPlayer.seek(this.getAttribute('data-start'));
             videoPlayer.play(true);
+        }
+    }
+    
+    /**
+     * yyyy-MM-dd hh:mm:ss to seconds
+     * var birthday = new Date(1995, 11, 17, 3, 24, 0);
+     */
+    this.realTime2Seconds = function (realTime) {
+        if(realTime) {
+            // console.log(realTime.substring(0, 4));
+            // console.log(realTime.substring(5, 7));
+            // console.log(realTime.substring(8, 10));
+            // console.log(realTime.substring(11, 13));
+            // console.log(realTime.substring(14, 16));
+            // console.log(realTime.substring(17, 19));
+            
+            var date = new Date(realTime.substring(0, 4), realTime.substring(5, 7), 
+            realTime.substring(8, 10), realTime.substring(11, 13), realTime.substring(14, 16), realTime.substring(17, 19));
+            
+            return date.getTime() / 1000;
+        }
+        
+        return 0;
+    }
+    
+    // timeTag
+    /**
+     * Get all anwsered questions
+     */
+    function getAllAnwseredQuestions() {
+        if (!MainService.getIsLogin()) {
+            alert('Plese Login');
+        } else if (appScope.currentLecture.followTeacher !== 0) {
+            // Reset array to empty
+            timeTag = [];
+            var user = MainService.getCurrentUser();
+            $http( { 
+                method: 'POST', 
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/getquestions',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: {
+                    "roleLevel": user.roleLevel,
+                    "idLecture": appScope.idLecture,
+                    "idQuestion": -1
+                }
+            } )
+            .success(function(data, status) {
+                for(var i = 0, len = data.length; i < len; ++i) {
+                    if(data[i].status === 'answer') {
+                        var question = [appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart) - appScope.realTime2Seconds(data[i].changeTime) ,
+                        data[i].content, data[i].content];
+                        timeTag.push(question);
+                    }
+                }
+                // console.log(data);
+                // console.log(appScope.realTime2Seconds(data[0].changeTime));
+                // console.log(appScope.currentLecture.lectureInfo.realStart);
+                appScope.replayVideo();
+            })
+            .error(function(data, status) {
+                console.log(data);
+                console.log(status);
+                console.log('Request failed');
+            });
         }
     }
     
