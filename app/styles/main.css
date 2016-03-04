@@ -1,6 +1,7 @@
 body {
 background: #f1f1f1 !important; 
 overflow-x: hidden;
+font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
 .jumbotron {
 background-color: #ffffff;
@@ -158,4 +159,10 @@ label {
 input[readonly] {
   background-color: white !important;
   cursor: text !important;
+}
+.info-lable {
+    font-size: 130%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
 }

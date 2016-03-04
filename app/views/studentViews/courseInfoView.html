@@ -1,0 +1,87 @@
+<br>
+<div class="container">
+    <div class="page-header" ng-init="infoCtrl.getCourse()">
+        <h1 class="text-center">{{infoCtrl.course.courseInfo.name}}
+            <button type="button" class="btn btn-sm btn-default" ng-if="infoCtrl.course.followCourse === 0">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                Follow
+            </button>
+            <button type="button" class="btn btn-sm btn-default" ng-if="infoCtrl.course.followCourse === 1">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Unfollow
+            </button>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-5">
+            <form class="list-group">
+                <div class="list-group">
+                    <label class="control-label" for="image">Course picture</label>
+                    <img class="img-responsive center-block" ng-src="{{infoCtrl.course.courseInfo.image}}">
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="name">Course name</label>
+                    <li class="list-group-item info-lable" id="name" name="name">{{infoCtrl.course.courseInfo.name}}</li>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="name">Taught by</label>
+                    <a ng-href="#/teacherInfo/{{infoCtrl.course.idTeacher}}">
+                        <li class="list-group-item info-lable" id="teacher" name="teacher">{{infoCtrl.course.teacherFirstName}} {{infoCtrl.course.teacherLastName}}</li>
+                    </a>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="category">Category</label>
+                    <li class="list-group-item info-lable" id="category" name="category">{{infoCtrl.course.courseInfo.category}}</li>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="level">Level</label>
+                    <li class="list-group-item info-lable" id="level" name="level">{{infoCtrl.course.courseInfo.levelNumber}}</li>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="startDate">Start date</label>
+                    <li class="list-group-item info-lable" id="startDate" name="startDate">{{infoCtrl.course.courseInfo.startDate}}</li>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="endDate">End date</label>
+                    <li class="list-group-item info-lable" id="endDate" name="endDate">{{infoCtrl.course.courseInfo.endDate}}</li>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="createDate">Date created</label>
+                    <li class="list-group-item info-lable" id="createDate" name="createDate">{{infoCtrl.course.courseInfo.createDate}}</li>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="intro">Course description</label>
+                    <p class="list-group-item list-group-text info-lable" id="intro" name="intro">{{infoCtrl.course.courseInfo.intro}}</p>
+                </div>
+                <br>
+                
+            </form>
+        </div>
+        <div class="col-lg-5 col-lg-offset-2">
+            <div class="list-group">
+                <label class="control-label" for="addLectureButton">Lectures:</label>
+            </div>
+        </div>
+        <div class="row col-lg-5 col-lg-offset-2" style="overflow: auto; margin-bottom: 50px; height: 1000px;">   
+            
+            <div class="row" style="display:flex; flex-wrap:wrap; padding-top: 10px; padding-left: 10px; padding-right: 10px;">
+                <div ng-repeat="lecture in infoCtrl.course.lectureList" class="thumbnail col-lg-6 col-md-3 col-sm-4 col-xs-6">
+                    <a ng-href="#/lectureInfo/{{lecture.idLecture}}">
+                        <div class="imageWrapper" style="position: relative;">
+                            <img ng-src="{{lecture.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;"
+                            />
+                        </div>
+                        <div class="caption">
+                            <a ng-href="#/lectureInfo/{{lecture.idLecture}}">Lecture #{{lecture.lectureNum}}: {{lecture.topic}}</a>
+                            <p>Date: {{lecture.scheduleDate}}</p>
+                            <p>Start Time: {{lecture.startTime}}</p>
+                            <p>End Time: {{lecture.endTime}}</p>
+                        </div>
+                    </a>
+                </div>
+                <p class="list-group-item list-group-text info-lable center-block" ng-show="infoCtrl.course.lectureList.length <= 0">Lectures have not been added to this course yet.</p>
+            </div>
+        </div>
+    </div>
+   
+</div>

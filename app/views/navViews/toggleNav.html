@@ -1,7 +1,8 @@
 <nav class="leftNav" ng-mouseenter="toggleCtrl.toggleNav(1)" ng-mouseleave="toggleCtrl.toggleNav(0)">
     <div class="row">
         <ul class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x: hidden;">
-            <div class="jumbotron" ng-if="!mainCtrl.isLogin">
+            <div ng-if="!mainCtrl.isLogin" style="padding-top:50px;"> </div>
+            <div class="jumbotron" ng-if="!mainCtrl.isLogin" >
                 <li><a href data-toggle="modal" data-target="#loginModal" mydata="mydata">Log In</a></li>
                 <li><a href data-toggle="modal" data-target="#signUpModal" mydata="mydata">Sign Up</a></li>
             </div>
@@ -9,8 +10,9 @@
                 <a ng-href="#/profile">
                     <li id="profile-pic" >
                         <img class="img-responsive img-circle" ng-src="{{mainCtrl.currentUser.profile}}" alt="profile">
-                        <li style="text-align: center; color:#f1f1f1;" ng-if="mainCtrl.currentUser.roleLevel === 2">Teacher</li>
-                        <li style="text-align: center; color:#f1f1f1;" ng-if="mainCtrl.currentUser.roleLevel === 1">Student</li>
+                        <li style="text-align: center; color:#f1f1f1;">Shawn Zhong</li>
+                        <li style="text-align: center; color:#f1f1f1; padding-top:5px;" ng-if="mainCtrl.currentUser.roleLevel === 2">Teacher</li>
+                        <li style="text-align: center; color:#f1f1f1; padding-top:5px;" ng-if="mainCtrl.currentUser.roleLevel === 1">Student</li>
                     </li>
                 </a>
                 <br>
@@ -18,10 +20,11 @@
                 <li ng-click="mainCtrl.logout()"><a>Log Out</a></li>
             </div>
             <li><a ng-href="#/mycourses" ng-if="mainCtrl.currentUser.roleLevel === 2">My Courses</a></li>
+            <li><a ng-href="#/allLive" >Live Lectures</a></li>
+            <li><a ng-href="#/allReplay" >Replay Videos</a></li>
+            <li><a ng-href="#/allCourses" >Find Courses</a></li>
             <li><a ng-href="#/followedTeachers" >Followed Teachers</a></li>
             <li><a ng-href="#/followedCourses" >Followed Courses</a></li>
-            <li><a ng-href="#/allTeachers" >All Teachers</a></li>
-            <li><a ng-href="#/allCourses" >All Courses</a></li>
         </ul>
     </div>
 </nav>
