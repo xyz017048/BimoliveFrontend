@@ -46,7 +46,10 @@ Registration:
 				"lastLogin":            STRING,
 				"profile": 		STRING,
 				"introWords":           STRING,
-				"regisDate":            STRING
+				"regisDate":            STRING,
+                                "resume":               STRING,
+                                "company":              STRING,
+                                "jobTitle":             STRING,
 			}
 
 Login:  (teacher: teacher@gmail.com, teacher;  student: student@gmail.com,  student)
@@ -70,9 +73,9 @@ Login:  (teacher: teacher@gmail.com, teacher;  student: student@gmail.com,  stud
 				"firstName":            STRING,
 				"lastName":		STRING,
 				"lastLogin":            STRING,
-				"profile": 		STRING,
+                                "profile": 		STRING,
 				"introWords":           STRING,
-				"regisDate":            STRING,
+                                "regisDate":            STRING,
                                 "resume":               STRING,
                                 "company":              STRING,
                                 "jobTitle":             STRING,
@@ -415,6 +418,7 @@ Student Get a single Lecture:         NOTE: if 'status' == 'wait', student can o
                                 {
                                     "teacherFirstName":     STRING,
                                     "teacherLastName":      STRING,
+                                    "idTeacher":            INT,
                                     "lectureInfo":          {
                                                                 "idLecture":        INT,
                                                                 "idCourse":         INT,
@@ -475,6 +479,7 @@ Student get all my followed courses:
                                         "teacherLastName":      STRING,
                                         "courseInfo":           {
                                                                     "idCourse":         INT,
+                                                                    "idUser":           INT,        (teacher id)
                                                                     "category":         STRING,
                                                                     "levelNumber":      INT,
                                                                     "name":             STRING,
@@ -554,6 +559,7 @@ Student get all courses:
                                         "teacherLastName":      STRING,
                                         "courseInfo":           {
                                                                     "idCourse":         INT,
+                                                                    "idUser":           INT,        (teacher id)
                                                                     "category":         STRING,
                                                                     "levelNumber":      INT,
                                                                     "name":             STRING,
@@ -766,6 +772,80 @@ Student inputs permission code to enroll a course:
                                     "result":       INT     (result=0 fail; reuslt=1 success)
                                 }
 
-start lecture record datetime
 
-search 
+************************************* Search **********************************
+search:
+ 
+                Request:    POST/GET   /search
+                                {
+                                    "type":         STRING,  ("all"/"course"/"lecture"/"teacher")
+                                    "words":        STRING   (whole word search)
+                                }
+
+                Response:   
+                                {
+                                    "courses":
+                                                [
+                                                    {
+                                                        "teacherFirstName":     STRING,
+                                                        "teacherLastName":      STRING,
+                                                        "courseInfo":           {
+                                                                                    "idCourse":         INT,
+                                                                                    "idUser":           INT,        (teacher id)
+                                                                                    "category":         STRING,
+                                                                                    "levelNumber":      INT,
+                                                                                    "name":             STRING,
+                                                                                    "intro":            STRING,
+                                                                                    "image":            STRING,     (the image path/id of the course)
+                                                                                    "createDate":       STRING,     (format: "yyyy-MM-dd hh:mm:ss" )
+                                                                                    "startDate":        STRING,     (format: "yyyy-MM-dd hh:mm:ss" Here time zone problem)
+                                                                                    "endDate":          STRING,     (format: "yyyy-MM-dd hh:mm:ss")
+                                                                                    "endFlag":          INT,         (endFlag = 0, no endDate, make endDate same as startDate;
+                                                                                                                        endFlag = 1, real endDate)
+                                                                                }
+                                                    },
+                                                    ...,
+                                                    ...
+                                                ],
+                                    "lectures": 
+                                                [
+                                                    {
+                                                        "teacherFirstName":     STRING,
+                                                        "teacherLastName":      STRING,
+                                                        "idTeacher":            INT,
+                                                        "lectureInfo":          {
+                                                                                    "idLecture":        INT,
+                                                                                    "idCourse":         INT,
+                                                                                    "lectureNum":       INT,       
+                                                                                    "topic":            STRING,
+                                                                                    "intro":            STRING,     (may not be required)
+                                                                                    "image":            STRING,     (the image path/id of the lecture, may need a default pic)
+                                                                                    "scheduleDate":     STRING,     (format: "yyyy-MM-dd" Here time zone problem)
+                                                                                    "startTime":        STRING,     (format: "hh:mm")
+                                                                                    "endTime":          STRING,     (format: "hh:mm")
+                                                                                    "createDate":       STRING,     (format: "yyyy-MM-dd hh:mm:ss")
+                                                                                    "status":           STRING,         
+                                                                                    "url":              STRING
+                                                                                }
+                                                    },
+                                                    ...,
+                                                    ...
+                                                ],
+                                    "teachers":  
+                                                [
+                                                    {   
+                                                        "idUser":               INT,
+                                                        "email":                STRING,    
+                                                        "username":             STRING,   
+                                                        "firstName":            STRING,
+                                                        "lastName":             STRING,
+                                                        "profile":              STRING,  
+                                                        "introWords":           STRING,
+                                                        "resume":               STRING, 
+                                                        "company":              STRING, 
+                                                        "jobTitle":             STRING 
+                                                    },
+                                                    ...,
+                                                    ...
+                                                ]
+                                }
