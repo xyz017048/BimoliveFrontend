@@ -7,7 +7,7 @@
 <br>
 <div class="container">
     <div class="page-header">
-        <h1>Live Now
+        <h1>Live Lectures
         </h1>
     </div>
     <div class="row" style="display:flex; flex-wrap:wrap;" ng-init="mainCtrl.init()">
@@ -22,7 +22,7 @@
                 </div>
                 <div class="caption">
                     <a ng-href="#/student/{{video.idLecture}}">{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</a>
-                    <p>by {{video.teacherFirstName}} {{teacherLastName}}</p>
+                    <p>by {{video.teacherFirstName}} {{video.teacherLastName}}</p>
                 </div>
             </a>
         </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="caption">
                     <a ng-href="#/student/{{video.idLecture}}">{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</a>
-                    <p>by {{video.teacherFirstName}} {{teacherLastName}}</p>
+                    <p>by {{video.teacherFirstName}} {{video.teacherLastName}}</p>
                 </div>
             </a>
         </div>
