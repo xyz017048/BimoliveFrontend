@@ -4,9 +4,22 @@
     <div class="page-header">
         <h1>{{studentCtrl.currentLecture.lectureInfo.topic}}
         <div class="pull-right">
-          <h2>Start Time : </h2> <h2>{{studentCtrl.currentLecture.lectureInfo.startTime}}</h2>
-          <h2 style="padding-left:10px;">End Time : </h2>
-          <h2>{{studentCtrl.currentLecture.lectureInfo.endTime}}</h2>
+            <button type="button" class="btn btn-md btn-default" ng-if="studentCtrl.currentLecture.followTeacher === 0">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                Follow Teacher
+            </button>
+            <button type="button" class="btn btn-md btn-default" ng-if="studentCtrl.currentLecture.followTeacher === 1">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Unfollow Teacher
+            </button>
+            <button type="button" class="btn btn-md btn-default" ng-if="studentCtrl.currentLecture.followCourse === 0">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                Follow Course
+            </button>
+            <button type="button" class="btn btn-md btn-default" ng-if="studentCtrl.currentLecture.followCourse === 1">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Unfollow Course
+            </button>
         </div>
       </h1>
     </div>
