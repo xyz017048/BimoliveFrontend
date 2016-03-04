@@ -420,7 +420,7 @@ angular.module('bimoliveApp')
      * it will return a url of the uploaded file, it will return '' if anything goes wrong.
      */
     MainService.upload = function (file, filePurpose, courseId, lectureId) {
-        this.showLoader = true;
+        $('#progress').show();
         AWS.config.update({ accessKeyId: 'AKIAIJG57SRTCKPYBGJA', secretAccessKey: '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' });
         AWS.config.region = 'us-west-2';
         var bucket = new AWS.S3({ params: { Bucket: 'bimolive-pictures' } });
@@ -432,7 +432,7 @@ angular.module('bimoliveApp')
                 key = 'resume/' + MainService.getCurrentUser().idUser;
             } else if (filePurpose === 'course') { 
                 if (courseId) {
-                    key = 'course_pics/' + courseId + 'course';
+                    key = 'course_pics/' + courseId + '/' + 'course';
                 } else {
                     return '';
                 }
@@ -456,12 +456,21 @@ angular.module('bimoliveApp')
                 else {
                     // Success!
                     alert('Upload Done');
+                    // hide loader image
+                    $('#progress').hide();
+                    $('#progress-bar').attr('style', 'width:0%');
+                    $('#progress-bar').attr('aria-valuenow', '0');
+                    $('#progress-bar').text('0%');
                 }
             })
             .on('httpUploadProgress', function (progress) {
-                if (Math.round(progress.loaded / progress.total * 100)) {
-                    // appScope.showLoader = false;
+                var percentage = Math.round(progress.loaded / progress.total * 100);
+                if (progress) {
+                    $('#progress-bar').attr('style', 'width:' + percentage + '%');
+                    $('#progress-bar').attr('aria-valuenow', percentage);
+                    $('#progress-bar').text(percentage + '%');
                 }
+
             });
             
             return 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key;
