@@ -39,7 +39,8 @@ angular.module('bimoliveApp')
             // get question after get lecture
             getQuestions(lastId);
             if (appScope.isPermitted) {
-                appScope.streamVideo();
+                // appScope.streamVideo();
+                appScope.getAllAnwseredQuestions();
             }
         })
         .error(function (data, status) {
@@ -156,40 +157,41 @@ angular.module('bimoliveApp')
     };
     
     var videoPlayer;
+    var chaptersFile;
     this.streamVideo = function () {
         
-        var myBlob = new Blob([
-                'WEBVTT\n\n'+
-                'Chapter 1\n'+
-                '00:00:00.000 --> 00:01:42.000\n'+
-                'Opening credits\n\n'+
+        // var myBlob = new Blob([
+        //         'WEBVTT\n\n'+
+        //         'Chapter 1\n'+
+        //         '00:00:00.000 --> 00:01:42.000\n'+
+        //         'Opening credits\n\n'+
 
-                'Chapter 2\n'+
-                '00:01:42.000 --> 00:04:44.000\n'+
-                'A dangerous quest\n\n'+
+        //         'Chapter 2\n'+
+        //         '00:01:42.000 --> 00:04:44.000\n'+
+        //         'A dangerous quest\n\n'+
 
-                'Chapter 3\n'+
-                '00:04:44.000 --> 00:05:50.000\n'+
-                'The attack\n\n'+
+        //         'Chapter 3\n'+
+        //         '00:04:44.000 --> 00:05:50.000\n'+
+        //         'The attack\n\n'+
 
-                'Chapter 4\n'+
-                '00:05:50.000 --> 00:08:24.000\n'+
-                'In pursuit\n\n'+
+        //         'Chapter 4\n'+
+        //         '00:05:50.000 --> 00:08:24.000\n'+
+        //         'In pursuit\n\n'+
 
-                'Chapter 5\n'+
-                '00:08:24.000 --> 00:10:13.000\n'+
-                'Cave Fight\n\n'+
+        //         'Chapter 5\n'+
+        //         '00:08:24.000 --> 00:10:13.000\n'+
+        //         'Cave Fight\n\n'+
 
-                'Chapter 6\n'+
-                '00:10:13.000 --> 00:12:24.000\n'+
-                'Eye to eye\n\n'+
+        //         'Chapter 6\n'+
+        //         '00:10:13.000 --> 00:12:24.000\n'+
+        //         'Eye to eye\n\n'+
 
-                'Chapter 7\n'+
-                '00:12:24.000 --> 00:14:48.000\n'+
-                'Ending Credits'
-        ], {type : "text/vtt"});
+        //         'Chapter 7\n'+
+        //         '00:12:24.000 --> 00:14:48.000\n'+
+        //         'Ending Credits'
+        // ], {type : "text/vtt"});
         
-        var chaptersFile = window.URL.createObjectURL(myBlob); 
+        // var chaptersFile = window.URL.createObjectURL(myBlob); 
         
         var live_url = '';
         if (this.currentLecture.lectureInfo.status === 'live') {
@@ -221,7 +223,7 @@ angular.module('bimoliveApp')
         videoPlayer.on('ready', function(e) {
             if(!appScope.isLive) {
                 // replayVideo();
-                getAllAnwseredQuestions();
+                // getAllAnwseredQuestions();
             }
         });
         
@@ -540,7 +542,7 @@ angular.module('bimoliveApp')
         questionPanel.appendChild(ulElement);
         
         console.log(i);
-    }
+    };
 
     function seek() {
         if(videoPlayer) {
@@ -569,13 +571,69 @@ angular.module('bimoliveApp')
         }
         
         return 0;
-    }
+    };
+    
+    this.seconds2vttTimeFormat = function(totalSeconds) {
+        console.log(totalSeconds);
+        var tmp = totalSeconds;
+        var hours = Math.floor(tmp/3600);
+        tmp %= 3600;
+        var minutes = Math.floor(tmp/60);
+        tmp %= 60;
+        var seconds = Math.floor(tmp);
+        
+        console.log(hours);
+        console.log(minutes);
+        console.log(seconds);
+        
+        hours = hours > 9 ? hours : '0' + hours;
+        minutes = minutes > 9 ? minutes : '0' + minutes;
+        seconds = seconds > 9 ? seconds : '0' + seconds;
+        
+        console.log(hours + ':' + minutes + ':' + seconds + '.000');
+        
+        return hours + ':' + minutes + ':' + seconds + '.000';
+    };
+    
+    /**
+     * Create vtt file
+     */
+    this.createvttFile = function(data) {
+        
+        var content = '';
+        if(data.length > 0) {
+            content += 'WEBVTT\n\n' +
+                      'Chapter 1\n' +
+                      '00:00:00.000 --> ' + this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[0].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart)) + '\n' +
+                      data[0].content + '\n\n';
+                      
+            for(var i = 1, len = data.length; i < len; ++i) {
+                if(i < len - 1) {
+                    content += ('Chapter ' + (i + 1) + '\n' + 
+                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(appScope.realTime2Seconds(data[i-1].changeTime) - appScope.currentLecture.lectureInfo.realStart)) + ' --> ' + 
+                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(appScope.realTime2Seconds(data[i].changeTime) - appScope.currentLecture.lectureInfo.realStart)) + '\n' +
+                    data[i].content + '\n\n');
+                } else {
+                    content += ('Chapter ' + (i + 1) + '\n' + 
+                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(appScope.realTime2Seconds(data[i-1].changeTime) - appScope.currentLecture.lectureInfo.realStart)) + ' --> ' + 
+                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(appScope.realTime2Seconds(data[i].changeTime) - appScope.currentLecture.lectureInfo.realStart)) + '\n' +
+                    data[i].content);
+                }
+            }
+        }
+        
+        var myBlob = new Blob([content], {type : "text/vtt"});
+        
+        var chaptersFile = window.URL.createObjectURL(myBlob);
+        
+        return chaptersFile;
+    };
     
     // timeTag
     /**
      * Get all anwsered questions
      */
-    function getAllAnwseredQuestions() {
+    this.getAllAnwseredQuestions = function() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
         } else if (appScope.currentLecture.followTeacher !== 0) {
@@ -597,7 +655,7 @@ angular.module('bimoliveApp')
             .success(function(data, status) {
                 for(var i = 0, len = data.length; i < len; ++i) {
                     if(data[i].status === 'answer') {
-                        var question = [appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart) - appScope.realTime2Seconds(data[i].changeTime) ,
+                        var question = [appScope.realTime2Seconds(data[i].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart),
                         data[i].content, data[i].content];
                         timeTag.push(question);
                     }
@@ -605,7 +663,9 @@ angular.module('bimoliveApp')
                 // console.log(data);
                 // console.log(appScope.realTime2Seconds(data[0].changeTime));
                 // console.log(appScope.currentLecture.lectureInfo.realStart);
+                appScope.chaptersFile = appScope.createvttFile(data);
                 appScope.replayVideo();
+                appScope.streamVideo();
             })
             .error(function(data, status) {
                 console.log(data);
@@ -614,5 +674,6 @@ angular.module('bimoliveApp')
             });
         }
     }
+    
     
 }]);
