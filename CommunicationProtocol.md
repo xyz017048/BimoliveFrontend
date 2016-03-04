@@ -49,7 +49,7 @@ Registration:
 				"regisDate":            STRING,
                                 "resume":               STRING,
                                 "company":              STRING,
-                                "jobTitle":             STRING,
+                                "jobTitle":             STRING
 			}
 
 Login:  (teacher: teacher@gmail.com, teacher;  student: student@gmail.com,  student)
@@ -79,7 +79,7 @@ Login:  (teacher: teacher@gmail.com, teacher;  student: student@gmail.com,  stud
                                 "resume":               STRING,
                                 "company":              STRING,
                                 "jobTitle":             STRING,
-                                "applyStatus":          STRING   (note: 'applyStatus' == "new/read" means the user is waiting for approval)
+                                "applyStatus":          STRING   (note: 'applyStatus' == "new"/"read" means the user is waiting for approval)
 			}
 
 Teacher generate a key:
@@ -128,7 +128,8 @@ Question ask and answer Part:
                                         "username":         STRING,
                                         "content" :         STRING,
                                         "status":           STRING,
-                                        "sendTime":         STRING (format: yyyy-MM-dd hh:mm:ss)
+                                        "sendTime":         STRING, (format: yyyy-MM-dd hh:mm:ss)
+                                        "changeTime":       STRING (format: yyyy-MM-dd hh:mm:ss) if status is still 'new', the changeTime will be same as sendTime
                                     },
                                     ...
                                 ]
