@@ -217,7 +217,7 @@ angular.module('bimoliveApp')
                 name: 'seven'
             },
             tracks: [{
-                file: chaptersFile,
+                file: appScope.chaptersFile,
                 kind: 'chapters'
             }]
         });
@@ -575,6 +575,9 @@ angular.module('bimoliveApp')
         return 0;
     };
     
+    /**
+     * Convert seconds to vtt time format
+     */
     this.seconds2vttTimeFormat = function(totalSeconds) {
         console.log(totalSeconds);
         var tmp = totalSeconds;
@@ -604,21 +607,23 @@ angular.module('bimoliveApp')
         
         var content = '';
         if(data.length > 0) {
-            content += 'WEBVTT\n\n' +
-                      'Chapter 1\n' +
-                      '00:00:00.000 --> ' + this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[0].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart)) + '\n' +
-                      data[0].content + '\n\n';
+            content += 'WEBVTT\n\n';
+                    //   'Chapter 1\n' +
+                    //   '00:00:00.000 --> ' + this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[0].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart)) + '\n' +
+                    //   data[0].content + '\n\n';
                       
-            for(var i = 1, len = data.length; i < len; ++i) {
+            for(var i = 0, len = data.length; i < len; ++i) {
+                var index = i + 1;
                 if(i < len - 1) {
-                    content += ('Chapter ' + (i + 1) + '\n' + 
-                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(appScope.realTime2Seconds(data[i-1].changeTime) - appScope.currentLecture.lectureInfo.realStart)) + ' --> ' + 
-                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(appScope.realTime2Seconds(data[i].changeTime) - appScope.currentLecture.lectureInfo.realStart)) + '\n' +
+                    content += ('Chapter ' + index + '\n' + 
+                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[i].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart)) + ' --> ' + 
+                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[i+1].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart)) + '\n' +
                     data[i].content + '\n\n');
                 } else {
-                    content += ('Chapter ' + (i + 1) + '\n' + 
-                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(appScope.realTime2Seconds(data[i-1].changeTime) - appScope.currentLecture.lectureInfo.realStart)) + ' --> ' + 
-                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(appScope.realTime2Seconds(data[i].changeTime) - appScope.currentLecture.lectureInfo.realStart)) + '\n' +
+                    // last one
+                    content += ('Chapter ' + index + '\n' + 
+                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[i].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart)) + ' --> ' + 
+                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[i].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart) + 5) + '\n' +
                     data[i].content);
                 }
             }
@@ -626,9 +631,7 @@ angular.module('bimoliveApp')
         
         var myBlob = new Blob([content], {type : "text/vtt"});
         
-        var chaptersFile = window.URL.createObjectURL(myBlob);
-        
-        return chaptersFile;
+        this.chaptersFile = window.URL.createObjectURL(myBlob);
     };
     
     // timeTag
@@ -665,7 +668,7 @@ angular.module('bimoliveApp')
                 // console.log(data);
                 // console.log(appScope.realTime2Seconds(data[0].changeTime));
                 // console.log(appScope.currentLecture.lectureInfo.realStart);
-                appScope.chaptersFile = appScope.createvttFile(data);
+                appScope.createvttFile(data);
                 appScope.replayVideo();
                 appScope.streamVideo();
             })
@@ -676,6 +679,5 @@ angular.module('bimoliveApp')
             });
         }
     }
-    
     
 }]);
