@@ -1,0 +1,52 @@
+<br>
+<div class="container">
+    <div class="page-header" ng-init="infoCtrl.getLecture()">
+        <h1 class="text-center">
+            {{infoCtrl.lecture.lectureInfo.topic}} 
+            <span class="label label-danger" style="font-size:20px; padding-top:7px;" ng-if="infoCtrl.lecture.lectureInfo.status === 'live'">LIVE</span>
+            <span class="label label-warning" style="font-size:20px; padding-top:7px;" ng-if="infoCtrl.lecture.lectureInfo.status === 'wait'">Waiting</span>
+            <span class="label label-success" style="font-size:20px; padding-top:7px;" ng-if="infoCtrl.lecture.lectureInfo.status === 'finish'">Finished</span>
+            <span class="label label-primary" style="font-size:20px; padding-top:7px;" ng-if="infoCtrl.lecture.lectureInfo.status === 'replay'">Replay</span>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+            <form class="list-group">
+                <div class="list-group">
+                    <img class="img-responsive center-block" ng-src="{{infoCtrl.lecture.lectureInfo.image}}">
+                </div>
+                <a ng-href="#/student/{{infoCtrl.lecture.lectureInfo.idLecture}}" ng-if="infoCtrl.lecture.lectureInfo.status === 'live'"><button type="button" class="btn btn-lg btn-danger center-block">Watch live</button></a>
+                <a ng-href="#/student/{{infoCtrl.lecture.lectureInfo.idLecture}}" ng-if="infoCtrl.lecture.lectureInfo.status === 'replay'"><button type="button" class="btn btn-lg btn-primary center-block">Watch Replay</button></a>
+                <div class="list-group">
+                    <label class="control-label" for="topic">Lecture topic</label>
+                    <li class="list-group-item info-lable" id="topic" name="topic">{{infoCtrl.lecture.lectureInfo.topic}}</li>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="teacher">Taught by</label>
+                    <a ng-href="#/teacherInfo/{{infoCtrl.lecture.idTeacher}}">
+                        <li class="list-group-item info-lable" id="teacher" name="teacher">{{infoCtrl.lecture.teacherFirstName}} {{infoCtrl.lecture.teacherLastName}}</li>
+                    </a>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="scheduleDate">Scheduled date</label>
+                    <li class="list-group-item info-lable" id="scheduleDate" name="scheduleDate">{{infoCtrl.lecture.lectureInfo.scheduleDate}}</li>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="startTime">Start time</label>
+                    <li class="list-group-item info-lable" id="startTime" name="startTime">{{infoCtrl.lecture.lectureInfo.startTime}}</li>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="endTime">End time</label>
+                    <li class="list-group-item info-lable" id="endTime" name="endTime">{{infoCtrl.lecture.lectureInfo.endTime}}</li>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="intro">lecture description</label>
+                    <p class="list-group-item list-group-text info-lable" id="intro" name="intro">{{infoCtrl.lecture.lectureInfo.intro}}</p>
+                </div>
+                <br>
+                
+            </form>
+        </div>
+    </div>
+   
+</div>

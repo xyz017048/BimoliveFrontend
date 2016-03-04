@@ -106,8 +106,10 @@ angular.module('bimoliveApp')
                 setTimeout(function () {
                     getQuestions(lastId);
                 }, 5000);
-            } else { // it is not 'live' change video
+            } else if (appScope.currentLecture.lectureInfo.status === 'finish') { // it is not 'live' change video
                 // appScope.streamVideo();
+                alert('Lecture Finished');
+                $location.url($window.history.back(1));
             }
         })
         .error(function(data, status) {
@@ -259,7 +261,7 @@ angular.module('bimoliveApp')
      * student follow course at lecture page
      * @return {[type]} [description]
      */
-    function followCourse() {
+    this.followCourse = function() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
         } else if (appScope.currentLecture.followCourse !== 1) {
@@ -295,7 +297,7 @@ angular.module('bimoliveApp')
      * student unfollow course at lecture page
      * @return {[type]} [description]
      */
-    function unfollowCourse() {
+    this.unfollowCourse = function() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
         } else if (appScope.currentLecture.followCourse !== 0) {
@@ -331,7 +333,7 @@ angular.module('bimoliveApp')
      * student follow teacher at lecture page
      * @return {[type]} [description]
      */
-    function followTeacher() {
+    this.followTeacher = function() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
         } else if (appScope.currentLecture.followTeacher !== 1) {
@@ -368,7 +370,7 @@ angular.module('bimoliveApp')
      * student follow teacher at lecture page
      * @return {[type]} [description]
      */
-    function unfollowTeacher() {
+    this.unfollowTeacher = function() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
         } else if (appScope.currentLecture.followTeacher !== 0) {

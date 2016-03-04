@@ -6,7 +6,7 @@ angular.module('bimoliveApp')
 /**
  * Controller for profile view
  */
-.controller('ProfileCtrl', ['MainService', '$http', '$location', '$window', function (MainService, $http, $location, $window) {
+.controller('ProfileCtrl', ['MainService', '$http', '$location', '$window', '$scope', function (MainService, $http, $location, $window, $scope) {
     
     // if the user has not log in, redirect back and show the log in modal
     if (!MainService.getIsLogin()) {
@@ -53,6 +53,7 @@ angular.module('bimoliveApp')
         var files = event.target.files;
         var profile_pic = files[0];
         appScope.user.profile = MainService.upload(profile_pic, 'profile');
+        $scope.$apply();
     });
     
     $('#resume').change(function (event) {

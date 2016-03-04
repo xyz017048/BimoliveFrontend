@@ -5,7 +5,7 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('CourseDetailCtrl', ['$http', '$routeParams', 'MainService', '$location', '$window', function ($http, $routeParams, MainService, $location, $window) {
+.controller('CourseDetailCtrl', ['$http', '$routeParams', 'MainService', '$location', '$window', '$scope', function ($http, $routeParams, MainService, $location, $window, $scope) {
     
     // if the user has not log in, redirect back and show the log in modal
     if (!MainService.getIsLogin()) {
@@ -136,8 +136,12 @@ angular.module('bimoliveApp')
         this.getLectureList();
     };
     
-}])
-
-.factory('lectureDetail', function () {
-    
-});
+    // hide loader image
+    $('#progress').hide();
+    $('#course_pic').change(function (event) {
+        var files = event.target.files;
+        var profile_pic = files[0];
+        appScope.currentCourse.image = MainService.upload(profile_pic, 'course', appScope.currentCourse.idCourse);
+        $scope.$apply();
+    });
+}]);

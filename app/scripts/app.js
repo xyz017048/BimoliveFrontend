@@ -97,7 +97,7 @@ angular.module('bimoliveApp', [
         .when('/teacherInfo/:teacherid', {
             templateUrl: 'views/studentViews/teacherInfoView.html',
             controller: 'InfoCtrl',
-            controllerAs: 'InfoCtrl'
+            controllerAs: 'infoCtrl'
         })
         .when('/admin', {
             templateUrl: 'views/adminViews/adminView.html',
