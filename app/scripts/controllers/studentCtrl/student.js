@@ -106,8 +106,10 @@ angular.module('bimoliveApp')
                 setTimeout(function () {
                     getQuestions(lastId);
                 }, 5000);
-            } else { // it is not 'live' change video
+            } else if (appScope.currentLecture.lectureInfo.status === 'finish') { // it is not 'live' change video
                 // appScope.streamVideo();
+                alert('Lecture Finished');
+                $location.url($window.history.back(1));
             }
         })
         .error(function(data, status) {
