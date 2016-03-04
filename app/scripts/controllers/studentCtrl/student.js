@@ -219,7 +219,9 @@ angular.module('bimoliveApp')
         });
         
         videoPlayer.on('ready', function(e) {
-            replayVideo();
+            if(!appScope.isLive) {
+                replayVideo();
+            }
         });
         
         videoPlayer.on('time', function(e) {

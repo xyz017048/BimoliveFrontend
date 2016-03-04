@@ -10,7 +10,7 @@
                 <a ng-href="#/profile">
                     <li id="profile-pic" >
                         <img class="img-responsive img-circle" ng-src="{{mainCtrl.currentUser.profile}}" alt="profile">
-                        <li style="text-align: center; color:#f1f1f1;">Shawn Zhong</li>
+                        <li style="text-align: center; color:#f1f1f1;">{{mainCtrl.currentUser.username}}</li>
                         <li style="text-align: center; color:#f1f1f1; padding-top:5px;" ng-if="mainCtrl.currentUser.roleLevel === 2">Teacher</li>
                         <li style="text-align: center; color:#f1f1f1; padding-top:5px;" ng-if="mainCtrl.currentUser.roleLevel === 1">Student</li>
                     </li>
