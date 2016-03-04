@@ -3,11 +3,11 @@
     <div class="page-header" ng-init="infoCtrl.getTeacher()">
         <h1 class="text-center">
             {{infoCtrl.teacher.teacherInfo.firstName}} {{infoCtrl.teacher.teacherInfo.lastName}}
-            <button type="button" class="btn btn-md btn-default" ng-if="infoCtrl.teacher.followTeacher === 0">
+            <button type="button" class="btn btn-md btn-default" ng-if="infoCtrl.teacher.followTeacher === 0" ng-click="infoCtrl.followTeacher()">
                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                 Follow
             </button>
-            <button type="button" class="btn btn-md btn-default" ng-if="infoCtrl.teacher.followTeacher === 1">
+            <button type="button" class="btn btn-md btn-default" ng-if="infoCtrl.teacher.followTeacher === 1" ng-click="infoCtrl.unfollowTeacher()">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 Unfollow
             </button>

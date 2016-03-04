@@ -261,7 +261,7 @@ angular.module('bimoliveApp')
      * student follow course at lecture page
      * @return {[type]} [description]
      */
-    function followCourse() {
+    this.followCourse = function() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
         } else if (appScope.currentLecture.followCourse !== 1) {
@@ -297,7 +297,7 @@ angular.module('bimoliveApp')
      * student unfollow course at lecture page
      * @return {[type]} [description]
      */
-    function unfollowCourse() {
+    this.unfollowCourse = function() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
         } else if (appScope.currentLecture.followCourse !== 0) {
@@ -333,7 +333,7 @@ angular.module('bimoliveApp')
      * student follow teacher at lecture page
      * @return {[type]} [description]
      */
-    function followTeacher() {
+    this.followTeacher = function() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
         } else if (appScope.currentLecture.followTeacher !== 1) {
@@ -370,7 +370,7 @@ angular.module('bimoliveApp')
      * student follow teacher at lecture page
      * @return {[type]} [description]
      */
-    function unfollowTeacher() {
+    this.unfollowTeacher = function() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
         } else if (appScope.currentLecture.followTeacher !== 0) {

@@ -2,11 +2,11 @@
 <div class="container">
     <div class="page-header" ng-init="infoCtrl.getCourse()">
         <h1 class="text-center">{{infoCtrl.course.courseInfo.name}}
-            <button type="button" class="btn btn-md btn-default" ng-if="infoCtrl.course.followCourse === 0">
+            <button type="button" class="btn btn-md btn-default" ng-if="infoCtrl.course.followCourse === 0" ng-click="infoCtrl.followCourse()">
                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                 Follow
             </button>
-            <button type="button" class="btn btn-md btn-default" ng-if="infoCtrl.course.followCourse === 1">
+            <button type="button" class="btn btn-md btn-default" ng-if="infoCtrl.course.followCourse === 1" ng-click="infoCtrl.unfollowCourse()">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 Unfollow
             </button>
