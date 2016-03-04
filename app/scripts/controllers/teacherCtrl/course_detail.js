@@ -46,8 +46,8 @@ angular.module('bimoliveApp')
             }
         } )
         .success(function(data, status) {
-            appScope.currentCourse = Object.create(data);
-            appScope.defaultCourse = Object.create(data);
+            appScope.currentCourse = data;
+            appScope.defaultCourse = JSON.parse(JSON.stringify(data));
             appScope.getLectureList();
         })
         .error(function(data, status) {
@@ -142,6 +142,13 @@ angular.module('bimoliveApp')
         var files = event.target.files;
         var profile_pic = files[0];
         appScope.currentCourse.image = MainService.upload(profile_pic, 'course', appScope.currentCourse.idCourse);
-        $scope.$apply();
+        appScope.refreshPage();
     });
+    
+    this.refreshPage = function () {
+        var interval = setInterval(function () { $scope.$apply(); }, 500);
+        setTimeout(function() {
+             clearInterval(interval);
+        }, 10000);
+    };
 }]);

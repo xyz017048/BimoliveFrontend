@@ -49,11 +49,14 @@ angular.module('bimoliveApp')
 	    });
     };
     
+    // hide loader image
+    $('#progress').hide();
+    
     $('#profile').change(function (event) {
         var files = event.target.files;
         var profile_pic = files[0];
         appScope.user.profile = MainService.upload(profile_pic, 'profile');
-        $scope.$apply();
+        appScope.refreshPage();
     });
     
     $('#resume').change(function (event) {
@@ -61,5 +64,12 @@ angular.module('bimoliveApp')
         var resume = files[0];
         appScope.user.resume = MainService.upload(resume, 'resume');
     });
+    
+    this.refreshPage = function () {
+        var interval = setInterval(function () { $scope.$apply(); }, 500);
+        setTimeout(function() {
+             clearInterval(interval);
+        }, 10000);
+    };
     
 }]);

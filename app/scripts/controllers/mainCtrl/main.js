@@ -455,7 +455,7 @@ angular.module('bimoliveApp')
                 }
                 else {
                     // Success!
-                    alert('Upload Done');
+                    // alert('Upload Done');
                     // hide loader image
                     $('#progress').hide();
                     $('#progress-bar').attr('style', 'width:0%');
