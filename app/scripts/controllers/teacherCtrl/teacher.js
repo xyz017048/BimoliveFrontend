@@ -37,12 +37,22 @@ angular.module('bimoliveApp')
         } )
         .success(function(data, status) {
             for (var q in data) {
-                appScope.questions.push(data[q]);
-                lastId = data[q].idQuestion;
+                if (data[q].idQuestion !== 0) {
+                    appScope.questions.push(data[q]);
+                }
+                if (q === data.length - 1 + "") {
+                    lastId = data[q].idQuestion;
+                    appScope.currentLecture.lectureInfo.status = data[q].lectureStatus;
+                }
             }
-            setTimeout(function () {
-                getQuestions(lastId);
-            }, 5000);
+            if (appScope.currentLecture.lectureInfo.status === 'live') {
+                setTimeout(function () {
+                    getQuestions(lastId);
+                }, 5000);
+            } else if (appScope.currentLecture.lectureInfo.status === 'finish') { // it is not 'live' change video
+                // appScope.streamVideo();
+                alert('Lecture Finished');
+            }
         })
         .error(function(data, status) {
             console.log(data);
@@ -137,7 +147,7 @@ angular.module('bimoliveApp')
         })
 
         .success(function (data, status) {
-            
+            appScope.currentLecture.lectureInfo.status = 'finish';
         })
 
         .error(function (data, status) {
