@@ -1,0 +1,48 @@
+<br>
+<div class="container">
+    <div class="page-header" ng-init="infoCtrl.getTeacher()">
+        <h1 class="text-center">
+            {{infoCtrl.teacher.teacherInfo.firstName}} {{infoCtrl.teacher.teacherInfo.lastName}}
+            <button type="button" class="btn btn-md btn-default" ng-if="infoCtrl.teacher.followTeacher === 0">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                Follow
+            </button>
+            <button type="button" class="btn btn-md btn-default" ng-if="infoCtrl.teacher.followTeacher === 1">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Unfollow
+            </button>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+            <form class="list-group">
+                <div class="list-group">
+                    <img class="img-responsive center-block" ng-src="{{infoCtrl.teacher.teacherInfo.profile}}">
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="name">Teacher name</label>
+                    <li class="list-group-item info-lable" id="name" name="name">{{infoCtrl.teacher.teacherInfo.firstName}} {{infoCtrl.teacher.teacherInfo.lastName}} </li>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="email">Email</label>
+                    <li class="list-group-item info-lable" id="email" name="email">{{infoCtrl.teacher.teacherInfo.email}}</li>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="company">Work for</label>
+                    <li class="list-group-item info-lable" id="company" name="company">{{infoCtrl.teacher.teacherInfo.company}}</li>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="jobTitle">Job title</label>
+                    <li class="list-group-item info-lable" id="jobTitle" name="jobTitle">{{infoCtrl.teacher.teacherInfo.jobTitle}}</li>
+                </div>
+                <div class="list-group">
+                    <label class="control-label" for="intro">teacher description</label>
+                    <p class="list-group-item list-group-text info-lable" id="intro" name="intro">{{infoCtrl.teacher.teacherInfo.intro}}</p>
+                </div>
+                <br>
+                
+            </form>
+        </div>
+    </div>
+   
+</div>

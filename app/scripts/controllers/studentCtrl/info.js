@@ -74,7 +74,7 @@ angular.module('bimoliveApp')
                 idUser: MainService.getCurrentUser().idUser
             }
         } )
-        .success(function(data, status) {
+        .success(function (data, status) {
             appScope.teacher = Object.create(data);
         })
         .error(function(data, status) {
