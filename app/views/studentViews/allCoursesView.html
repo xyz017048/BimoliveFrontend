@@ -1,0 +1,32 @@
+<br>
+<div class="container">
+    <div class="page-header">
+        <h1>All Courses
+        </h1>
+    </div>
+    <div class="row">
+        <div class="input-group col-lg-6 col-lg-offset-3">
+            <input type="text" class="form-control input-lg" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-default btn-lg" type="button">Go!</button>
+            </span>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row" style="display:flex; flex-wrap:wrap;" ng-init="allCtrl.getCourses()">
+        <div ng-repeat="course in allCtrl.courses" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <a ng-href="#/courseInfo/{{course.courseInfo.idCourse}}">
+                <div class="imageWrapper" style="position: relative;">
+                    <img ng-src="{{course.courseInfo.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
+                </div>
+                <div class="caption">
+                    <a ng-href="#/courseInfo/{{course.courseInfo.idCourse}}">{{course.courseInfo.category}} {{course.courseInfo.levelNumber}}: {{course.courseInfo.name}}</a>
+                    <p>by {{course.teacherFirstName}} {{course.teacherLastName}}</p>
+                    <p>Start Date: {{course.courseInfo.startDate}}</p>
+                    <p>End Date: {{course.courseInfo.endDate}}</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
