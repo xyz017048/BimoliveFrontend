@@ -1,0 +1,25 @@
+<br>
+<div class="container">
+    <div class="page-header">
+        <h1>All Live Videos
+        </h1>
+    </div>
+    <div class="row" style="display:flex; flex-wrap:wrap;" ng-init="allCtrl.getLiveVideos()">
+        <h3 class="text-center" ng-if="allCtrl.liveVideos.length <= 0">No live video at this moment, <a ng-href="#/allReplay">click here to watch replay videos!</a></h3>
+        <div ng-repeat="video in allCtrl.liveVideos" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <a ng-href="#/student/{{video.idLecture}}">
+                <div class="imageWrapper" style="position: relative;">
+                    <img ng-src="{{video.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;"
+                    />
+                    <div class="img-overlay">
+                        <img ng-src="images/play_icon.png" class="img-responsive play-icon" alt="play" />
+                    </div>
+                </div>
+                <div class="caption">
+                    <a ng-href="#/student/{{video.idLecture}}">{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</a>
+                    <p>by {{video.teacherFirstName}} {{video.teacherLastName}}</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
