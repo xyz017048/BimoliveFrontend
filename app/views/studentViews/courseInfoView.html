@@ -16,15 +16,15 @@
         <div class="col-lg-5">
             <form class="list-group">
                 <div class="list-group">
-                    <label class="control-label" for="image">Course picture</label>
                     <img class="img-responsive center-block" ng-src="{{infoCtrl.course.courseInfo.image}}">
                 </div>
+                <button></button>
                 <div class="list-group">
                     <label class="control-label" for="name">Course name</label>
                     <li class="list-group-item info-lable" id="name" name="name">{{infoCtrl.course.courseInfo.name}}</li>
                 </div>
                 <div class="list-group">
-                    <label class="control-label" for="name">Taught by</label>
+                    <label class="control-label" for="teacher">Taught by</label>
                     <a ng-href="#/teacherInfo/{{infoCtrl.course.idTeacher}}">
                         <li class="list-group-item info-lable" id="teacher" name="teacher">{{infoCtrl.course.teacherFirstName}} {{infoCtrl.course.teacherLastName}}</li>
                     </a>

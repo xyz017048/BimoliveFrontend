@@ -3,7 +3,7 @@
 
 angular.module('bimoliveApp')
 /**
- * Controller for teacher view
+ * Controller for courseInfo, LectureInfo, and teacherInfo pages
  */
 .controller('InfoCtrl', ['$routeParams', '$http', 'MainService', '$location', '$window', function ($routeParams, $http, MainService, $location, $window) {
     
@@ -65,16 +65,40 @@ angular.module('bimoliveApp')
     this.getTeacher = function () {
         $http( { 
             method: 'POST', 
-            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/followedcourses',
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/teacherinfo',
             headers: {
                 'Content-Type': undefined
             },
             data: { 
-                idCourse: $routeParams.teacherid
+                idTeacher: $routeParams.teacherid,
+                idUser: MainService.getCurrentUser().idUser
             }
         } )
         .success(function(data, status) {
             appScope.teacher = Object.create(data);
+        })
+        .error(function(data, status) {
+            console.log(data);
+            console.log(status);
+            console.log('Request failed');
+        });
+    };
+    
+    this.lecture = {};
+    this.getLecture = function () {
+        $http( { 
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/singlelecture',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: { 
+                idLecture: $routeParams.lectureid,
+                idUser: MainService.getCurrentUser().idUser
+            }
+        } )
+        .success(function(data, status) {
+            appScope.lecture = Object.create(data);
         })
         .error(function(data, status) {
             console.log(data);
