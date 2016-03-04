@@ -13,7 +13,7 @@
         </h1>
     </div>
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-5 col-md-5">
             <form class="list-group">
                 <div class="list-group">
                     <img class="img-responsive center-block" ng-src="{{infoCtrl.course.courseInfo.image}}">
@@ -56,15 +56,15 @@
                 
             </form>
         </div>
-        <div class="col-lg-5 col-lg-offset-2">
+        <div class="col-lg-5 col-lg-offset-2 col-md-5 col-md-offset-2">
             <div class="list-group">
                 <label class="control-label" for="addLectureButton">Lectures:</label>
             </div>
         </div>
-        <div class="row col-lg-5 col-lg-offset-2" style="overflow: auto; margin-bottom: 50px; height: 1000px;">   
+        <div class="row col-lg-5 col-lg-offset-2 col-md-5 col-md-offset-2" style="overflow: auto; margin-bottom: 50px; height: 1000px;">   
             
             <div class="row" style="display:flex; flex-wrap:wrap; padding-top: 10px; padding-left: 10px; padding-right: 10px;">
-                <div ng-repeat="lecture in infoCtrl.course.lectureList" class="thumbnail col-lg-6 col-md-3 col-sm-4 col-xs-6">
+                <div ng-repeat="lecture in infoCtrl.course.lectureList" class="thumbnail col-lg-4 col-md-4 col-sm-3 col-xs-6">
                     <a ng-href="#/lectureInfo/{{lecture.idLecture}}">
                         <div class="imageWrapper" style="position: relative;">
                             <img ng-src="{{lecture.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;"

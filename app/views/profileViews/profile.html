@@ -2,9 +2,9 @@
 <div class="container">
     <div class="page-header">
         <h1 ng-if="profileCtrl.user.roleLevel == 1">Student Account Setting <!-- student -->
-            <button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#applyToTeachModal" ng-if="profileCtrl.user.applyStatus === ''">Apply to teach</button>
-            <button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#applyToTeachModal" ng-if="profileCtrl.user.applyStatus !== ''">Edit application</button>
-            <button type="button" class="btn btn-lg btn-default" data-toggle="modal" ng-if="profileCtrl.user.applyStatus === 'new'||profileCtrl.user.applyStatus === 'read'">Cancel application</button>
+            <button type="button" class="btn btn-lg btn-default btn-outline" data-toggle="modal" data-target="#applyToTeachModal" ng-if="profileCtrl.user.applyStatus === ''">Apply to teach</button>
+            <button type="button" class="btn btn-lg btn-default btn-outline" data-toggle="modal" data-target="#applyToTeachModal" ng-if="profileCtrl.user.applyStatus !== ''">Edit application</button>
+            <button type="button" class="btn btn-lg btn-default btn-outline" data-toggle="modal" ng-if="profileCtrl.user.applyStatus === 'new'||profileCtrl.user.applyStatus === 'read'">Cancel application</button>
         </h1>
         <h1 ng-if="profileCtrl.user.roleLevel === 2">Teacher Account Setting</h1>
         
@@ -17,7 +17,7 @@
                     <img class="img-circle center-block" style="max-width: 25%" ng-src="{{profileCtrl.user.profile}}">
                     <br>
                     <!--<img ng-show="profileCtrl.showLoader" ng-src="images/loader.gif" class="img-responsive" style="padding-top:20px; height:60px; width:30px; padding-bottom:10px; display:block; margin:auto;">-->
-                    <button class="btn btn-default btn-block btn-file">
+                    <button class="btn btn-default btn-outline btn-block btn-file">
                         Upload Picture <input type="file" id="profile" name="profile"/>
                     </button>
                 </div>
@@ -38,10 +38,10 @@
                     <input class="form-control" id="lastName" placeholder="{{profileCtrl.user.lastName}}" ng-model="profileCtrl.user.lastName">
                 </div>
                 <div class="control-group col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
-                    <button type="button" class="btn btn-lg btn-default" ng-click="profileCtrl.resetData()">
+                    <button type="button" class="btn btn-lg btn-default btn-outline" ng-click="profileCtrl.resetData()">
                         <span class="glyphicon glyphicon-repeat"></span> Reset
                     </button>
-                    <button type="submit" class="btn btn-lg btn-primary"">
+                    <button type="submit" class="btn btn-lg btn-primary btn-outline">
                         <span class="glyphicon glyphicon-upload"></span> Update
                     </button>
                 </div>
