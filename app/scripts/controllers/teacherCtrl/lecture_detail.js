@@ -5,7 +5,7 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('LectureDetailCtrl', ['$http', '$routeParams', 'MainService', '$location', '$window',  function ($http, $routeParams, MainService, $location, $window) {
+.controller('LectureDetailCtrl', ['$http', '$routeParams', 'MainService', '$location', '$window', '$scope', function ($http, $routeParams, MainService, $location, $window, $scope) {
     
     // if the user has not log in, redirect back and show the log in modal
     if (!MainService.getIsLogin()) {
@@ -62,6 +62,44 @@ angular.module('bimoliveApp')
         .error(function (data, status) {
             alert('Start Lecture Failed!');
         });
+    };
+    
+    this.uploadReplay = function (idUser, idLecture, url) {
+        $http({
+            method: 'POST',
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/uploadlecture',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: {
+                idUser: idUser,
+                idLecture: idLecture,
+                url: url
+            }
+        })
+
+        .success(function (data, status) {
+            alert('upload success');
+        })
+
+        .error(function (data, status) {
+            alert('Upload Lecture Failed!');
+        });
+    };
+    
+    $('#progressLecture').hide();
+    $('#lectureReplay').change(function (event) {
+        var files = event.target.files;
+        var profile_pic = files[0];
+        appScope.replayUrl = MainService.upload(profile_pic, 'lectureReplay', appScope.currentLecture.idCourse, appScope.currentLecture.idLecture, appScope.uploadReplay);
+        // appScope.refreshPage();
+    });
+    
+    this.refreshPage = function () {
+        var interval = setInterval(function () { $scope.$apply(); }, 500);
+        setTimeout(function() {
+             clearInterval(interval);
+        }, 10000);
     };
         
 }]);

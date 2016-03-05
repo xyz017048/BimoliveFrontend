@@ -39,6 +39,9 @@ angular.module('bimoliveApp')
         .success(function (data, status) {
             $('#applyToTeachModal').modal('hide'); 
             if (data.result) {
+                if (appScope.user.applyStatus === '') {
+                    appScope.user.applyStatus = 'new';
+                }
                 alert('Apply success! Waiting for approve');
                 MainService.setCurrentUser(appScope.user);
             } else {

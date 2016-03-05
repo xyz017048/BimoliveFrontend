@@ -197,10 +197,10 @@ angular.module('bimoliveApp')
         
         var live_url = '';
         if (this.currentLecture.lectureInfo.status === 'live') {
-            live_url = 'rtmp://' + '52.36.183.186' + '/live' + '/' + this.currentLecture.lectureInfo.url;
+            live_url = 'rtmp://' + '52.33.149.173' + '/live' + '/' + this.currentLecture.lectureInfo.url;
         } else if (this.currentLecture.lectureInfo.status === 'replay') {
             live_url = this.currentLecture.lectureInfo.url;
-            live_url = 'https://content.jwplatform.com/videos/q1fx20VZ-kNspJqnJ.mp4';
+            // live_url = 'https://content.jwplatform.com/videos/q1fx20VZ-kNspJqnJ.mp4';
         } else if (this.currentLecture.lectureInfo.status === 'finish') {
             alert('finish');
         }

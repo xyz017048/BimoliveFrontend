@@ -158,6 +158,7 @@ angular.module('bimoliveApp')
                 console.log(data);
                 console.log(status);
                 console.log('Request failed');
+                alert('Server error, please try again later!');
             });
             
             // Clear the textbox
@@ -195,8 +196,6 @@ angular.module('bimoliveApp')
     
     this.usernameCheck = function() {
         
-        var result = 0;
-        
         // Serveice
         $http( { 
             method: 'POST', 
@@ -208,19 +207,20 @@ angular.module('bimoliveApp')
         } )
         
         .success(function(data, status) {
-            result = data.result;
+            if (data.result) {
+                appScope.emailCheck();
+            } else {
+                alert('Username has been used.');
+            }
         })
         
         .error(function(data, status) {
             
         });
         
-        return function() { return result; };
     };
     
     this.emailCheck = function() {
-        
-        var result = 0;
         
         // Serveice
         $http( { 
@@ -233,13 +233,45 @@ angular.module('bimoliveApp')
         } )
         
         .success(function(data, status) {
-            result = data.result;
+            if (data.result) {
+                appScope.realSignUp();
+            } else {
+                alert('Email has been used.');
+            }
         })
         
         .error(function(data, status) {
         });
         
-        return function() { return result; };
+    };
+    
+    this.realSignUp = function () {
+        $http( { 
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/register',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: { email: this.signUpEmail, username: this.signUpUsername, password: this.signUpPassword }
+        } )
+        
+        .success(function(data, status) {
+            if(data.result) {
+                appScope.isLogin = true;
+                MainService.setIsLogin(true);
+                // Inject into MainService
+                MainService.setCurrentUser(data);
+                appScope.currentUser = data;
+                alert('Sign up successed!');
+            } else {
+                alert('Sign up failed! Please try again!');
+            }
+        })
+        .error(function (data, status) {
+            
+        });
+        
+        this.signUpClear();
     };
     
     /**
@@ -248,42 +280,7 @@ angular.module('bimoliveApp')
     this.signUp = function() {
         // If the signUpUsername, signUpEmail and signUpPassword is valid and defined
         if(this.checkIsSignUpValid()) {
-            
-            // Assign app object in appScope
-            var appScope = this;
-            
-            if ( this.usernameCheck() ) {
-                
-                if( this.emailCheck() ) {
-                    // Serveice
-                    $http( { 
-                        method: 'POST', 
-                        url: 'http://bimolive.us-west-2.elasticbeanstalk.com/register',
-                        headers: {
-                            'Content-Type': undefined
-                        },
-                        data: { email: this.signUpEmail, username: this.signUpUsername, password: this.signUpPassword }
-                    } )
-                    
-                    .success(function(data, status) {
-                        if(data.result) {
-                            appScope.isLogin = true;
-                            MainService.setIsLogin(true);
-                            // Inject into MainService
-                            MainService.setCurrentUser(data);
-                            appScope.currentUser = data;
-                        }
-                    })
-                    .error(function(data, status) {
-                    });
-                    
-                    this.signUpClear();    
-                } else {
-                    alert( 'Email has been registered' );
-                }
-            } else {
-                alert( 'Username is used' );
-            }
+            this.usernameCheck();
         } 
     };
     
@@ -419,11 +416,13 @@ angular.module('bimoliveApp')
      * lectureId is opitional for uploading lecture
      * it will return a url of the uploaded file, it will return '' if anything goes wrong.
      */
-    MainService.upload = function (file, filePurpose, courseId, lectureId) {
+    MainService.upload = function (file, filePurpose, courseId, lectureId, callBackFcn) {
+        $('#progressLecture').show();
         $('#progress').show();
         AWS.config.update({ accessKeyId: 'AKIAIJG57SRTCKPYBGJA', secretAccessKey: '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' });
         AWS.config.region = 'us-west-2';
         var bucket = new AWS.S3({ params: { Bucket: 'bimolive-pictures' } });
+        bucket.config.httpOptions.timeout = 60000 * 10;
         if (file) {
             var key = '';
             if (filePurpose === 'profile') {
@@ -436,7 +435,13 @@ angular.module('bimoliveApp')
                 } else {
                     return '';
                 }
-            } else if (filePurpose === 'lecture') {
+            } else if (filePurpose === 'lectureReplay') {
+                if (courseId) {
+                    key = 'replayVideos/' + courseId + '/' + lectureId + '.mp4';
+                } else {
+                    return '';
+                }
+            }else if (filePurpose === 'lecture') {
                 if (courseId) {
                     key = 'course_pics/' + courseId + '/' + lectureId;
                 } else {
@@ -461,6 +466,12 @@ angular.module('bimoliveApp')
                     $('#progress-bar').attr('style', 'width:0%');
                     $('#progress-bar').attr('aria-valuenow', '0');
                     $('#progress-bar').text('0%');
+                    
+                    $('#progressLecture').hide();
+                    $('#progress-bar').attr('style', 'width:0%');
+                    $('#progress-bar').attr('aria-valuenow', '0');
+                    $('#progress-bar').text('0%');
+                    callBackFcn(MainService.CurrentUser.idUser, lectureId, 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key);
                 }
             })
             .on('httpUploadProgress', function (progress) {

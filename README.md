@@ -30,6 +30,10 @@ Run html2jade to compile a jade file
 html2jade index.html > index.jade
 ```
 
+```bash
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8000
+```
+
 Run server
 ```bash
 node server.js
