@@ -36,7 +36,12 @@ sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8000
 
 Run server
 ```bash
-node server.js
+forever start server.js
+```
+To end server
+
+```bash
+forever stop 0
 ```
 
 ## Testing

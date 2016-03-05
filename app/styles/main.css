@@ -1,5 +1,5 @@
 body {
-background: #f1f1f1 !important; 
+background: #fdfdfc !important; 
 overflow-x: hidden;
 font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
@@ -63,6 +63,8 @@ background-color: #FFFFFF;
 }
 .well-lg {
 transition: transform 0.4s ease;
+background: transparent;
+border: 0px;
 }
 .active-nav .well-lg{
 transform:translate3d(170px, 0, 0);
@@ -114,7 +116,7 @@ h2 {
     display: inline-block; 
     vertical-align: middle; 
     position: relative;
-    background: #f5f5f5;
+    background: transparent;
     border: none;
 }
 #add-course-wrapper {
@@ -164,24 +166,41 @@ input[readonly] {
     padding-bottom: 5px;
     padding-left: 10px;
 }
-.label{
-  border-radius:0; 
+.btn-default {
+    color: #252424;
+    border-color: #252424;
+    border: 1px solid #252424;
+    background: none;
 }
-.form-control{
-  border-radius:0; 
+.btn-default:hover {
+    color: #ffffff;
+    background-color: #252424;
 }
-.btn{
-  border-radius:0;
+.btn-primary {
+      color: #252424;
+    border-color: #252424;
+    border: 1px solid #252424;
+    background: none;
+}
+.btn-primary:hover {
+  color: #ffffff;
+    background-color: #252424;
+}
+a:focus {
+    outline: none;
 }
 .btn:focus {
   outline: none;
+}
+.navbar {
+    font-size: 17px;
 }
 .navbar-default .navbar-brand {
   color: #878787;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-  color: #878787;
+  color: #ffffff;
 }
 .navbar-default .navbar-text {
   color: #878787;
@@ -192,27 +211,27 @@ input[readonly] {
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #878787;
-    background-color: #ffffff;
+  color: #ffffff;
+    background-color: #252424;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
-  color: #878787;
-  background-color: #ffffff;
+  color: #ffffff;
+    background-color: #252424;
 }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  color: #878787;
-  background-color: #ffffff;
+  color: #ffffff;
+    background-color: #252424;
 }
 .navbar-default .navbar-toggle {
-  border-color: #ffffff;
+  border-color: #252424;
 }
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-  background-color: #ffffff;
+  background-color: #252424;
 }
 .navbar-default .navbar-toggle .icon-bar {
   background-color: #818181;
