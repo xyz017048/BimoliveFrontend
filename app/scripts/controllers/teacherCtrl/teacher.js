@@ -37,12 +37,23 @@ angular.module('bimoliveApp')
         } )
         .success(function(data, status) {
             for (var q in data) {
-                appScope.questions.push(data[q]);
-                lastId = data[q].idQuestion;
+                if (data[q].idQuestion !== 0) {
+                    appScope.questions.push(data[q]);
+                }
+                if (q === data.length - 1 + "") {
+                    lastId = data[q].idQuestion;
+                    appScope.currentLecture.lectureInfo.status = data[q].lectureStatus;
+                }
             }
-            setTimeout(function () {
-                getQuestions(lastId);
-            }, 5000);
+            if (appScope.currentLecture.lectureInfo.status === 'live') {
+                setTimeout(function () {
+                    getQuestions(lastId);
+                }, 5000);
+            } else if (appScope.currentLecture.lectureInfo.status === 'finish') { // it is not 'live' change video
+                // appScope.streamVideo();
+                alert('Lecture Finished');
+                appScope.redirectPage();
+            }
         })
         .error(function(data, status) {
             console.log(data);
@@ -119,6 +130,8 @@ angular.module('bimoliveApp')
         });
     };
     
+    this.currentLecture = {};
+    this.isFinished = false;
     /**
      * End lecture
      * Change the status of the lecture
@@ -137,41 +150,43 @@ angular.module('bimoliveApp')
         })
 
         .success(function (data, status) {
-            
+            appScope.currentLecture.lectureInfo.status = 'finish';
+            appScope.isFinished = true;
         })
 
         .error(function (data, status) {
-            });
-    };
-            
-
-    this.currentLecture = {};
-    this.isFinished = false;
-    // init
-    if(MainService.getCurrentUser().roleLevel === 2)
-    {
-        $http( { 
-            method: 'POST', 
-            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/singlelecture',
-            headers: {
-                'Content-Type': undefined
-            },
-            data: {
-                idLecture: $routeParams.idLecture,
-                idUser: MainService.getCurrentUser().idUser
-            }
-        } )
-        
-        .success(function(data, status) {
-            appScope.currentLecture = data;
-            if (data.status === 'replay') {
-                appScope.isFinished = true; 
-            }
-        })
-        
-        .error(function(data, status) {
         });
-    }
+    };
+    
+    // init
+    this.lectureFinish = function() {
+        if(MainService.getCurrentUser().roleLevel === 2)
+        {
+            $http( { 
+                method: 'POST', 
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/singlelecture',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: {
+                    idLecture: $routeParams.idLecture,
+                    idUser: MainService.getCurrentUser().idUser
+                }
+            } )
+            
+            .success(function(data, status) {
+                appScope.currentLecture = data;
+                if (data.status === 'replay') {
+                    appScope.isFinished = true;
+                }
+            })
+            
+            .error(function(data, status) {
+            });
+        }
+    };
+    
+    this.lectureFinish();
     
     this.redirectPage = function () {
         $('#redirectModal').on('hidden.bs.modal', function (e) {
