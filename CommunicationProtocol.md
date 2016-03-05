@@ -358,6 +358,18 @@ Teacher ends a live lecture:
                                 "result":       INT     (result=0 fail; reuslt=1 success)
                             }
 
+Teacher uploads a lecture video to replay
+            Request: POST   /teacher/uploadlecture
+                            {
+                                "idUser":       INT,
+                                "idLecture":    INT,
+                                "url":          STRING
+                            }
+            Response:   May receive 403 error, if the teacher don't hold this lecture
+                            or this lecture is not live.
+                            {
+                                "result":       INT     (result=0 fail; reuslt=1 success)
+                            }
 
 Teacher upload a video: (change status = "replay", url = where in amazon cloud)
 
@@ -751,7 +763,7 @@ Admin makes an decision on a application:
                                 {
                                     "idAdmin":              INT,
                                     "idUser":               INT,
-                                    "applyStatus":          STRING (can be "read","approval","decline")
+                                    "applyStatus":          STRING (can be "new","read","approval","decline")
                                 }
                 Response:
                                 {
