@@ -415,9 +415,9 @@ angular.module('bimoliveApp')
      * courseId is optional for uploading course and lecture
      * lectureId is opitional for uploading lecture
      * it will return a url of the uploaded file, it will return '' if anything goes wrong.
+     * CallBackFunction is the function will be called during and after upload.
      */
-    MainService.upload = function (file, filePurpose, courseId, lectureId, callBackFcn) {
-        $('#progressLecture').show();
+    MainService.upload = function (file, filePurpose, courseId, lectureId, callBackFunction) {
         $('#progress').show();
         AWS.config.update({ accessKeyId: 'AKIAIJG57SRTCKPYBGJA', secretAccessKey: '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' });
         AWS.config.region = 'us-west-2';
@@ -433,22 +433,30 @@ angular.module('bimoliveApp')
                 if (courseId) {
                     key = 'course_pics/' + courseId + '/' + 'course';
                 } else {
+                    $('#progress').hide();
+                    $('#progressLecture').hide();
                     return '';
                 }
             } else if (filePurpose === 'lectureReplay') {
                 if (courseId) {
                     key = 'replayVideos/' + courseId + '/' + lectureId + '.mp4';
                 } else {
+                    $('#progress').hide();
+                    $('#progressLecture').hide();
                     return '';
                 }
             }else if (filePurpose === 'lecture') {
                 if (courseId) {
                     key = 'course_pics/' + courseId + '/' + lectureId;
                 } else {
+                    $('#progress').hide();
+                    $('#progressLecture').hide();
                     return '';
                 }
             } else {
                 alert('Upload Failed');
+                $('#progress').hide();
+                $('#progressLecture').hide();
                 return '';
             }
             
@@ -457,21 +465,16 @@ angular.module('bimoliveApp')
                 if(err) {
                     // There Was An Error With Your S3 Config
                     alert(err.message);
+                    $('#progress').hide();
+                    $('#progressLecture').hide();
                 }
                 else {
                     // Success!
-                    // alert('Upload Done');
-                    // hide loader image
                     $('#progress').hide();
                     $('#progress-bar').attr('style', 'width:0%');
                     $('#progress-bar').attr('aria-valuenow', '0');
                     $('#progress-bar').text('0%');
-                    
-                    $('#progressLecture').hide();
-                    $('#progress-bar').attr('style', 'width:0%');
-                    $('#progress-bar').attr('aria-valuenow', '0');
-                    $('#progress-bar').text('0%');
-                    callBackFcn(MainService.CurrentUser.idUser, lectureId, 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key);
+                    callBackFunction('https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key);
                 }
             })
             .on('httpUploadProgress', function (progress) {
@@ -488,6 +491,8 @@ angular.module('bimoliveApp')
         }
         else {
             // No File Selected
+            $('#progress').hide();
+            $('#progressLecture').hide();
             alert('No File Selected');
             return '';
         }

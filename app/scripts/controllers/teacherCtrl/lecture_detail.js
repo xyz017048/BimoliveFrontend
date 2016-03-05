@@ -64,7 +64,11 @@ angular.module('bimoliveApp')
         });
     };
     
-    this.uploadReplay = function (idUser, idLecture, url) {
+    this.uploadReplay = function (url) {
+        if (!url) {
+            alert('Upload Lecture Failed!');
+            return;
+        }
         $http({
             method: 'POST',
             url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/uploadlecture',
@@ -72,8 +76,8 @@ angular.module('bimoliveApp')
                 'Content-Type': undefined
             },
             data: {
-                idUser: idUser,
-                idLecture: idLecture,
+                idUser: MainService.getCurrentUser().idUser,
+                idLecture: $routeParams.idLecture,
                 url: url
             }
         })
@@ -87,11 +91,11 @@ angular.module('bimoliveApp')
         });
     };
     
-    $('#progressLecture').hide();
+    $('#progress').hide();
     $('#lectureReplay').change(function (event) {
         var files = event.target.files;
         var profile_pic = files[0];
-        appScope.replayUrl = MainService.upload(profile_pic, 'lectureReplay', appScope.currentLecture.idCourse, appScope.currentLecture.idLecture, appScope.uploadReplay);
+        MainService.upload(profile_pic, 'lectureReplay', appScope.currentLecture.idCourse, appScope.currentLecture.idLecture, appScope.uploadReplay);
         // appScope.refreshPage();
     });
     

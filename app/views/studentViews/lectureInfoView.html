@@ -16,7 +16,7 @@
                     <img class="img-responsive center-block" ng-src="{{infoCtrl.lecture.lectureInfo.image}}">
                 </div>
                 <a ng-href="#/student/{{infoCtrl.lecture.lectureInfo.idLecture}}" ng-if="infoCtrl.lecture.lectureInfo.status === 'live'"><button type="button" class="btn btn-lg btn-danger center-block">Watch live</button></a>
-                <a ng-href="#/student/{{infoCtrl.lecture.lectureInfo.idLecture}}" ng-if="infoCtrl.lecture.lectureInfo.status === 'replay'"><button type="button" class="btn btn-lg btn-primary center-block">Watch Replay</button></a>
+                <a ng-href="#/student/{{infoCtrl.lecture.lectureInfo.idLecture}}" ng-if="infoCtrl.lecture.lectureInfo.status === 'replay'"><button type="button" class="btn btn-lg btn-default center-block">Watch Replay</button></a>
                 <div class="list-group">
                     <label class="control-label" for="topic">Lecture topic</label>
                     <li class="list-group-item info-lable" id="topic" name="topic">{{infoCtrl.lecture.lectureInfo.topic}}</li>

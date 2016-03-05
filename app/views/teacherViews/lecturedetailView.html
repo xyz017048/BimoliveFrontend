@@ -28,13 +28,12 @@
     </div>
     <br>
     <a href ng-if="!lectureDetailCtrl.isFinished" ng-click="lectureDetailCtrl.startLecture()"> 
-        <button type="button" class="btn btn-primary btn-lg center-block">START LECTURE</button> 
+        <button type="button" class="btn btn-default btn-lg center-block">START LECTURE</button> 
     </a>
-    <a ng-if="lectureDetailCtrl.currentLecture.status === 'replay'"> <button type="button" class="btn btn-primary btn-lg center-block">REPLAY</button> </a>
-    <!--<button class="btn btn-primary btn-lg center-block btn-file" ng-if="lectureDetailCtrl.currentLecture.status === 'finish'">-->
-    <button class="btn btn-primary btn-lg center-block btn-file" > 
+    <button type="button" class="btn btn-default btn-lg center-block" ng-if="lectureDetailCtrl.currentLecture.status === 'replay'">REPLAY</button>
+    <button class="btn btn-default btn-lg center-block btn-file" ng-show="lectureDetailCtrl.currentLecture.status === 'finish'"> 
         <p style="margin-bottom:0px;">Upload Replay Video <input type="file" id="lectureReplay" name="lectureReplay"/></p>
-        <div class="progress" id="progressLecture">
+        <div class="progress" id="progress">
             <div class="progress-bar progress-bar-striped active" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
                 0%
             </div>

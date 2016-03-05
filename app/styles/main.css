@@ -176,6 +176,12 @@ input[readonly] {
     color: #ffffff;
     background-color: #252424;
 }
+.btn-default:focus {
+    color: #252424;
+    border-color: #252424;
+    border: 1px solid #252424;
+    background: none;
+}
 .btn-primary {
       color: #252424;
     border-color: #252424;
