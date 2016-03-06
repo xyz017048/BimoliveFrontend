@@ -24,15 +24,6 @@ angular.module('bimoliveApp')
     };
 })
 /**
- * Directive for top navigation
- */
-.directive('topNav', function () {
-    return {
-        restrict: 'E',
-        templateUrl: 'views/navViews/topNav.html'
-    };
-})
-/**
  * Directive for toggle navigation
  */
 .directive('toggleNav', function () {

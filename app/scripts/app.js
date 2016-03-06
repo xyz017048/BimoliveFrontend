@@ -104,6 +104,16 @@ angular.module('bimoliveApp', [
             controller: 'AdminCtrl',
             controllerAs: 'adminCtrl'
         })
+        .when('/search', {
+            templateUrl: 'views/otherViews/searchView.html',
+            controller: 'SearchCtrl',
+            controllerAs: 'searchCtrl'
+        })
+        .when('/search/type=:type&q=:currentQ', {
+            templateUrl: 'views/otherViews/searchView.html',
+            controller: 'SearchCtrl',
+            controllerAs: 'searchCtrl'
+        })
         .otherwise({
             redirectTo: '/'
         });
