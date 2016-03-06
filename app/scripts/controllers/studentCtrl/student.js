@@ -487,11 +487,12 @@ angular.module('bimoliveApp')
     };
     
     this.getPermission = function () {
-        if (this.permittedLectures.indexOf(this.idLecture) === -1) {
-            return false;
-        } else {
-            return true;
-        }
+        // if (this.permittedLectures.indexOf(this.idLecture) === -1) {
+        //     return false;
+        // } else {
+        //     return true;
+        // }
+        return true;
     };
     
     // show the modal
