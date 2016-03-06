@@ -145,6 +145,8 @@ angular.module('bimoliveApp')
             .success(function(data, status) {
                 if(data.result) {
                     appScope.currentQuestion = '';
+                    // Display sent questions
+                    sentQuestionsfunction();
                 } else {
                     console.log('success but got ' + data.result);
                 }
@@ -154,9 +156,6 @@ angular.module('bimoliveApp')
                 console.log(status);
                 console.log('Request failed');
             });
-            
-            // Display sent questions
-            sentQuestionsfunction();
         }
     };
     
