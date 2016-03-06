@@ -14,7 +14,7 @@
 <!--<div class="container hidden-lg hidden-md hidden-sm"></div>-->
 <div class="container">
     <div class="row">
-        <button type="button" class="btn btn-danger btn-lg center-block" data-toggle="modal" data-target="#redirectModal" data-backdrop="static" mydata="mydata" ng-click="teacherCtrl.endLecture()">END LECTURE</button> 
+        <button type="button" class="btn btn-danger btn-lg center-block" ng-click="teacherCtrl.endLecture()">END LECTURE</button> 
         <h3 class="text-center" ng-if="teacherCtrl.questions.length <= 0">Question queue is empty</h3>
         <h3 class="text-center" ng-if="teacherCtrl.questions.length > 0">Questions:</h3>
         <ul id="questions" class="list-group col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12"

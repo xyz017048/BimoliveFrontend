@@ -192,6 +192,28 @@ input[readonly] {
   color: #ffffff;
     background-color: #252424;
 }
+.btn-primary:focus {
+      color: #252424;
+    border-color: #252424;
+    border: 1px solid #252424;
+    background: none;
+}
+.btn-danger {
+      color: #d5332a;
+    border-color: #d5332a;
+    border: 1px solid #d5332a;
+    background: none;
+}
+.btn-danger:hover {
+  color: #ffffff;
+    background-color: #d5332a;
+}
+.btn-danger:focus {
+      color: #d5332a;
+    border-color: #d5332a;
+    border: 1px solid #d5332a;
+    background: none;
+}
 a:focus {
     outline: none;
 }
@@ -267,4 +289,13 @@ a:focus {
     color: #878787;
     background-color: #ffffff;
   }
+}
+
+.fade {
+    opacity: 0;
+    -webkit-transition: opacity 0.1s linear;
+        -moz-transition: opacity 0.1s linear;
+        -ms-transition: opacity 0.1s linear;
+        -o-transition: opacity 0.1s linear;
+            transition: opacity 0.1s linear;
 }

@@ -474,7 +474,9 @@ angular.module('bimoliveApp')
                     $('#progress-bar').attr('style', 'width:0%');
                     $('#progress-bar').attr('aria-valuenow', '0');
                     $('#progress-bar').text('0%');
-                    callBackFunction('https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key);
+                    if (callBackFunction) {
+                        callBackFunction('https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key);   
+                    }
                 }
             })
             .on('httpUploadProgress', function (progress) {

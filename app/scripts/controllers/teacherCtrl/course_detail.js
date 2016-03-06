@@ -136,19 +136,14 @@ angular.module('bimoliveApp')
         this.getLectureList();
     };
     
-    // hide loader image
-    $('#progress').hide();
     $('#course_pic').change(function (event) {
         var files = event.target.files;
         var profile_pic = files[0];
-        appScope.currentCourse.image = MainService.upload(profile_pic, 'course', appScope.currentCourse.idCourse);
-        appScope.refreshPage();
+        appScope.imageUrl = MainService.upload(profile_pic, 'course', appScope.currentCourse.idCourse);
     });
     
-    this.refreshPage = function () {
-        var interval = setInterval(function () { $scope.$apply(); }, 500);
-        setTimeout(function() {
-             clearInterval(interval);
-        }, 10000);
+    this.refreshPage = function (sss) {
+        this.currentCourse.image = this.imageUrl;
+        $scope.$apply(); 
     };
 }]);

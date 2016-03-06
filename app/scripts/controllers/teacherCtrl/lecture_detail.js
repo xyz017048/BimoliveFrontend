@@ -91,11 +91,10 @@ angular.module('bimoliveApp')
         });
     };
     
-    $('#progress').hide();
     $('#lectureReplay').change(function (event) {
         var files = event.target.files;
         var profile_pic = files[0];
-        MainService.upload(profile_pic, 'lectureReplay', appScope.currentLecture.idCourse, appScope.currentLecture.idLecture, appScope.uploadReplay);
+        MainService.upload(profile_pic, 'lectureReplay', appScope.currentLecture.idCourse, appScope.currentLecture.idLecture);
         // appScope.refreshPage();
     });
     

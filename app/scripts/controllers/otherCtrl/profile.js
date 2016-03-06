@@ -52,9 +52,6 @@ angular.module('bimoliveApp')
 	    });
     };
     
-    // hide loader image
-    $('#progress').hide();
-    
     $('#profile').change(function (event) {
         var files = event.target.files;
         var profile_pic = files[0];
