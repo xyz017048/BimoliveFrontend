@@ -34,7 +34,7 @@ html
       // toggle navigation
       toggle-nav
       |         
-      .well.well-lg.col-lg-10.col-lg-offset-1.col-md-10.col-md-offset-1.col-sm-11.col-sm-offset-1.col-xs-11.col-xs-offset-1
+      .well.well-lg
         div(ng-view='')
     // log in modal
     div(ng-include="'views/modalViews/loginModal.html'")
@@ -78,6 +78,8 @@ html
     script(src='bower_components/angular-touch/angular-touch.js')
     |     
     script(src='bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
+    |     
+    script(src='bower_components/aws-sdk/dist/aws-sdk.js')
     // endbower
     // endbuild
     // build:js({.tmp,app}) scripts/scripts.js
@@ -102,4 +104,10 @@ html
     script(src='scripts/controllers/teacherCtrl/lecture_detail.js')
     |     
     script(src='scripts/controllers/studentCtrl/student.js')
+    |     
+    script(src='scripts/controllers/studentCtrl/follow.js')
+    |     
+    script(src='scripts/controllers/studentCtrl/all.js')
+    |     
+    script(src='scripts/controllers/studentCtrl/info.js')
     // endbuild

@@ -37,7 +37,7 @@ angular.module('bimoliveApp')
             appScope.currentLecture = data;
             appScope.isLive = (data.lectureInfo.status === 'live');
             // get question after get lecture
-            getQuestions(lastId);
+            getQuestions(appScope.lastId);
             if (appScope.isPermitted) {
                 // appScope.streamVideo();
                 appScope.getAllAnwseredQuestions();
@@ -47,13 +47,15 @@ angular.module('bimoliveApp')
         });
     };
     
+    this.getLecture();
+    
     this.sentQuestions = [];
     // Display sent questions
-    sentQuestions();
+    // sentQuestions();
     /**
      * What questions that student has sent to the teacher
      */
-    function sentQuestions() {
+    function sentQuestionsfunction() {
         $http({
             method: 'POST',
             url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/questions',
@@ -154,7 +156,7 @@ angular.module('bimoliveApp')
             });
             
             // Display sent questions
-            sentQuestions();
+            sentQuestionsfunction();
         }
     };
     
@@ -206,26 +208,41 @@ angular.module('bimoliveApp')
         }
         videoPlayer = jwplayer('videoPlayer');
         var video = document.getElementById('video');
-        videoPlayer.setup({
-            file: live_url,
-            flashplayer: 'scripts/jwplayer/jwplayer.flash.swf',
-            controlbar: 'bottom',
-            width: video.offsetWidth,
-            height: video.offsetHeight,
-            autostart: true,
-            skin: {
-                name: 'seven'
-            },
-            tracks: [{
-                file: appScope.chaptersFile,
-                kind: 'chapters'
-            }]
-        });
+        
+        if(this.currentLecture.lectureInfo.status === 'replay') {
+            videoPlayer.setup({
+                file: live_url,
+                flashplayer: 'scripts/jwplayer/jwplayer.flash.swf',
+                controlbar: 'bottom',
+                width: video.offsetWidth,
+                height: video.offsetHeight,
+                autostart: true,
+                skin: {
+                    name: 'seven'
+                },
+                tracks: [{
+                    file: appScope.chaptersFile,
+                    kind: 'chapters'
+                }]
+            });
+        } else if(this.currentLecture.lectureInfo.status === 'live') {
+            videoPlayer.setup({
+                file: live_url,
+                flashplayer: 'scripts/jwplayer/jwplayer.flash.swf',
+                controlbar: 'bottom',
+                width: video.offsetWidth,
+                height: video.offsetHeight,
+                autostart: true,
+                skin: {
+                    name: 'seven'
+                }
+            });
+        }
         
         videoPlayer.on('ready', function(e) {
             if(!appScope.isLive) {
                 // replayVideo();
-                // getAllAnwseredQuestions();
+                // appScope.getAllAnwseredQuestions();
             }
         });
         
@@ -641,7 +658,7 @@ angular.module('bimoliveApp')
     this.getAllAnwseredQuestions = function() {
         if (!MainService.getIsLogin()) {
             alert('Plese Login');
-        } else if (appScope.currentLecture.followTeacher !== 0) {
+        } else {
             // Reset array to empty
             timeTag = [];
             var user = MainService.getCurrentUser();
