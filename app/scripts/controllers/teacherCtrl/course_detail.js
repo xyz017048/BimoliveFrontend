@@ -5,7 +5,7 @@ angular.module('bimoliveApp')
 /**
  * Controller for teacher view
  */
-.controller('CourseDetailCtrl', ['$http', '$routeParams', 'MainService', '$location', '$window', '$scope', function ($http, $routeParams, MainService, $location, $window, $scope) {
+.controller('CourseDetailCtrl', ['$http', '$routeParams', 'MainService', '$location', '$window', function ($http, $routeParams, MainService, $location, $window) {
     
     // if the user has not log in, redirect back and show the log in modal
     if (!MainService.getIsLogin()) {
@@ -87,6 +87,7 @@ angular.module('bimoliveApp')
     
     this.resetData = function () {
         this.currentCourse = Object.create(this.defaultCourse);
+        document.getElementById('profile-img').src = this.currentCourse.image;
     };
     
     // FAKE, place holder for a function foring checking valivation
@@ -138,12 +139,18 @@ angular.module('bimoliveApp')
     
     $('#course_pic').change(function (event) {
         var files = event.target.files;
-        var profile_pic = files[0];
-        appScope.imageUrl = MainService.upload(profile_pic, 'course', appScope.currentCourse.idCourse, 0, appScope.refreshPage);
+        var file = files[0];
+        appScope.imageUrl = MainService.upload(file, 'course', appScope.currentCourse.idCourse);
+        // read the image and display it on page
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var dataUri = event.target.result,
+                img     = document.getElementById('profile-img');
+            img.src = dataUri;
+        };
+        reader.onerror = function(event) {
+            console.error('File could not be read! Code ' + event.target.error.code);
+        };
+        reader.readAsDataURL(file);
     });
-    
-    this.refreshPage = function (sss) {
-        this.currentCourse.image = this.imageUrl;
-        $scope.$apply(); 
-    };
 }]);

@@ -6,7 +6,7 @@ angular.module('bimoliveApp')
 /**
  * Controller for profile view
  */
-.controller('ProfileCtrl', ['MainService', '$http', '$location', '$window', '$scope', function (MainService, $http, $location, $window, $scope) {
+.controller('ProfileCtrl', ['MainService', '$http', '$location', '$window', function (MainService, $http, $location, $window) {
     
     // if the user has not log in, redirect back and show the log in modal
     if (!MainService.getIsLogin()) {
@@ -25,6 +25,7 @@ angular.module('bimoliveApp')
     
     this.resetData = function () {
         this.user = JSON.parse(JSON.stringify(MainService.getCurrentUser())); // Reset the user object
+        document.getElementById('profile-img').src = this.user.profile;
     };
 
     this.teacherApply = function () {
@@ -56,7 +57,18 @@ angular.module('bimoliveApp')
         var files = event.target.files;
         var profile_pic = files[0];
         appScope.user.profile = MainService.upload(profile_pic, 'profile');
-        appScope.refreshPage();
+        
+        // read the image and display it on page
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var dataUri = event.target.result,
+                img     = document.getElementById('profile-img');
+            img.src = dataUri;
+        };
+        reader.onerror = function(event) {
+            console.error('File could not be read! Code ' + event.target.error.code);
+        };
+        reader.readAsDataURL(profile_pic);
     });
     
     $('#resume').change(function (event) {
@@ -64,14 +76,5 @@ angular.module('bimoliveApp')
         var resume = files[0];
         appScope.user.resume = MainService.upload(resume, 'resume');
     });
-    
-    this.refreshPage = function () {
-        var interval = setInterval(function () { 
-            $scope.$apply();
-        }, 500);
-        setTimeout(function() {
-             clearInterval(interval);
-        }, 10000);
-    };
     
 }]);
