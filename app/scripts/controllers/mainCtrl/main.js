@@ -419,6 +419,7 @@ angular.module('bimoliveApp')
      */
     MainService.upload = function (file, filePurpose, courseId, lectureId, callBackFunction) {
         $('#progress').show();
+        $('#progress-text').show();
         AWS.config.update({ accessKeyId: 'AKIAIJG57SRTCKPYBGJA', secretAccessKey: '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' });
         AWS.config.region = 'us-west-2';
         var bucket = new AWS.S3({ params: { Bucket: 'bimolive-pictures' } });
@@ -434,7 +435,7 @@ angular.module('bimoliveApp')
                     key = 'course_pics/' + courseId + '/' + 'course';
                 } else {
                     $('#progress').hide();
-                    $('#progressLecture').hide();
+                    $('#progress-text').hide();
                     return '';
                 }
             } else if (filePurpose === 'lectureReplay') {
@@ -442,7 +443,7 @@ angular.module('bimoliveApp')
                     key = 'replayVideos/' + courseId + '/' + lectureId + '.mp4';
                 } else {
                     $('#progress').hide();
-                    $('#progressLecture').hide();
+                    $('#progress-text').hide();
                     return '';
                 }
             }else if (filePurpose === 'lecture') {
@@ -450,13 +451,13 @@ angular.module('bimoliveApp')
                     key = 'course_pics/' + courseId + '/' + lectureId;
                 } else {
                     $('#progress').hide();
-                    $('#progressLecture').hide();
+                    $('#progress-text').hide();
                     return '';
                 }
             } else {
                 alert('Upload Failed');
                 $('#progress').hide();
-                $('#progressLecture').hide();
+                $('#progress-text').hide();
                 return '';
             }
             
@@ -466,16 +467,17 @@ angular.module('bimoliveApp')
                     // There Was An Error With Your S3 Config
                     alert(err.message);
                     $('#progress').hide();
-                    $('#progressLecture').hide();
+                    $('#progress-text').hide();
                 }
                 else {
                     // Success!
                     $('#progress').hide();
+                    $('#progress-text').hide();
                     $('#progress-bar').attr('style', 'width:0%');
                     $('#progress-bar').attr('aria-valuenow', '0');
-                    $('#progress-bar').text('0%');
+                    $('#progress-text').text('0%');
                     if (callBackFunction) {
-                        callBackFunction('https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key);   
+                        callBackFunction(MainService.getCurrentUser().idUser, lectureId, 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key);   
                     }
                 }
             })
@@ -484,7 +486,7 @@ angular.module('bimoliveApp')
                 if (progress) {
                     $('#progress-bar').attr('style', 'width:' + percentage + '%');
                     $('#progress-bar').attr('aria-valuenow', percentage);
-                    $('#progress-bar').text(percentage + '%');
+                    $('#progress-text').text(percentage + '%');
                 }
 
             });
@@ -494,7 +496,7 @@ angular.module('bimoliveApp')
         else {
             // No File Selected
             $('#progress').hide();
-            $('#progressLecture').hide();
+            $('#progress-text').hide();
             alert('No File Selected');
             return '';
         }

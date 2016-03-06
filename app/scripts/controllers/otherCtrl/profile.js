@@ -66,7 +66,9 @@ angular.module('bimoliveApp')
     });
     
     this.refreshPage = function () {
-        var interval = setInterval(function () { $scope.$apply(); }, 500);
+        var interval = setInterval(function () { 
+            $scope.$apply();
+        }, 500);
         setTimeout(function() {
              clearInterval(interval);
         }, 10000);

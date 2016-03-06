@@ -64,7 +64,7 @@ angular.module('bimoliveApp')
         });
     };
     
-    this.uploadReplay = function (url) {
+    this.uploadReplay = function (idUser, idLecture, url) {
         if (!url) {
             alert('Upload Lecture Failed!');
             return;
@@ -76,8 +76,8 @@ angular.module('bimoliveApp')
                 'Content-Type': undefined
             },
             data: {
-                idUser: MainService.getCurrentUser().idUser,
-                idLecture: $routeParams.idLecture,
+                idUser: idUser,
+                idLecture: idLecture,
                 url: url
             }
         })

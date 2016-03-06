@@ -299,3 +299,11 @@ a:focus {
         -o-transition: opacity 0.1s linear;
             transition: opacity 0.1s linear;
 }
+.progress {
+    background: #ffffff;
+    border-radius: 0px;
+    height: 5px;
+}
+.progress-bar {
+    background: #252424;
+}

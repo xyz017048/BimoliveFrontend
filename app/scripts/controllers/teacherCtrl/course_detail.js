@@ -139,7 +139,7 @@ angular.module('bimoliveApp')
     $('#course_pic').change(function (event) {
         var files = event.target.files;
         var profile_pic = files[0];
-        appScope.imageUrl = MainService.upload(profile_pic, 'course', appScope.currentCourse.idCourse);
+        appScope.imageUrl = MainService.upload(profile_pic, 'course', appScope.currentCourse.idCourse, 0, appScope.refreshPage);
     });
     
     this.refreshPage = function (sss) {
