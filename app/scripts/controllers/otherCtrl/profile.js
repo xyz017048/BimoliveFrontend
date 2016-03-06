@@ -27,6 +27,26 @@ angular.module('bimoliveApp')
         this.user = JSON.parse(JSON.stringify(MainService.getCurrentUser())); // Reset the user object
         document.getElementById('profile-img').src = this.user.profile;
     };
+    
+    this.updateData = function () {
+        $http({
+            method: 'POST',
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/accountupdate',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: this.user
+        })
+        .success(function (data, status) {
+            if (data.result) {
+                MainService.setCurrentUser(appScope.user);
+            } else {
+                console.log('success but got ' + data.result);
+            }
+        })
+        .error(function (data, status) {
+        });
+    };
 
     this.teacherApply = function () {
     	$http({

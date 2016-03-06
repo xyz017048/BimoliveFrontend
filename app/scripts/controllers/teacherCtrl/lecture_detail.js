@@ -33,6 +33,7 @@ angular.module('bimoliveApp')
         
         .success(function(data, status) {
             appScope.currentLecture = data;
+            appScope.origLecture = JSON.parse(JSON.stringify(data));
             if (data.status === 'finish' || data.status === 'replay') {
                 appScope.isFinished = true; 
             }
@@ -89,6 +90,32 @@ angular.module('bimoliveApp')
         .error(function (data, status) {
             alert('Upload Lecture Failed!');
         });
+    };
+    
+    this.updateData = function () {
+        $http({
+            method: 'POST',
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/updatelecture',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: this.currentLecture
+        })
+        .success(function (data, status) {
+            if (data.result) {
+                appScope.origLecture = JSON.parse(JSON.stringify(appScope.currentLecture));
+                document.getElementById('profile-img').src = appScope.currentLecture.image;
+            } else {
+                console.log('success but got ' + data.result);
+            }
+        })
+        .error(function (data, status) {
+        });
+    };
+    
+    this.resetData = function () {
+        this.currentLecture = JSON.parse(JSON.stringify(this.origLecture));
+        document.getElementById('profile-img').src = this.origLecture.image;
     };
     
     $('#lectureReplay').change(function (event) {

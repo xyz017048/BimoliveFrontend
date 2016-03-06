@@ -6,11 +6,11 @@
     </div>
     <div class="row">
         <div class="col-lg-5 col-md-5">
-            <form ng-submit="courseDetailCtrl.updateToServer()">
+            <form>
                 <div class="form-group">
                     <label class="control-label" for="image">Course picture:</label>
                     <div class="thumbnail col-lg-offset-4">
-                        <img class="img-responsive img-thumbnail" id="profile-img" ng-src="{{courseDetailCtrl.currentCourse.image}}" src="">
+                        <img class="img-responsive img-thumbnail" id="profile-img" ng-src="{{courseDetailCtrl.currentCourse.image}}">
                     </div>
 
                     <button class="btn btn-default btn-block btn-file col-lg-offset-2">
@@ -67,7 +67,7 @@
                     <button type="button" class="btn btn-lg btn-default" ng-click="courseDetailCtrl.resetData()">
                         <span class="glyphicon glyphicon-repeat"></span> Reset
                     </button>
-                    <button type="submit" class="btn btn-lg btn-default"">
+                    <button type="submit" class="btn btn-lg btn-default" ng-submit="courseDetailCtrl.updateData()">
                         <span class="glyphicon glyphicon-upload"></span> Update
                     </button>
                 </div>

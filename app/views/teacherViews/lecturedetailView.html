@@ -5,25 +5,46 @@
         </h1>
     </div>
     <div class="row">
-        <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
-            <label class="control-label" for="lectureTopic" style="font-size: 150%;">Lecture Topic:</label>
-            <input type="text" class="form-control col-lg-offset-2" id="lectureTopic" name="lectureTopic" placeholder="{{lectureDetailCtrl.currentLecture.topic}}"
-            ng-modle="lectureDetailCtrl.currentLecture.topic">
-        </div>
-        <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
-            <label class="control-label" for="scheduleDate" style="font-size: 150%;">Scheduled Date :</label>
-            <input type="text" class="form-control col-lg-offset-2" id="scheduleDate" name="scheduleDate" placeholder="{{lectureDetailCtrl.currentLecture.scheduleDate}}"
-            ng-modle="lectureDetailCtrl.currentLecture.scheduleDate">
-        </div>
-        <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
-            <label class="control-label" for="startTime" style="font-size: 150%;">Start Time:</label>
-            <input type="text" class="form-control col-lg-offset-2" id="endDate" name="startTime" placeholder="{{lectureDetailCtrl.currentLecture.startTime}}"
-            ng-modle="lectureDetailCtrl.currentLecture.startTime">
-        </div>
-        <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
-            <label class="control-label" for="endTime" style="font-size: 150%;">End Time:</label>
-            <input type="text" class="form-control col-lg-offset-2" id="endTime" name="endTime" placeholder="{{lectureDetailCtrl.currentLecture.endTime}}"
-            ng-modle="lectureDetailCtrl.currentLecture.endTime">
+        <div class="col-lg-5 col-md-5">
+            <form>
+                <div class="form-group">
+                    <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
+                        <label class="control-label" for="lectureTopic" style="font-size: 150%;">Lecture Topic:</label>
+                        <input type="text" class="form-control col-lg-offset-2" id="lectureTopic" name="lectureTopic" placeholder="{{lectureDetailCtrl.currentLecture.topic}}"
+                        ng-modle="lectureDetailCtrl.currentLecture.topic">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
+                        <label class="control-label" for="scheduleDate" style="font-size: 150%;">Scheduled Date :</label>
+                        <input type="text" class="form-control col-lg-offset-2" id="scheduleDate" name="scheduleDate" placeholder="{{lectureDetailCtrl.currentLecture.scheduleDate}}"
+                        ng-modle="lectureDetailCtrl.currentLecture.scheduleDate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
+                        <label class="control-label" for="startTime" style="font-size: 150%;">Start Time:</label>
+                        <input type="text" class="form-control col-lg-offset-2" id="endDate" name="startTime" placeholder="{{lectureDetailCtrl.currentLecture.startTime}}"
+                        ng-modle="lectureDetailCtrl.currentLecture.startTime">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
+                        <label class="control-label" for="endTime" style="font-size: 150%;">End Time:</label>
+                        <input type="text" class="form-control col-lg-offset-2" id="endTime" name="endTime" placeholder="{{lectureDetailCtrl.currentLecture.endTime}}"
+                        ng-modle="lectureDetailCtrl.currentLecture.endTime">
+                    </div>
+                </div>
+                <div class="control-group col-lg-offset-5 col-md-offset-3 col-sm-offset-3">
+                    <button type="button" class="btn btn-lg btn-default" ng-click="lectureDetailCtrl.resetData()">
+                        <span class="glyphicon glyphicon-repeat"></span> Reset
+                    </button>
+                    <button type="submit" class="btn btn-lg btn-default" ng-click="lectureDetailCtrl.updateData()">
+                        <span class="glyphicon glyphicon-upload"></span> Update
+                    </button>
+                </div>
+                <br>
+            </form>
         </div>
     </div>
     <br>

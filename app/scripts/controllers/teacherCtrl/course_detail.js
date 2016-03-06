@@ -47,7 +47,7 @@ angular.module('bimoliveApp')
         } )
         .success(function(data, status) {
             appScope.currentCourse = data;
-            appScope.defaultCourse = JSON.parse(JSON.stringify(data));
+            appScope.origCourse = JSON.parse(JSON.stringify(data));
             appScope.getLectureList();
         })
         .error(function(data, status) {
@@ -80,14 +80,30 @@ angular.module('bimoliveApp')
         });
     };
     
-    // FAKE, update course detail to server, !!!!! check role before updating to server !!!!!
-    this.updateToServer = function () {
-        alert('old: ' + this.defaultCourse.name + ' new: ' + this.currentCourse.name);
+    this.updateData = function () {
+        $http({
+            method: 'POST',
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/updatecourse',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: this.currentCourse
+        })
+        .success(function (data, status) {
+            if (data.result) {
+                appScope.origCourse = JSON.parse(JSON.stringify(appScope.currentCourse));
+                document.getElementById('profile-img').src = appScope.currentCourse.image;
+            } else {
+                console.log('success but got ' + data.result);
+            }
+        })
+        .error(function (data, status) {
+        });
     };
     
     this.resetData = function () {
-        this.currentCourse = Object.create(this.defaultCourse);
-        document.getElementById('profile-img').src = this.currentCourse.image;
+        this.currentCourse = JSON.parse(JSON.stringify(this.origCourse));
+        document.getElementById('profile-img').src = this.origCourse.image;
     };
     
     // FAKE, place holder for a function foring checking valivation
@@ -97,7 +113,6 @@ angular.module('bimoliveApp')
     
     this.createNewLecture = function () {
         if (this.checkNewLectureValid()) {
-            var appScope = this;
             $http({
                 method: 'POST',
                 url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/createlecture',
@@ -140,7 +155,7 @@ angular.module('bimoliveApp')
     $('#course_pic').change(function (event) {
         var files = event.target.files;
         var file = files[0];
-        appScope.imageUrl = MainService.upload(file, 'course', appScope.currentCourse.idCourse);
+        appScope.currentCourse.image = MainService.upload(file, 'course', appScope.currentCourse.idCourse);
         // read the image and display it on page
         var reader = new FileReader();
         reader.onload = function(event) {
