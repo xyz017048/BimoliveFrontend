@@ -4,48 +4,56 @@
         <h1>Search
         </h1>
     </div>
-    <p>This is the search view.</p>
-    <p>Type is </p>
-    {{searchCtrl.type}}
-    <p>Q is </p>
-    {{searchCtrl.currentQ}}
 
-    <h1 ng-if="searchCtrl.courses.length!==0">Courses</h1>
-    <div ng-repeat="course in searchCtrl.courses" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
-        <a ng-href="#/coursedetail/{{course.idCourse}}">
-            <div class="imageWrapper" style="position: relative;">
-                <img ng-src="{{course.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
-            </div>
-            <div class="caption">
-                <a ng-href="#/coursedetail/{{course.idCourse}}">{{course.category}} {{course.levelNumber}}: {{course.name}}</a>
-                <p>Start Date: {{course.startDate}}</p>
-                <p>End Date: {{course.endDate}}</p>
-            </div>
-        </a>
+    <div class="page-header">
+        <h1 ng-if="searchCtrl.courses.length!==0">Courses</h1>
     </div>
-    <h1 ng-if="searchCtrl.lectures.length!==0">Lectures</h1>
-    <div ng-repeat="course in searchCtrl.courses" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
-        <a ng-href="#/lecturedetail/{{lecture.idLecture}}">
-            <div class="imageWrapper" style="position: relative;">
-                <img ng-src="{{lecture.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
-            </div>
-            <div class="caption">
-                <a ng-href="#/lecturedetail/{{lecture.idCourse}}">Lecture #{{lecture.lectureNum}}: {{lecture.topic}}</a>
-                <p>Date: {{lecture.scheduleDate}}</p>
-                <p>Start Time: {{lecture.startTime}}</p>
-                <p>End Time: {{lecture.endTime}}</p>
-            </div>
-        </a>
+    <div class="row" style="display:flex; flex-wrap:wrap;">
+        <div ng-repeat="course in searchCtrl.courses" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <a ng-href="#/courseInfo/{{course.courseInfo.idCourse}}">
+                <div class="imageWrapper" style="position: relative;">
+                    <img ng-src="{{course.courseInfo.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
+                </div>
+                <div class="caption">
+                    <a ng-href="#/courseInfo/{{course.courseInfo.idCourse}}">{{course.courseInfo.category}} {{course.courseInfo.levelNumber}}: {{course.courseInfo.name}}</a>
+                    <p>by {{course.teacherFirstName}} {{course.teacherLastName}}</p>
+                    <p>Start Date: {{course.courseInfo.startDate}}</p>
+                    <p>End Date: {{course.courseInfo.endDate}}</p>
+                </div>
+            </a>
+        </div>
     </div>
-    <h1 ng-if="searchCtrl.teachers.length!==0">Teachers</h1>
-    <div ng-repeat="teacher in searchCtrl.teachers" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
-        <a ng-href="#/teacherInfo/{{teacher.idUser}}">
-            <div class="imageWrapper" style="position: relative;">
-                <img ng-src="{{teacher.profile}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
-            </div>
-            <div class="caption">
-                <a ng-href="#/teacherInfo/{{teacher.idUser}}">{{teacher.jobTitle}}: {{teacher.firstName}} {{teacher.lastName}}</a>
-            </div>
-        </a>
+    <div class="page-header">
+        <h1 ng-if="searchCtrl.lectures.length!==0">Lectures</h1>
+    </div>
+    <div class="row" style="display:flex; flex-wrap:wrap;">
+        <div ng-repeat="lecture in searchCtrl.lectures" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <a ng-href="#/lectureInfo/{{lecture.lectureInfo.idLecture}}">
+                <div class="imageWrapper" style="position: relative;">
+                    <img ng-src="{{lecture.lectureInfo.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
+                </div>
+                <div class="caption">
+                    <a ng-href="#/lecturedetail/{{lecture.lectureInfo.idCourse}}">Lecture #{{lecture.lectureInfo.lectureNum}}: {{lecture.lectureInfo.topic}}</a>
+                    <p>Date: {{lecture.lectureInfo.scheduleDate}}</p>
+                    <p>Start Time: {{lecture.lectureInfo.startTime}}</p>
+                    <p>End Time: {{lecture.lectureInfo.endTime}}</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="page-header">
+        <h1 ng-if="searchCtrl.teachers.length!==0">Teachers</h1>
+    </div>
+    <div class="row" style="display:flex; flex-wrap:wrap;">
+        <div ng-repeat="teacher in searchCtrl.teachers" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <a ng-href="#/teacherInfo/{{teacher.idUser}}">
+                <div class="imageWrapper" style="position: relative;">
+                    <img ng-src="{{teacher.profile}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
+                </div>
+                <div class="caption">
+                    <a ng-href="#/teacherInfo/{{teacher.idUser}}">{{teacher.jobTitle}}: {{teacher.firstName}} {{teacher.lastName}}</a>
+                </div>
+            </a>
+        </div>
     </div>
 </div>

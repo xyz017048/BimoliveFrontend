@@ -7,10 +7,10 @@ angular.module('bimoliveApp')
  * Controller for toggle navigation view
  */
 .controller('TopCtrl', function ($location) {
-    this.currentQ = '';
+    this.words = '';
 
     this.search = function () {
-        $location.url('/search/type=all&q=' + this.currentQ);
+        $location.url('/search?type=all&words=' + this.words);
     };
 })
 /**

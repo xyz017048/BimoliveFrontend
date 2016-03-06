@@ -109,7 +109,7 @@ angular.module('bimoliveApp', [
             controller: 'SearchCtrl',
             controllerAs: 'searchCtrl'
         })
-        .when('/search/type=:type&q=:currentQ', {
+        .when('/search?type=:type&words=:words', {
             templateUrl: 'views/otherViews/searchView.html',
             controller: 'SearchCtrl',
             controllerAs: 'searchCtrl'

@@ -11,25 +11,25 @@ angular.module('bimoliveApp')
     if (this.type === '') {
     	this.type = 'all';
     }
-    this.currentQ = $routeParams.currentQ;
+    this.words = $routeParams.words;
     this.courses = [];
     this.lectures = [];
     this.teachers = [];
 
     var appScope = this;
 
-    function search(type, currentQ) {
-        if(currentQ !== '')
+    function search(type, words) {
+        if(words !== '')
         {
             $http( { 
-                method: 'GET', 
+                method: 'POST', 
                 url: 'http://bimolive.us-west-2.elasticbeanstalk.com/search',
                 headers: {
                     'Content-Type': undefined
                 },
                 data: {
 	                type: type,
-	                words: currentQ
+	                words: words
                 }
             } )
             .success(function (data, status) {
@@ -42,5 +42,5 @@ angular.module('bimoliveApp')
         }
     }
     
-    search(this.type, this.currentQ);
+    search(this.type, this.words);
 });
