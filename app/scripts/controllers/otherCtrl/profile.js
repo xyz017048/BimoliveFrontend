@@ -36,6 +36,7 @@ angular.module('bimoliveApp')
             if (data.result) {
                 alert('Account Updated!');
                 MainService.setCurrentUser(appScope.user);
+                location.reload();
             } else {
                 console.log('success but got ' + data.result);
             }
