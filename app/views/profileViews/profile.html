@@ -11,7 +11,7 @@
     </div>
     <div class="row" >
         <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
-            <form ng-submit="profileCtrl.updateToServer()">
+            <form ng-submit="profileCtrl.updateData()">
                 <div class="form-group">
                     <label class="control-label" for="profile">Profile picture</label>
                     <img class="img-circle center-block" id="profile-img" style="max-width: 25%" ng-src="{{profileCtrl.user.profile}}" src="">
@@ -43,16 +43,20 @@
                 </div>
                 <div class="form-group" ng-if="profileCtrl.user.roleLevel === 2">
                     <label class="control-label" for="resume">Resume Upload</label>
-                    <a href="">View Resume</a>
+                    <a ng-href="{{profileCtrl.user.resume}}" href="" target="_blank" id="view-resume">View Resume</a>
                     <button class="btn btn-default btn-block btn-file">
-                        Select Resume <input type="file" id="resume" name="resume"/>
+                        <p style="margin-bottom:0px;">Select Resume <input type="file" id="resume" name="resume"/></p>
+                        <div class="progress" id="progress-resume" style="display:none;">
+                            <div class="progress-bar progress-bar-striped active" id="progress-bar-resume" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
+                        </div>
+                        <p id="progress-resume-text" style="display:none;">0%</p>
                     </button>
                 </div>
                 <div class="control-group center-text">
                     <button type="button" class="btn btn-lg btn-default" ng-click="profileCtrl.resetData()">
                         <span class="glyphicon glyphicon-repeat"></span> Reset
                     </button>
-                    <button type="submit" class="btn btn-lg btn-default pull-right" ng-click="profileCtrl.updateData()">
+                    <button type="submit" class="btn btn-lg btn-default pull-right">
                         <span class="glyphicon glyphicon-upload"></span> Update
                     </button>
                 </div>
@@ -75,7 +79,6 @@
     </div>
 </div>
 
-
 <!-- apply to teach Modal -->
 <div class="modal fade" id="applyToTeachModal" role="dialog">
     <div class="modal-dialog modal-md">
@@ -89,10 +92,23 @@
             <div class="modal-body">
                 <form name="teacherApply" id="applicationForm" ng-submit="profileCtrl.teacherApply()" novalidate>
                     <div class="form-group">
-                        <label class="control-label" for="resume">Resume Upload</label>
+                        <label class="control-label" for="resume-modal">Select Resume</label>
+                        <a ng-href="{{profileCtrl.user.resume}}" href="" target="_blank" id="view-resume-modal">View Resume</a>
                         <button class="btn btn-default btn-block btn-file">
-                            Upload Resume <input type="file" id="resume" name="resume"/>
+                            Upload Resume <input type="file" id="resume-modal" name="resume-modal"/>
+                            <div class="progress" id="progress-resume-modal" style="display:none;">
+                                <div class="progress-bar progress-bar-striped active" id="progress-bar-resume-modal" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
+                            </div>
+                            <p id="progress-resume-modal-text" style="display:none;">0%</p>
                         </button>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : firstName.$invalid && !firstName.$pristine }">
+                        <label class="control-label" for="firstName">First name</label>
+                        <input class="form-control" id="firstName" placeholder="{{profileCtrl.user.firstName}}" ng-model="profileCtrl.user.firstName">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="lastName">Last name</label>
+                        <input class="form-control" id="lastName" placeholder="{{profileCtrl.user.lastName}}" ng-model="profileCtrl.user.lastName">
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="intro">Self Introduction</label>
@@ -105,7 +121,7 @@
             <div class="modal-footer">
                 <div class="text-center">
                     <button type="submit" class="btn btn-default" ng-click="profileCtrl.teacherApply()">Submit</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="profileCtrl.resetApplicationForm()">Cancel</button>
                 </div>
 
             </div>

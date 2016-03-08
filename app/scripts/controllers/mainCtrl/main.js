@@ -407,7 +407,49 @@ angular.module('bimoliveApp')
         }
         MainService.isLogin = isLogin;
     };
-    
+
+    MainService.showProgress = function(purpose) {
+        if (purpose === 'resume') {
+            $('#progress-resume').show();
+            $('#progress-resume-text').show();
+        } else if (purpose === 'resume-modal') {
+            $('#progress-resume-modal').show();
+            $('#progress-resume-modal-text').show();
+        } else {
+            $('#progress').show();
+            $('#progress-text').show();
+        }
+    };
+
+    MainService.hideProgress = function(purpose) {
+        if (purpose === 'resume') {
+            $('#progress-resume').hide();
+            $('#progress-resume-text').hide();
+        } else if (purpose === 'resume-modal') {
+            $('#progress-resume-modal').hide();
+            $('#progress-resume-modal-text').hide();
+        } else {
+            $('#progress').hide();
+            $('#progress-text').hide();
+        }
+    };
+
+    MainService.setProgress = function(purpose, percentage) {
+        if (purpose === 'resume') {
+            $('#progress-bar-resume').attr('style', 'width:' + percentage + '%');
+            $('#progress-bar-resume').attr('aria-valuenow', percentage);
+            $('#progress-resume-text').text(percentage + '%');
+        } else if (purpose === 'resume-modal') {
+            $('#progress-bar-resume-modal').attr('style', 'width:' + percentage + '%');
+            $('#progress-bar-resume-modal').attr('aria-valuenow', percentage);
+            $('#progress-resume-modal-text').text(percentage + '%');
+        } else {
+            $('#progress-bar').attr('style', 'width:' + percentage + '%');
+            $('#progress-bar').attr('aria-valuenow', percentage);
+            $('#progress-text').text(percentage + '%');
+        }
+    };    
+        
     /**
      * upload function, file is the file object
      * filePurpose is the purpose of this file, 
@@ -418,8 +460,7 @@ angular.module('bimoliveApp')
      * CallBackFunction is the function will be called during and after upload.
      */
     MainService.upload = function (file, filePurpose, courseId, lectureId, callBackFunction) {
-        $('#progress').show();
-        $('#progress-text').show();
+        MainService.showProgress(filePurpose);
         AWS.config.update({ accessKeyId: 'AKIAIJG57SRTCKPYBGJA', secretAccessKey: '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' });
         AWS.config.region = 'us-west-2';
         var bucket = new AWS.S3({ params: { Bucket: 'bimolive-pictures' } });
@@ -428,36 +469,32 @@ angular.module('bimoliveApp')
             var key = '';
             if (filePurpose === 'profile') {
                 key = 'profile_pics/' + MainService.getCurrentUser().idUser;
-            } else if (filePurpose === 'resume') {
+            } else if (filePurpose === 'resume' || filePurpose === 'resume-modal') {
                 key = 'resume/' + MainService.getCurrentUser().idUser;
             } else if (filePurpose === 'course') { 
                 if (courseId) {
                     key = 'course_pics/' + courseId + '/' + 'course';
                 } else {
-                    $('#progress').hide();
-                    $('#progress-text').hide();
+                    MainService.hideProgress(filePurpose);
                     return '';
                 }
             } else if (filePurpose === 'lectureReplay') {
                 if (courseId) {
                     key = 'replayVideos/' + courseId + '/' + lectureId + '.mp4';
                 } else {
-                    $('#progress').hide();
-                    $('#progress-text').hide();
+                    MainService.hideProgress(filePurpose);
                     return '';
                 }
             }else if (filePurpose === 'lecture') {
                 if (courseId) {
                     key = 'course_pics/' + courseId + '/' + lectureId;
                 } else {
-                    $('#progress').hide();
-                    $('#progress-text').hide();
+                    MainService.hideProgress(filePurpose);
                     return '';
                 }
             } else {
                 alert('Upload Failed');
-                $('#progress').hide();
-                $('#progress-text').hide();
+                MainService.hideProgress(filePurpose);
                 return '';
             }
             
@@ -466,27 +503,21 @@ angular.module('bimoliveApp')
                 if(err) {
                     // There Was An Error With Your S3 Config
                     alert(err.message);
-                    $('#progress').hide();
-                    $('#progress-text').hide();
+                    MainService.hideProgress(filePurpose);
                 }
                 else {
                     // Success!
-                    $('#progress').hide();
-                    $('#progress-text').hide();
-                    $('#progress-bar').attr('style', 'width:0%');
-                    $('#progress-bar').attr('aria-valuenow', '0');
-                    $('#progress-text').text('0%');
+                    MainService.hideProgress(filePurpose);
+                    MainService.setProgress(filePurpose, 0);
                     if (callBackFunction) {
                         callBackFunction(MainService.getCurrentUser().idUser, lectureId, 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key);   
                     }
                 }
             })
             .on('httpUploadProgress', function (progress) {
-                var percentage = Math.round(progress.loaded / progress.total * 100);
                 if (progress) {
-                    $('#progress-bar').attr('style', 'width:' + percentage + '%');
-                    $('#progress-bar').attr('aria-valuenow', percentage);
-                    $('#progress-text').text(percentage + '%');
+                    var percentage = Math.round(progress.loaded / progress.total * 100);
+                    MainService.setProgress(filePurpose, percentage);
                 }
 
             });
@@ -495,8 +526,7 @@ angular.module('bimoliveApp')
         }
         else {
             // No File Selected
-            $('#progress').hide();
-            $('#progress-text').hide();
+            MainService.hideProgress(filePurpose);
             alert('No File Selected');
             return '';
         }
