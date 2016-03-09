@@ -22,6 +22,10 @@ angular.module('bimoliveApp')
     var user = MainService.getCurrentUser();
     
     this.lastId = -1;
+
+    this.init = function() {
+        this.getLecture();
+    };    
     
     this.getLecture = function () {
         $http({
@@ -39,17 +43,15 @@ angular.module('bimoliveApp')
             appScope.currentLecture = data;
             appScope.isLive = (data.lectureInfo.status === 'live');
             // get question after get lecture
-            getQuestions(appScope.lastId);
-            if (appScope.isPermitted) {
-                // appScope.streamVideo();
-                appScope.getAllAnwseredQuestions();
-            }
+            appScope.getQuestions(appScope.lastId);
+            appScope.getAllAnwseredQuestions();
+            appScope.streamVideo();
         })
         .error(function (data, status) {
         });
     };
     
-    this.getLecture();
+    // this.getLecture();
     
     this.sentQuestions = [];
     // Display sent questions
@@ -83,7 +85,7 @@ angular.module('bimoliveApp')
      * @param  {[type]} idQuestion [description]
      * @return {[type]}            [description]
      */
-    function getQuestions(idQuestion) {
+    this.getQuestions = function(idQuestion) {
         $http( { 
             method: 'POST', 
             url: 'http://bimolive.us-west-2.elasticbeanstalk.com/getquestions',
@@ -108,7 +110,7 @@ angular.module('bimoliveApp')
             }
             if (appScope.currentLecture.lectureInfo.status === 'live') {
                 setTimeout(function () {
-                    getQuestions(appScope.lastId);
+                    appScope.getQuestions(appScope.lastId);
                 }, 3000);
             } else if (appScope.currentLecture.lectureInfo.status === 'finish') { // it is not 'live' change video
                 // appScope.streamVideo();
@@ -206,7 +208,7 @@ angular.module('bimoliveApp')
             live_url = this.currentLecture.lectureInfo.url;
             // live_url = 'https://content.jwplatform.com/videos/q1fx20VZ-kNspJqnJ.mp4';
         } else if (this.currentLecture.lectureInfo.status === 'finish') {
-            alert('finish');
+            // alert('finish');
         }
         videoPlayer = jwplayer('videoPlayer');
         var video = document.getElementById('video');
@@ -499,14 +501,14 @@ angular.module('bimoliveApp')
     };
     
     // show the modal
-    setTimeout(function () {
-        if (!appScope.getPermission()) {
-            $('#permissioncodeModal').modal({ keyboard: false, backdrop: 'static' });
-            $('#permissioncodeModal').modal('show');   
-        } else {
-            appScope.getLecture();
-        }
-    }, 100);
+    // setTimeout(function () {
+    //     if (!appScope.getPermission()) {
+    //         $('#permissioncodeModal').modal({ keyboard: false, backdrop: 'static' });
+    //         $('#permissioncodeModal').modal('show');   
+    //     } else {
+    //         appScope.getLecture();
+    //     }
+    // }, 100);
     
     
     ///////////////////
@@ -693,7 +695,7 @@ angular.module('bimoliveApp')
                     appScope.createvttFile(data);
                     appScope.replayVideo();
                 }
-                appScope.streamVideo();
+                // appScope.streamVideo();
             })
             .error(function(data, status) {
                 console.log(data);

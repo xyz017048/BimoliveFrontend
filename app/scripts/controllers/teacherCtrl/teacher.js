@@ -15,13 +15,13 @@ angular.module('bimoliveApp')
     
     var appScope = this;
     this.sectionId = $routeParams.idLecture;
-
+    this.lastId = -1;
    /**
     * [getQuestions description]
     * @param  {[type]} idQuestion [description]
     * @return {[type]}            [description]
-    */
-    function getQuestions(lastId) {
+    */      
+    this.getQuestions = function(lastId) {
         
         $http( {
             method: 'POST', 
@@ -41,13 +41,13 @@ angular.module('bimoliveApp')
                     appScope.questions.push(data[q]);
                 }
                 if (q === data.length - 1 + "") {
-                    lastId = data[q].idQuestion;
+                    appScope.lastId = data[q].idQuestion;
                     appScope.currentLecture.status = data[q].lectureStatus;
                 }
             }
             if (appScope.currentLecture.status === 'live') {
                 setTimeout(function () {
-                    getQuestions(lastId);
+                    appScope.getQuestions(appScope.lastId);
                 }, 3000);
             } else if (appScope.currentLecture.status === 'finish') { // it is not 'live' change video
                 // appScope.streamVideo();
@@ -62,9 +62,8 @@ angular.module('bimoliveApp')
     }
 
     this.questions = [];
-    var lastId = -1;
     // First time get all the questions from the database
-    getQuestions(lastId);
+    // this.getQuestions(appScope.lastId);
     
     // Continue getting questions from database
     // setInterval( function() {
@@ -151,7 +150,9 @@ angular.module('bimoliveApp')
         .success(function (data, status) {
             appScope.currentLecture.status = 'finish';
             appScope.isFinished = true;
-            $('#redirectModal').modal('show');
+            // $('#redirectModal').modal('show');
+            alert('Lecture finished');
+            $location.url('/mycourses');
         })
 
         .error(function (data, status) {
@@ -159,7 +160,7 @@ angular.module('bimoliveApp')
     };
     
     // init
-    this.lectureFinish = function() {
+    this.init = function() {
         if(MainService.getCurrentUser().roleLevel === 2)
         {
             $http( { 
@@ -176,6 +177,7 @@ angular.module('bimoliveApp')
             
             .success(function(data, status) {
                 appScope.currentLecture = data;
+                appScope.getQuestions(appScope.lastId);
                 if (data.status === 'replay') {
                     appScope.isFinished = true;
                 }
@@ -187,11 +189,14 @@ angular.module('bimoliveApp')
         }
     };
     
-    this.lectureFinish();
+    // this.lectureFinish();
     
-    this.redirectPage = function () {
-        $('#redirectModal').on('hidden.bs.modal', function (e) {
-            $location.url('/mycourses');
-        });
-    };
+    // this.redirectPage = function () {
+    //     $('#redirectModal').on('hidden.bs.modal', function (e) {
+    //         $location.url('/mycourses');
+    //     });
+    // };
+    $('#redirectModal').on('hidden.bs.modal', function (e) {
+        $location.url('/mycourses');
+    });
 }]);

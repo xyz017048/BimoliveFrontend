@@ -1,6 +1,6 @@
 <br>
-<div ng-init="studentCtrl.showPermissionModal()"></div>
-<div class="container" ng-if="studentCtrl.isPermitted">
+<div ng-init="studentCtrl.init()"></div>
+<div class="container">
     <div class="page-header">
         <h1>{{studentCtrl.currentLecture.lectureInfo.topic}}
         <div class="pull-right">
@@ -24,7 +24,7 @@
       </h1>
     </div>
 </div>
-<div class="container" ng-if="studentCtrl.isPermitted" >
+<div class="container">
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
             <div class="embed-responsive embed-responsive-16by9" id="video">
