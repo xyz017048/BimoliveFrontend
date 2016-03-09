@@ -21,7 +21,7 @@ angular.module('bimoliveApp')
         'level': '',
         'scheduleDate': '',
         'startTime': '',
-        'endDate': ''};
+        'endTime': ''};
     }
     
     this.init = function () {
@@ -107,12 +107,38 @@ angular.module('bimoliveApp')
     };
     
     // FAKE, place holder for a function foring checking valivation
-    this.checkNewLectureValid = function () {
-        return true;
+    this.checkNewLectureValid = function() {
+        if (this.newLecture.topic === '') {
+            alert('Please enter a topic');
+            return false;
+        } else if (this.newLecture.scheduleDate === '') {
+            alert('Please select a schedule date');
+        } else if (this.newLecture.startTime === '') {
+            alert('Please select a start time');
+            return false;
+        } else if (this.newLecture.endTime === '') {
+            alert('Please select a end time');
+            return false;
+        } else {
+            return true;
+        }
     };
-    
-    this.createNewLecture = function () {
+
+    this.createNewLecture = function() {
         if (this.checkNewLectureValid()) {
+            var month = this.newLecture.scheduleDate.getMonth() + 1;
+            var date = this.newLecture.scheduleDate.getDate();
+            var startHour = this.newLecture.startTime.getHours();
+            var startMin = this.newLecture.startTime.getMinutes();
+            var endHour = this.newLecture.endTime.getHours();
+            var endMin = this.newLecture.endTime.getMinutes();
+            var scheduleDate = this.newLecture.scheduleDate.getFullYear() +
+                '-' + (month < 10 ? ('0' + month) : month) +
+                '-' + (date < 10 ? ('0' + date) : date);
+            var startTime = (startHour < 10 ? ('0' + startHour) : startHour) +
+                ':' + (startMin < 10 ? ('0' + startMin) : startMin);
+            var endTime = (endHour < 10 ? ('0' + endHour) : endHour) +
+                ':' + (endMin < 10 ? ('0' + endMin) : endMin);
             $http({
                 method: 'POST',
                 url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/createlecture',
@@ -123,11 +149,11 @@ angular.module('bimoliveApp')
                     "idCourse": this.idCourse,
                     "lectureNum": this.lectureList.length + 1,
                     "topic": this.newLecture.topic,
-                    "intro": "",
+                    "intro": this.newLecture.intro,
                     "image": "https://s3-us-west-2.amazonaws.com/bimolive-pictures/course_pics/lecture_default_pic.png",
-                    "scheduleDate": "2017-01-21",
-                    "startTime": "11:11",
-                    "endTime": "11:12"
+                    "scheduleDate": scheduleDate,
+                    "startTime": startTime,
+                    "endTime": endTime
                 }
             })
             .success(function (data, status) {
@@ -168,4 +194,27 @@ angular.module('bimoliveApp')
         };
         reader.readAsDataURL(file);
     });
+
+    /// datePicker options  ///  
+    this.popup1 = {
+        opened: false
+    };
+    
+    this.open1 = function() {
+        this.popup1.opened = true;
+    };
+    
+    this.minDate = new Date();
+    this.format = 'yyyy/MM/dd';
+    this.maxDate = new Date(this.minDate.getFullYear() + 10, 5, 27);
+    
+    this.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+    };
+
+    this.isscheduleDateValid = function() {
+        return true;
+    };
+    /////
 }]);

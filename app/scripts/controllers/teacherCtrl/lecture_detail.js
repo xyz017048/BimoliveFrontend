@@ -122,14 +122,6 @@ angular.module('bimoliveApp')
         var files = event.target.files;
         var profile_pic = files[0];
         MainService.upload(profile_pic, 'lectureReplay', appScope.currentLecture.idCourse, appScope.currentLecture.idLecture);
-        // appScope.refreshPage();
     });
-    
-    this.refreshPage = function () {
-        var interval = setInterval(function () { $scope.$apply(); }, 500);
-        setTimeout(function() {
-             clearInterval(interval);
-        }, 10000);
-    };
         
 }]);

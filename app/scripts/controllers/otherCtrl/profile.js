@@ -18,11 +18,6 @@ angular.module('bimoliveApp')
     this.showLoader = false;
     this.user = JSON.parse(JSON.stringify(MainService.getCurrentUser())); // Copy the user object from main service 
     
-    this.updateToServer = function () {
-        alert(this.user.email + ' ' +
-                this.user.username + ' ');
-    };
-    
     this.resetData = function () {
         this.user = JSON.parse(JSON.stringify(MainService.getCurrentUser())); // Reset the user object
         document.getElementById('profile-img').src = this.user.profile;
@@ -39,7 +34,9 @@ angular.module('bimoliveApp')
         })
         .success(function (data, status) {
             if (data.result) {
+                alert('Account Updated!');
                 MainService.setCurrentUser(appScope.user);
+                location.reload();
             } else {
                 console.log('success but got ' + data.result);
             }
@@ -48,7 +45,25 @@ angular.module('bimoliveApp')
         });
     };
 
-    this.teacherApply = function () {
+    this.applicationValid = function() {
+        if (!this.user.firstName || this.user.firstName === null || this.user.firstName === '') {
+            alert('Please enter your first name');
+            return false;
+        } else if (!this.user.lastName || this.user.lastName === null || this.user.lastName === '') {
+            alert('Please enter your last name');
+            return false;
+        } else if (!this.user.resume || this.user.resume === null || this.user.resume === '') {
+            alert('Please select your resume');
+            return false;
+        } else {
+            return true;
+        }
+    };
+
+    this.teacherApply = function() {
+        if (!this.applicationValid()) {
+            return;
+        }
     	$http({
 	        method: 'POST',
 	        url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacherapply',
@@ -71,6 +86,12 @@ angular.module('bimoliveApp')
 	    })
 	    .error(function (data, status) {
 	    });
+    };
+
+    this.resetApplicationForm = function() {
+        var originalUser = JSON.parse(JSON.stringify(MainService.getCurrentUser()));
+        this.user.resume = originalUser.resume;
+        this.user.introWords = originalUser.introWords;
     };
     
     $('#profile').change(function (event) {
@@ -95,6 +116,13 @@ angular.module('bimoliveApp')
         var files = event.target.files;
         var resume = files[0];
         appScope.user.resume = MainService.upload(resume, 'resume');
+        $('#view-resume').attr('href', appScope.user.resume);
     });
-    
+
+    $('#resume-modal').change(function (event) {
+        var files = event.target.files;
+        var resume = files[0];
+        appScope.user.resume = MainService.upload(resume, 'resume-modal');
+        $('#view-resume-modal').attr('href', appScope.user.resume);
+    });
 }]);
