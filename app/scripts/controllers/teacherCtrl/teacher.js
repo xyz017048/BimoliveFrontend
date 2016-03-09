@@ -51,7 +51,7 @@ angular.module('bimoliveApp')
                 }, 3000);
             } else if (appScope.currentLecture.status === 'finish') { // it is not 'live' change video
                 // appScope.streamVideo();
-                appScope.redirectPage();
+                // appScope.redirectPage();
             }
         })
         .error(function(data, status) {
