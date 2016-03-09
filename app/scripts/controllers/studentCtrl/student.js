@@ -45,7 +45,7 @@ angular.module('bimoliveApp')
             // get question after get lecture
             appScope.getQuestions(appScope.lastId);
             appScope.getAllAnwseredQuestions();
-            appScope.streamVideo();
+            
         })
         .error(function (data, status) {
         });
@@ -557,7 +557,7 @@ angular.module('bimoliveApp')
             
             var pElement = document.createElement('p');
             pElement.classList.add('list-group-item-text');
-            pElement.innerHTML = 'blah';
+            pElement.innerHTML = timeTag[i][2];
             
             ulElement.appendChild(aElement);
             aElement.appendChild(h4Element);
@@ -683,7 +683,7 @@ angular.module('bimoliveApp')
                 for(var i = 0, len = data.length; i < len; ++i) {
                     if(data[i].status === 'answer') {
                         var question = [appScope.realTime2Seconds(data[i].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart),
-                        data[i].content, data[i].content];
+                        data[i].username, data[i].content];
                         timeTag.push(question);
                     }
                 }
@@ -695,7 +695,7 @@ angular.module('bimoliveApp')
                     appScope.createvttFile(data);
                     appScope.replayVideo();
                 }
-                // appScope.streamVideo();
+                appScope.streamVideo();
             })
             .error(function(data, status) {
                 console.log(data);
