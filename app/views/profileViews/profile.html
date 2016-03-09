@@ -11,7 +11,7 @@
     </div>
     <div class="row" >
         <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
-            <form ng-submit="profileCtrl.updateToServer()">
+            <form ng-submit="profileCtrl.updateData()">
                 <div class="form-group">
                     <label class="control-label" for="profile">Profile picture</label>
                     <img class="img-circle center-block" id="profile-img" style="max-width: 25%" ng-src="{{profileCtrl.user.profile}}" src="">
@@ -52,7 +52,7 @@
                     <button type="button" class="btn btn-lg btn-default" ng-click="profileCtrl.resetData()">
                         <span class="glyphicon glyphicon-repeat"></span> Reset
                     </button>
-                    <button type="submit" class="btn btn-lg btn-default pull-right" ng-click="profileCtrl.updateData()">
+                    <button type="submit" class="btn btn-lg btn-default pull-right">
                         <span class="glyphicon glyphicon-upload"></span> Update
                     </button>
                 </div>

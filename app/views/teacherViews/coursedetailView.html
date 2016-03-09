@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         <div class="col-lg-5 col-md-5">
-            <form>
+            <form ng-submit="courseDetailCtrl.updateData()">
                 <div class="form-group">
                     <label class="control-label" for="image">Course picture:</label>
                     <div class="thumbnail col-lg-offset-4">
@@ -67,7 +67,7 @@
                     <button type="button" class="btn btn-lg btn-default" ng-click="courseDetailCtrl.resetData()">
                         <span class="glyphicon glyphicon-repeat"></span> Reset
                     </button>
-                    <button type="submit" class="btn btn-lg btn-default" ng-submit="courseDetailCtrl.updateData()">
+                    <button type="submit" class="btn btn-lg btn-default">
                         <span class="glyphicon glyphicon-upload"></span> Update
                     </button>
                 </div>

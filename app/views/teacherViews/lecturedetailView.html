@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         <div class="col-lg-5 col-md-5">
-            <form>
+            <form ng-click="lectureDetailCtrl.updateData()">
                 <div class="form-group">
                     <div class="input-group col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ">
                         <label class="control-label" for="lectureTopic" style="font-size: 150%;">Lecture Topic:</label>
@@ -39,7 +39,7 @@
                     <button type="button" class="btn btn-lg btn-default" ng-click="lectureDetailCtrl.resetData()">
                         <span class="glyphicon glyphicon-repeat"></span> Reset
                     </button>
-                    <button type="submit" class="btn btn-lg btn-default" ng-click="lectureDetailCtrl.updateData()">
+                    <button type="submit" class="btn btn-lg btn-default">
                         <span class="glyphicon glyphicon-upload"></span> Update
                     </button>
                 </div>
