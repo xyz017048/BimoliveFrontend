@@ -21,6 +21,8 @@ angular.module('bimoliveApp')
     var appScope = this;
     var user = MainService.getCurrentUser();
     
+    this.lastId = -1;
+    
     this.getLecture = function () {
         $http({
             method: 'POST',
@@ -75,7 +77,7 @@ angular.module('bimoliveApp')
     }
 
     appScope.questions = [];
-    var lastId = -1;
+    
     /**
      * get Question with last idQuestion
      * @param  {[type]} idQuestion [description]
@@ -100,18 +102,19 @@ angular.module('bimoliveApp')
                     appScope.questions.push(data[q]);
                 }
                 if (q === data.length - 1 + "") {
-                    lastId = data[q].idQuestion;
+                    appScope.lastId = data[q].idQuestion;
                     appScope.currentLecture.lectureInfo.status = data[q].lectureStatus;
                 }
             }
             if (appScope.currentLecture.lectureInfo.status === 'live') {
                 setTimeout(function () {
-                    getQuestions(lastId);
-                }, 5000);
+                    getQuestions(appScope.lastId);
+                }, 3000);
             } else if (appScope.currentLecture.lectureInfo.status === 'finish') { // it is not 'live' change video
                 // appScope.streamVideo();
                 alert('Lecture Finished');
-                $location.url($window.history.back(1));
+                // $location.url($window.history.back(1));
+                $location.url('/');
             }
         })
         .error(function(data, status) {
@@ -685,8 +688,11 @@ angular.module('bimoliveApp')
                 // console.log(data);
                 // console.log(appScope.realTime2Seconds(data[0].changeTime));
                 // console.log(appScope.currentLecture.lectureInfo.realStart);
-                appScope.createvttFile(data);
-                appScope.replayVideo();
+                
+                if(appScope.currentLecture.lectureInfo.status === 'replay') {
+                    appScope.createvttFile(data);
+                    appScope.replayVideo();
+                }
                 appScope.streamVideo();
             })
             .error(function(data, status) {

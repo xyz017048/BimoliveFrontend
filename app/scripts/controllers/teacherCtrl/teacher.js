@@ -48,7 +48,7 @@ angular.module('bimoliveApp')
             if (appScope.currentLecture.status === 'live') {
                 setTimeout(function () {
                     getQuestions(lastId);
-                }, 5000);
+                }, 3000);
             } else if (appScope.currentLecture.status === 'finish') { // it is not 'live' change video
                 // appScope.streamVideo();
                 appScope.redirectPage();
