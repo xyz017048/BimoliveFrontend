@@ -37,10 +37,12 @@
                 </span>
             </form>
             <br>
-            <label for="question_display">Sent Questions:</label>
-            <ul class="control-label" class="list-group" id="question_display" ng-repeat="sentQuestion in studentCtrl.sentQuestions">
-                <li class="list-group-item">{{sentQuestion.content}}</li>
-            <ul>
+            <div ng-if="studentCtrl.isLive">
+                <label for="question_display">Sent Questions:</label>
+                <ul class="control-label" class="list-group" id="question_display" ng-repeat="sentQuestion in studentCtrl.sentQuestions">
+                    <li class="list-group-item">{{sentQuestion.content}}</li>
+                <ul>
+            </div>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" id="questionPanel">
             <ul class="list-group" id="question_display" style="overflow-y:auto;height:440px;bottom:0;" ng-if="studentCtrl.isLive">
