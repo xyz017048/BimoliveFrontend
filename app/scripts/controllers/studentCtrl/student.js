@@ -25,6 +25,7 @@ angular.module('bimoliveApp')
 
     this.init = function() {
         this.getLecture();
+        this.sentQuestionsfunction();
     };    
     
     this.getLecture = function () {
@@ -59,7 +60,7 @@ angular.module('bimoliveApp')
     /**
      * What questions that student has sent to the teacher
      */
-    function sentQuestionsfunction() {
+    this.sentQuestionsfunction = function () {
         $http({
             method: 'POST',
             url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/questions',
@@ -151,7 +152,7 @@ angular.module('bimoliveApp')
                 if(data.result) {
                     appScope.currentQuestion = '';
                     // Display sent questions
-                    sentQuestionsfunction();
+                    appScope.sentQuestionsfunction();
                 } else {
                     console.log('success but got ' + data.result);
                 }
