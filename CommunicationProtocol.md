@@ -763,7 +763,7 @@ Admin makes an decision on a application:
                                 {
                                     "idAdmin":              INT,
                                     "idUser":               INT,
-                                    "applyStatus":          STRING (can be "new","read","approval","decline")
+                                    "applyStatus":          STRING (can be "new","read","approve","decline")
                                 }
                 Response:
                                 {
