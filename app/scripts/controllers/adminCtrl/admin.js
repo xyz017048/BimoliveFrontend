@@ -62,7 +62,8 @@ angular.module('bimoliveApp')
             data: {
                 idAdmin: MainService.getCurrentUser().idUser,
                 idUser: this.currentRequest.idUser,
-                applyStatus: applyStatus 
+                applyStatus: applyStatus,
+                email: this.currentRequest.email
             }
         } )
         .success(function(data, status) {
@@ -87,7 +88,8 @@ angular.module('bimoliveApp')
             data: {
                 idAdmin: MainService.getCurrentUser().idUser,
                 idUser: this.currentRequest.idUser,
-                applyStatus: 'decline'  
+                applyStatus: 'decline',
+                email: this.currentRequest.email
             }
         } )
         .success(function(data, status) {
