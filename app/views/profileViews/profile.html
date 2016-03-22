@@ -25,6 +25,11 @@
                         <p id="progress-text" style="display:none;">0%</p>
                     </button>
                 </div>
+                <div class="form-group" ng-if="profileCtrl.user.roleLevel === 2">
+                    <label class="control-label" for="key">Broadcast Key</label>
+                    <label class="form-control" id="key" placeholder="{{profileCtrl.user.keyString}}" ng-model="profileCtrl.user.keyString"></label>
+                    <button type="button"  class="btn btn-default btn-block" ng-click="profileCtrl.regenerateKey()">Regenerate Key</button>
+                </div>
                 <div class="form-group">
                     <label class="control-label" for="email">Email address</label>
                     <input class="form-control" id="email" placeholder="{{profileCtrl.user.email}}" ng-model="profileCtrl.user.email">

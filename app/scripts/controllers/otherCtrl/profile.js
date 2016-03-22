@@ -45,6 +45,10 @@ angular.module('bimoliveApp')
         });
     };
 
+    this.regenerateKey = function() {
+        alert('not implemented!');
+    };
+
     this.applicationValid = function() {
         if (!this.user.firstName || this.user.firstName === null || this.user.firstName === '') {
             alert('Please enter your first name');
