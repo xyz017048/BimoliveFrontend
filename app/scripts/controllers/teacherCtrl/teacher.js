@@ -152,7 +152,7 @@ angular.module('bimoliveApp')
             appScope.isFinished = true;
             // $('#redirectModal').modal('show');
             alert('Lecture finished');
-            $location.url('/mycourses');
+            $location.url('/lecturedetail/' + $routeParams.idLecture);
         })
 
         .error(function (data, status) {
