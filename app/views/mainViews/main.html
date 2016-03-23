@@ -30,19 +30,19 @@
             <a ng-href="#/allLive" ng-if="mainCtrl.liveVideos.length > 8">More</a>
         </div>
     </div>-->
-    <ul class="grid cs-style-7"  style="display:flex; flex-wrap:wrap;">
-        <li ng-repeat="video in mainCtrl.liveVideos track by $index" style="position: relative;" class="col-lg-3 col-md-3 col-sm-4 col-xs-6"> 
-            <a ng-href="#/student/{{video.idLecture}}">
+    <ul class="grid caption-style">
+        <li ng-repeat="video in mainCtrl.replayVideos track by $index" class="col-lg-3 col-md-3 col-sm-4 col-xs-6"> 
                 <figure>
-                    <img ng-src="images/thumbnail_pics/{{$index}}.png" alt="img01">
-                    <!--<img ng-src="{{video.image}}" alt="img01">                    -->
+                    <a ng-href="#/student/{{video.idLecture}}"> <img ng-src="images/thumbnail_pics/{{$index}}.png" alt="img01">
                     <figcaption>
                         <h3>{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</h3>
                         <span>by {{video.teacherFirstName}} {{video.teacherLastName}}</span>
-                        <!--<a ng-href="#/student/{{video.idLecture}}">Take a look</a>-->
                     </figcaption>
+                    </a>
                 </figure>
-            </a>
+                <div>
+                    <h4>{{video.topic}}</h4>
+                </div>
         </li>
     </ul>
     <div class="page-header">
@@ -69,19 +69,19 @@
             <a ng-href="#/allReplay" ng-if="mainCtrl.replayVideos.length > 8">More</a>
         </div>
     </div>-->
-    <ul class="grid cs-style-7"  style="display:flex; flex-wrap:wrap;">
-        <li ng-repeat="video in mainCtrl.replayVideos track by $index" style="position: relative;" class="col-lg-3 col-md-3 col-sm-4 col-xs-6"> 
-            <a ng-href="#/student/{{video.idLecture}}">
+    <ul class="grid caption-style">
+        <li ng-repeat="video in mainCtrl.replayVideos track by $index" class="col-lg-3 col-md-3 col-sm-4 col-xs-6"> 
                 <figure>
-                    <img ng-src="images/thumbnail_pics/{{$index}}.png" alt="img01">
-                    <!--<img ng-src="{{video.image}}" alt="img01">                    -->
+                    <a ng-href="#/student/{{video.idLecture}}"> <img ng-src="images/thumbnail_pics/{{$index}}.png" alt="img01">
                     <figcaption>
                         <h3>{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</h3>
                         <span>by {{video.teacherFirstName}} {{video.teacherLastName}}</span>
-                        <!--<a ng-href="#/student/{{video.idLecture}}">Take a look</a>-->
                     </figcaption>
+                    </a>
                 </figure>
-            </a>
+                <div>
+                    <h4>{{video.topic}}</h4>
+                </div>
         </li>
     </ul>
 </div>
