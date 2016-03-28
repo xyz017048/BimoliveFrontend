@@ -286,18 +286,21 @@ Teacher create/update/get [single course/ all courses/ single lecture/all lectur
                                 }                                 
                 Response:   
                                 {
-                                    "idLecture":        INT,
-                                    "idCourse":         INT,
-                                    "lectureNum":       INT,       
-                                    "topic":            STRING,
-                                    "intro":            STRING,     (may not be required)
-                                    "image":            STRING,     (the image path/id of the lecture, may need a default pic)
-                                    "scheduleDate":     STRING,     (format: "yyyy-MM-dd" Here time zone problem)
-                                    "startTime":        STRING,     (format: "hh:mm")
-                                    "endTime":          STRING,     (format: "hh:mm")
-                                    "createDate":       STRING,     (format: "yyyy-MM-dd hh:mm:ss")
-                                    "status":           STRING,         
-                                    "url":              STRING
+                                    "courseName":           STRING,
+                                    "lectureInfo":          {
+                                                                "idLecture":        INT,
+                                                                "idCourse":         INT,
+                                                                "lectureNum":       INT,       
+                                                                "topic":            STRING,
+                                                                "intro":            STRING,     (may not be required)
+                                                                "image":            STRING,     (the image path/id of the lecture, may need a default pic)
+                                                                "scheduleDate":     STRING,     (format: "yyyy-MM-dd" Here time zone problem)
+                                                                "startTime":        STRING,     (format: "hh:mm")
+                                                                "endTime":          STRING,     (format: "hh:mm")
+                                                                "createDate":       STRING,     (format: "yyyy-MM-dd hh:mm:ss")
+                                                                "status":           STRING,         
+                                                                "url":              STRING
+                                                            }
                                 }
 
 
@@ -431,6 +434,7 @@ Student Get a single Lecture:         NOTE: if 'status' == 'wait', student can o
                                 {
                                     "teacherFirstName":     STRING,
                                     "teacherLastName":      STRING,
+                                    "courseName":           STRING,
                                     "idTeacher":            INT,
                                     "lectureInfo":          {
                                                                 "idLecture":        INT,
@@ -762,6 +766,7 @@ Admin makes an decision on a application:
                 Request: POST   /admin/applicationdecision
                                 {
                                     "idAdmin":              INT,
+                                    "email":                STRING,
                                     "idUser":               INT,
                                     "applyStatus":          STRING (can be "new","read","approve","decline")
                                 }
