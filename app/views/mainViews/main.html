@@ -7,6 +7,54 @@
 <br>
 <div class="container" ng-init="mainCtrl.init()">
     <div class="page-header">
+        <h1>Trending
+        </h1>
+    </div>
+    <div class="container">
+        <br>
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+                <li data-target="#myCarousel" data-slide-to="4"></li>
+                <li data-target="#myCarousel" data-slide-to="5"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+
+                <div class="item active">
+                    <img src="images/thumbnail_pics/0.png" alt="instructionVideo" width="460" height="345">
+                    <div class="carousel-caption">
+                        <h3>How to use our website</h3>
+                    </div>
+                </div>
+
+                <div class="item" ng-repeat="video in mainCtrl.replayVideos | limitTo: 5">
+                    <img ng-src="{{video.image}}" alt="{{video.topic}" width="460" height="345">
+                    <div class="carousel-caption">
+                        <h3>{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</h3>
+                        <p>by {{video.teacherFirstName}} {{video.teacherLastName}}</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="left carousel-control" role="button" data-target="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" role="button" data-target="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    <div class="page-header">
         <h1>Live Lectures
         </h1>
     </div>
@@ -31,19 +79,22 @@
         </div>
     </div>-->
     <ul class="grid caption-style">
-        <li ng-repeat="video in mainCtrl.replayVideos track by $index" class="col-lg-3 col-md-3 col-sm-4 col-xs-6"> 
-                <figure>
-                    <a ng-href="#/student/{{video.idLecture}}"> <img ng-src="images/thumbnail_pics/{{$index}}.png" alt="img01">
+        <li ng-repeat="video in mainCtrl.liveVideos | limitTo: 8" class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <figure>
+                <a ng-href="#/student/{{video.idLecture}}"> <img ng-src="{{video.image}}" alt="img01">
                     <figcaption>
                         <h3>{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</h3>
                         <span>by {{video.teacherFirstName}} {{video.teacherLastName}}</span>
                     </figcaption>
-                    </a>
-                </figure>
-                <div>
-                    <h4>{{video.topic}}</h4>
-                </div>
+                </a>
+            </figure>
+            <div>
+                <h4>{{video.topic}}</h4>
+            </div>
         </li>
+        <div class="container">
+            <a ng-href="#/allLive" ng-if="mainCtrl.liveVideos.length > 8" style="font-size:130%;">More</a>
+        </div>
     </ul>
     <div class="page-header">
         <h1>Popular Replay
@@ -70,19 +121,22 @@
         </div>
     </div>-->
     <ul class="grid caption-style">
-        <li ng-repeat="video in mainCtrl.replayVideos track by $index" class="col-lg-3 col-md-3 col-sm-4 col-xs-6"> 
-                <figure>
-                    <a ng-href="#/student/{{video.idLecture}}"> <img ng-src="images/thumbnail_pics/{{$index}}.png" alt="img01">
+        <li ng-repeat="video in mainCtrl.replayVideos | limitTo: 8" class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <figure>
+                <a ng-href="#/student/{{video.idLecture}}"> <img ng-src="{{video.image}}" alt="img01">
                     <figcaption>
                         <h3>{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</h3>
                         <span>by {{video.teacherFirstName}} {{video.teacherLastName}}</span>
                     </figcaption>
-                    </a>
-                </figure>
-                <div>
-                    <h4>{{video.topic}}</h4>
-                </div>
+                </a>
+            </figure>
+            <div>
+                <h4>{{video.topic}}</h4>
+            </div>
         </li>
+        <div class="container">
+            <a ng-href="#/allReplay" ng-if="mainCtrl.replayVideos.length > 8" style="font-size:130%;">More</a>
+        </div>
     </ul>
 </div>
 <!--footer-->

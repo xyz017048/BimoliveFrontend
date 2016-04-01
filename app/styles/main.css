@@ -12,6 +12,9 @@ background: url('../images/background.jpg') no-repeat center center fixed;
 h1 {
     font-size: 290%;
 }
+.page-header h1{
+    margin: 0px;
+}
 .jumbotron {
 background-color: #ffffff;
 margin-top: 0px;
@@ -143,6 +146,13 @@ h2 {
     margin: 0 auto;
     text-align: center;
 }
+#myCarousel {
+    margin-top: 30px;
+}
+#myCarousel img {
+    display:block;
+    margin:auto;
+}
 label {
     font-size: 150%;
 }
@@ -246,15 +256,14 @@ a:focus {
   color: #878787;
   
 }
-.navbar-default .navbar-nav > li > a:hover,
-.navbar-default .navbar-nav > li > a:focus {
-  color: #ffffff;
+.navbar-default .navbar-nav > li > a:hover {
+    color: #ffffff;
     background-color: #252424;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
-  color: #ffffff;
+  color: #878787;
     background-color: #252424;
 }
 .navbar-default .navbar-nav > .open > a,
@@ -282,22 +291,6 @@ a:focus {
 }
 .navbar-default .navbar-link:hover {
   color: #878787;
-}
-
-@media (max-width: 767px) {
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #878787;
-  }
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #878787;
-  }
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #878787;
-    background-color: #ffffff;
-  }
 }
 
 .fade {
