@@ -2,7 +2,8 @@
 <div class="container">
     <div class="page-header" ng-init="infoCtrl.getLecture()">
         <h1 class="text-center">
-            {{infoCtrl.lecture.lectureInfo.topic}} 
+            Course "{{infoCtrl.lecture.courseName}}"</br>
+            Lecture #{{infoCtrl.lecture.lectureInfo.lectureNum}} 
             <span class="label label-danger" style="font-size:20px; padding-top:7px;" ng-if="infoCtrl.lecture.lectureInfo.status === 'live'">LIVE</span>
             <span class="label label-warning" style="font-size:20px; padding-top:7px;" ng-if="infoCtrl.lecture.lectureInfo.status === 'wait'">Waiting</span>
             <span class="label label-success" style="font-size:20px; padding-top:7px;" ng-if="infoCtrl.lecture.lectureInfo.status === 'finish'">Finished</span>
