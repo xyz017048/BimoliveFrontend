@@ -136,7 +136,7 @@ angular.module('bimoliveApp')
      */
     this.sendQuestion = function() {
         if (!MainService.getIsLogin()) {
-            alert('Plese Login');
+            // alert('Plese Login');
         } else if (this.currentQuestion.trim() !== '') {
             var user = MainService.getCurrentUser();
             $http( { 
@@ -289,7 +289,7 @@ angular.module('bimoliveApp')
      */
     this.followCourse = function() {
         if (!MainService.getIsLogin()) {
-            alert('Plese Login');
+            // alert('Plese Login');
         } else if (appScope.currentLecture.followCourse !== 1) {
             var user = MainService.getCurrentUser();
             $http( { 
@@ -325,7 +325,7 @@ angular.module('bimoliveApp')
      */
     this.unfollowCourse = function() {
         if (!MainService.getIsLogin()) {
-            alert('Plese Login');
+            // alert('Plese Login');
         } else if (appScope.currentLecture.followCourse !== 0) {
             var user = MainService.getCurrentUser();
             $http( { 
@@ -361,7 +361,7 @@ angular.module('bimoliveApp')
      */
     this.followTeacher = function() {
         if (!MainService.getIsLogin()) {
-            alert('Plese Login');
+            // alert('Plese Login');
         } else if (appScope.currentLecture.followTeacher !== 1) {
             var user = MainService.getCurrentUser();
             $http( { 
@@ -398,7 +398,7 @@ angular.module('bimoliveApp')
      */
     this.unfollowTeacher = function() {
         if (!MainService.getIsLogin()) {
-            alert('Plese Login');
+            // alert('Plese Login');
         } else if (appScope.currentLecture.followTeacher !== 0) {
             var user = MainService.getCurrentUser();
             $http( { 
@@ -667,7 +667,7 @@ angular.module('bimoliveApp')
      */
     this.getAllAnwseredQuestions = function() {
         if (!MainService.getIsLogin()) {
-            alert('Plese Login');
+            // alert('Plese Login');
         } else {
             // Reset array to empty
             timeTag = [];

@@ -42,6 +42,27 @@ angular.module('bimoliveApp')
             
             .error(function(data, status) {
             });
+
+            //get all categories 
+            appScope.categories = [];
+            $http( { 
+                method: 'POST', 
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/getcategory',
+                headers: {
+                    'Content-Type': undefined
+                }
+            } )
+            
+            .success(function (data, status) {
+                var length = data.length;
+                for (var i = 0; i < length; i++) {
+                    appScope.categories.push(data[i].abbreviation + ' - ' + data[i].fullName);
+                }
+            })
+            
+            .error(function(data, status) {
+                categories.push('Server error');    
+            });
         }
         
     }
@@ -71,24 +92,16 @@ angular.module('bimoliveApp')
         'level': '',
         'startDate': '',
         'endDate': '',
-        'intro': ''};    
+        'intro': '',
+        'image': ''};    
     }
     
     this.newCourse = createNewCourse();
     
-    // FAKE !
-    function getCategories() {
-        return ['CS', 'ACCTG'];
-    }
     
-    // FAKE !
-    function getLevels() {
-        return ['1', '2', '3', '4', '5'];
-    }
-    
-    // FAKE ! We may or may not need this
+    // check if the form is valid
     this.checkNewCourseValid = function () {
-        if (this.newCourseForm.$invalid || !this.isStartDateValid || !this.isStartDateValid) {
+        if (this.newCourseForm.$invalid || !this.isStartDateValid() || !this.isEndDateValid() || !this.isCourseNameValid() || !this.isCourseDescriptionValid()) {
             this.newCourseForm.newCourseName.$setDirty();
             this.newCourseForm.category.$setDirty();
             this.newCourseForm.level.$setDirty();
@@ -99,9 +112,8 @@ angular.module('bimoliveApp')
             return true;
         }
     };
-   
-    this.categories = getCategories();
-    this.levels = getLevels();
+
+    this.levels = ['1', '2', '3', '4', '5'];
     
     this.dateFormat = function(date) {
         
@@ -116,7 +128,29 @@ angular.module('bimoliveApp')
         return date.getFullYear() + '-' + month + '-' + day + ' ' + '00:00:00';
                // date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds();
     };
-    
+
+    this.isCourseNameValid = function() {
+        if (this.newCourse.name.length <= 0 || this.newCourse.name.length > 200) {
+            this.newCourseForm.newCourseName.$setValidity('name', false);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    this.isCourseDescriptionValid = function() {
+        if (this.newCourse.intro.length > 1000000) {
+            this.newCourseForm.intro.$setValidity('intro', false);
+            return false;
+        } else {
+            return true;
+        }
+    }    
+    this.formatDateForDisplay = function(date) {
+        return date.slice(0, date.indexOf(' '));
+    }
+
     /**
      * 
      */
@@ -133,7 +167,7 @@ angular.module('bimoliveApp')
                 },
                 data: {
                     idUser: MainService.getCurrentUser().idUser, 
-                    category: appScopeCourse.category,
+                    category: appScopeCourse.category.slice(appScopeCourse.category.indexOf('-') + 2),
                     levelNumber: appScopeCourse.level,
                     name: appScopeCourse.name,
                     intro: appScopeCourse.intro,

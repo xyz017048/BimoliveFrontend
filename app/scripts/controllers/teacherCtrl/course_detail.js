@@ -105,6 +105,10 @@ angular.module('bimoliveApp')
         this.currentCourse = JSON.parse(JSON.stringify(this.origCourse));
         document.getElementById('profile-img').src = this.origCourse.image;
     };
+
+    this.formatDateForDisplay = function(date) {
+        return date.slice(0, date.indexOf(' '));
+    }    
     
     // FAKE, place holder for a function foring checking valivation
     this.checkNewLectureValid = function() {
@@ -122,6 +126,7 @@ angular.module('bimoliveApp')
         } else {
             return true;
         }
+
     };
 
     this.createNewLecture = function() {
