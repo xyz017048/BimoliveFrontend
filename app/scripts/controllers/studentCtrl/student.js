@@ -13,14 +13,14 @@ angular.module('bimoliveApp')
         $location.url($window.history.back(1));
         $('#loginModal').modal('show'); 
     }
-    
-    this.idLecture = $routeParams.id;
-    this.currentLecture = {};
-    this.isLive = false;
 
     var appScope = this;
     var user = MainService.getCurrentUser();
     
+    this.idLecture = $routeParams.id;
+    this.currentLecture = {};
+    this.isLive = false;
+    this.isBanned = false;
     this.lastId = -1;
 
     this.init = function() {
@@ -102,7 +102,11 @@ angular.module('bimoliveApp')
         .success(function(data, status) {
             for (var q in data) {
                 if (data[q].idQuestion !== 0) {
-                    appScope.questions.push(data[q]);
+                    if(data[q].status === 'answer') {
+                        appScope.questions.push(data[q]);
+                    } else { // it is 'ban'
+                        appScope.isBanned = true;
+                    }
                 }
                 if (q === data.length - 1 + "") {
                     appScope.lastId = data[q].idQuestion;

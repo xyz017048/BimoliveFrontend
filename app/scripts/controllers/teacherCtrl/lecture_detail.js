@@ -15,6 +15,7 @@ angular.module('bimoliveApp')
     
     var appScope = this;
     this.currentLecture = {};
+    this.courseName = '';
     this.isFinished = false;
    
     if(MainService.getCurrentUser().roleLevel === 2)
@@ -32,7 +33,8 @@ angular.module('bimoliveApp')
         } )
         
         .success(function(data, status) {
-            appScope.currentLecture = data;
+            appScope.currentLecture = data.lectureInfo;
+            appScope.courseName = data.courseName;
             appScope.origLecture = JSON.parse(JSON.stringify(data));
             if (data.status === 'finish' || data.status === 'replay') {
                 appScope.isFinished = true; 
@@ -104,7 +106,8 @@ angular.module('bimoliveApp')
         .success(function (data, status) {
             if (data.result) {
                 appScope.origLecture = JSON.parse(JSON.stringify(appScope.currentLecture));
-                document.getElementById('profile-img').src = appScope.currentLecture.image;
+                // TODO wait for img tag. 
+                // document.getElementById('profile-img').src = appScope.currentLecture.image;
             } else {
                 console.log('success but got ' + data.result);
             }

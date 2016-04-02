@@ -46,7 +46,22 @@ angular.module('bimoliveApp')
     };
 
     this.regenerateKey = function() {
-        alert('not implemented!');
+        $http({
+            method: 'POST',
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/generatekey',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: {
+                idUser: this.user.idUser,
+            }
+        })
+        .success(function (data, status) {
+            appScope.user.keyString = data.keyString;
+            MainService.setCurrentUser(appScope.user);
+        })
+        .error(function (data, status) {
+        });
     };
 
     this.applicationValid = function() {
