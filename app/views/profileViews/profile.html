@@ -1,5 +1,5 @@
 <br>
-<div class="container">
+<div class="container" ng-init="profileCtrl.init()">
     <div class="page-header">
         <h1 ng-if="profileCtrl.user.roleLevel == 1">Student Account Setting <!-- student -->
             <button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#applyToTeachModal" ng-if="profileCtrl.user.applyStatus === ''">Apply to teach</button>

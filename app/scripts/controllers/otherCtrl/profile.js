@@ -15,9 +15,14 @@ angular.module('bimoliveApp')
     }
     
     var appScope = this;
-    this.showLoader = false;
-    this.user = JSON.parse(JSON.stringify(MainService.getCurrentUser())); // Copy the user object from main service 
-    
+    this.init = function() {
+        this.showLoader = false;
+        this.user = JSON.parse(JSON.stringify(MainService.getCurrentUser())); // Copy the user object from main service
+        if (this.user.applyStatus !== '' && this.user.applyStatus !== 'approve') {
+            // TODO: need a way to get apply status
+        }
+    }
+
     this.resetData = function () {
         this.user = JSON.parse(JSON.stringify(MainService.getCurrentUser())); // Reset the user object
         document.getElementById('profile-img').src = this.user.profile;
@@ -94,9 +99,7 @@ angular.module('bimoliveApp')
         .success(function (data, status) {
             $('#applyToTeachModal').modal('hide'); 
             if (data.result) {
-                if (appScope.user.applyStatus === '') {
-                    appScope.user.applyStatus = 'new';
-                }
+                appScope.user.applyStatus = 'new';
                 alert('Apply success! Waiting for approve');
                 MainService.setCurrentUser(appScope.user);
             } else {
