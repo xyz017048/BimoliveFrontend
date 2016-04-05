@@ -167,7 +167,7 @@ angular.module('bimoliveApp')
                 },
                 data: {
                     idUser: MainService.getCurrentUser().idUser, 
-                    category: appScopeCourse.category.slice(appScopeCourse.category.indexOf('-') + 2),
+                    category: appScopeCourse.category.slice(0, appScopeCourse.category.indexOf(' ')),
                     levelNumber: appScopeCourse.level,
                     name: appScopeCourse.name,
                     intro: appScopeCourse.intro,
@@ -190,9 +190,9 @@ angular.module('bimoliveApp')
                     );
                 alert(data.result);
                 // */
-                // if (data.result) {
-                //     alert('You have sucessfully created a course');
-                // }
+                if (!data.result) {
+                    alert('server error, please try again');
+                }
                 appScope.getCourseList();
             })
             
