@@ -14,7 +14,7 @@
                         <label class="control-label" for="newCourseName">Course Name</label>
                         <input type="text" class="form-control" id="newCourseName" name="newCourseName" placeholder="Course name" ng-model="courseCtrl.newCourse.name"
                         required>
-                        <p ng-show="courseCtrl.newCourseForm.newCourseName.$invalid && !courseCtrl.newCourseForm.newCourseName.$pristine" class="help-block">Course name is required.</p>
+                        <p ng-show="courseCtrl.newCourseForm.newCourseName.$invalid && !courseCtrl.newCourseForm.newCourseName.$pristine" class="help-block">Course name is invalid.</p>
                     </div>
                     <div class="form-group" ng-class="{ 'has-error' : courseCtrl.newCourseForm.category.$invalid && !courseCtrl.newCourseForm.category.$pristine }">
                         <label class="control-label" for="category">Category</label>
@@ -53,6 +53,11 @@
                             close-text="Close"/>
                         </p>
                         <p ng-show="!courseCtrl.newCourseForm.endDate.$pristine && !courseCtrl.isEndDateValid() " class="help-block">{{courseCtrl.endDateErrMsg}}</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : !courseCtrl.newCourseForm.intro.$pristine && courseCtrl.newCourseForm.intro.$invalid }">
+                        <label class="control-label" for="intro">Course description</label>
+                        <textarea type="text" class="form-control" id="intro" name="intro" ng-model="courseCtrl.newCourse.intro"></textarea>
+                        <p ng-show="!courseCtrl.newCourseForm.intro.$pristine && courseCtrl.newCourseForm.intro.$invalid" class="help-block">Description is too long.</p>
                     </div>
                 </form>
             </div>

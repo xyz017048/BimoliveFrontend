@@ -12,8 +12,8 @@
                 </div>
                 <div class="caption">
                     <a ng-href="#/coursedetail/{{course.idCourse}}" ng-click="courseCtrl.setCurrentCourse(course)">{{course.category}} {{course.levelNumber}}: {{course.name}}</a>
-                    <p>Start Date: {{course.startDate}}</p>
-                    <p>End Date: {{course.endDate}}</p>
+                    <p>Start Date: {{courseCtrl.formatDateForDisplay(course.startDate)}}</p>
+                    <p>End Date: {{courseCtrl.formatDateForDisplay(course.endDate)}}</p>
                 </div>
             </a>
         </div>
