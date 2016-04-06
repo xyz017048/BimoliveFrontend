@@ -14,8 +14,45 @@ angular.module('bimoliveApp')
     }
     
     var appScope = this;
-    this.sectionId = $routeParams.idLecture;
-    this.lastId = -1;
+
+    // init
+    this.init = function() {
+        this.idLecture = $routeParams.idLecture;
+        this.lastId = -1;
+        this.questions = [];
+        this.courseName = '';
+        this.currentLecture = {};
+        this.isFinished = false;
+
+        if(MainService.getCurrentUser().roleLevel === 2) // is teacher, then get lecture
+        {
+            $http( { 
+                method: 'POST', 
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/singlelecture',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: {
+                    idLecture: appScope.idLecture,
+                    idUser: MainService.getCurrentUser().idUser
+                }
+            } )
+            
+            .success(function(data, status) {
+                appScope.courseName = data.courseName;
+                appScope.currentLecture = data.lectureInfo;
+                appScope.getQuestions(appScope.lastId);
+                if (appScope.currentLecture.status === 'replay') {
+                    appScope.isFinished = true;
+                }
+            })
+            
+            .error(function (data, status) {
+                alert('Err:' + data);    
+            });
+        }
+    };
+
    /**
     * [getQuestions description]
     * @param  {[type]} idQuestion [description]
@@ -31,7 +68,7 @@ angular.module('bimoliveApp')
             },
             data: {
                 roleLevel: 2,
-                idLecture: $routeParams.idLecture,
+                idLecture: appScope.idLecture,
                 idQuestion: lastId
             }
         } )
@@ -60,15 +97,6 @@ angular.module('bimoliveApp')
             console.log('Request failed');
         });
     }
-
-    this.questions = [];
-    // First time get all the questions from the database
-    // this.getQuestions(appScope.lastId);
-    
-    // Continue getting questions from database
-    // setInterval( function() {
-    //     getQuestions(2);
-    // }, 2000 );
     
     /**
      * Answer questions
@@ -127,9 +155,35 @@ angular.module('bimoliveApp')
         .error(function(data, status) {
         });
     };
-    
-    this.currentLecture = {};
-    this.isFinished = false;
+
+    this.addFlag = function(content) {
+        $http( {
+            method: 'POST', 
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/questionanswer',
+            headers: {
+                    'Content-Type': undefined
+            },
+            data: {
+                "idUser": MainService.getCurrentUser().idUser,
+                "username": MainService.getCurrentUser().username,
+                "idLecture": appScope.idLecture,
+                "content": content
+            }
+        } )
+        
+        .success(function(data, status) {
+            if(!data.result) {
+                alert("fail to set flag");
+            } else {
+                // TODO: flag[] should add one question
+                // or question[] should add one
+            }
+        })
+        
+        .error(function(data, status) {
+        });
+    }
+
     /**
      * End lecture
      * Change the status of the lecture
@@ -143,7 +197,7 @@ angular.module('bimoliveApp')
             },
             data: {
                 idUser: MainService.getCurrentUser().idUser,
-                idLecture: $routeParams.idLecture
+                idLecture: appScope.idLecture
             }
         })
 
@@ -152,41 +206,11 @@ angular.module('bimoliveApp')
             appScope.isFinished = true;
             // $('#redirectModal').modal('show');
             alert('Lecture finished');
-            $location.url('/lecturedetail/' + $routeParams.idLecture);
+            $location.url('/lecturedetail/' + appScope.idLecture);
         })
 
         .error(function (data, status) {
         });
-    };
-    
-    // init
-    this.init = function() {
-        if(MainService.getCurrentUser().roleLevel === 2)
-        {
-            $http( { 
-                method: 'POST', 
-                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/singlelecture',
-                headers: {
-                    'Content-Type': undefined
-                },
-                data: {
-                    idLecture: $routeParams.idLecture,
-                    idUser: MainService.getCurrentUser().idUser
-                }
-            } )
-            
-            .success(function(data, status) {
-                appScope.currentLecture = data;
-                appScope.getQuestions(appScope.lastId);
-                if (data.status === 'replay') {
-                    appScope.isFinished = true;
-                }
-            })
-            
-            .error(function (data, status) {
-                alert('Err:' + data);    
-            });
-        }
     };
     
     // this.lectureFinish();

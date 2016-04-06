@@ -870,7 +870,7 @@ search:
 
 *************************************** Teacher question and answer during live video *********************************
 
-                Request: POST /teacher/questionanswer
+                Request: POST /teacher/questionanswer (if possible set status to flag instead of answer, deal with it just as answer)
 				{
 					"idUser":	INT,
 					"username" :   	STRING,

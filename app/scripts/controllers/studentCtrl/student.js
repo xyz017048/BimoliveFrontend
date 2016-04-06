@@ -16,14 +16,14 @@ angular.module('bimoliveApp')
 
     var appScope = this;
     var user = MainService.getCurrentUser();
-    
-    this.idLecture = $routeParams.id;
-    this.currentLecture = {};
-    this.isLive = false;
-    this.isBanned = false;
-    this.lastId = -1;
 
     this.init = function() {
+        this.idLecture = $routeParams.id;
+        this.currentLecture = {};
+        this.isLive = false;
+        this.isBanned = false;
+        this.lastId = -1;
+
         this.getLecture();
         this.sentQuestionsfunction();
     };    
@@ -102,7 +102,7 @@ angular.module('bimoliveApp')
         .success(function(data, status) {
             for (var q in data) {
                 if (data[q].idQuestion !== 0) {
-                    if(data[q].status === 'answer') {
+                    if(data[q].status === 'answer' || data[q].status === 'flag') {
                         appScope.questions.push(data[q]);
                     } else { // it is 'ban'
                         appScope.isBanned = true;
@@ -686,7 +686,7 @@ angular.module('bimoliveApp')
             } )
             .success(function(data, status) {
                 for(var i = 0, len = data.length; i < len; ++i) {
-                    if(data[i].status === 'answer') {
+                    if(data[i].status === 'answer' || data[i].status === 'flag') {
                         var question = [appScope.realTime2Seconds(data[i].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart),
                         data[i].username, data[i].content];
                         timeTag.push(question);
