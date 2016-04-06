@@ -867,3 +867,17 @@ search:
                                                     ...
                                                 ]
                                 }
+
+*************************************** Teacher question and answer during live video *********************************
+
+                Request: POST /teacher/questionanswer
+				{
+					"idUser":	INT,
+					"username" :   	STRING,
+					"idLecture":	INT,
+				 	"content" : 	STRING
+				}
+		Response:
+				{
+					"result": INT 	(result=0 fail; reuslt=1 success)
+				}
