@@ -19,7 +19,7 @@
     <!-- endbuild -->
 </head>
 
-<body ng-app="bimoliveApp" ng-controller="MainCtrl as mainCtrl">
+<body ng-app="bimoliveApp" ng-controller="MainCtrl as mainCtrl" data-spy="scroll" data-target="#myScrollspy" data-offset="20">
     <div class="container">
         <!--top navigation-->
         <top-nav></top-nav>
@@ -28,9 +28,7 @@
     <div class="row">
         <!--toggle navigation-->
         <!--<toggle-nav></toggle-nav>-->
-        <div class="well well-lg">
-            <div ng-view></div>
-        </div>
+        <div ng-view></div>
     </div>
 
     <!--log in modal-->

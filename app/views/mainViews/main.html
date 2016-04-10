@@ -18,23 +18,43 @@
                     <h1>Bimolive</h1>  
                     <h4>Learn from best</h4>
                 </div>
-                <div class="col-lg-12" style="color:#fff; text-align:center; letter-spacing: 3px; padding-top:50px;" >
+                <div class="col-lg-12 hidden-xs" style="color:#fff; text-align:center; letter-spacing: 3px; padding-top:50px;" >
                     <a href ng-if="!mainCtrl.isLogin" style="color: #fff; padding-right:10px;" data-toggle="modal" data-target="#loginModal" mydata="mydata">Log In</a>
                     <a href ng-if="!mainCtrl.isLogin" style="color: #fff;" data-toggle="modal" data-target="#signUpModal" mydata="mydata">Sign Up</a>
+                    <a ng-if="mainCtrl.isLogin" style="color: #fff; padding-right:10px;" ng-href="#/allLive">Live</a>
+                    <a ng-if="mainCtrl.isLogin" style="color: #fff; " ng-href="#/allReplay">Replay</a>
+                </div> 
+                <div class="col-lg-12 hidden-xs" style="text-align:center; padding-top:30px;" >
+                    <a href style="color: #fff; font-size:110%;" ng-click="mainCtrl.scrollDown()">
+                        <span class="glyphicon glyphicon-triangle-bottom" style="" aria-hidden="true"></span>
+                    </a>
+                </div>
+                <div class="col-lg-12 hidden-xs" style="text-align:center;" >
+                    <a href style="color: #fff; font-size:110%;" ng-click="mainCtrl.scrollDown()">
+                        <span class="glyphicon glyphicon-triangle-bottom" style="" aria-hidden="true"></span>
+                    </a>
+                </div>
+                <div class="col-lg-12 hidden-xs" style="text-align:center;" >
+                    <a href style="color: #fff; font-size:110%;" ng-click="mainCtrl.scrollDown()">
+                        <span class="glyphicon glyphicon-triangle-bottom" style="" aria-hidden="true"></span>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+    <div class="hidden-xs" id="live-videos">
+        <br>
+    </div>
     <div class="page-header">
-        <h1>Live Lectures
+        <h1>Live Now
         </h1>
     </div>
-    <div class="row" style="display:flex; flex-wrap:wrap; padding-right: 10px;" ng-init="mainCtrl.init()">
+    <div class="row" style="display:flex; flex-wrap:wrap; padding-right: 10px;">
         <div ng-repeat="video in mainCtrl.liveVideos | limitTo: 8" class="tb col-lg-3 col-md-3 col-sm-4 col-xs-6">
             <a ng-href="#/student/{{video.idLecture}}" class="darken">
                 <img ng-src="{{video.image}}" class="img-responsive" alt="1"/>
                 <div class="caption">
-                    <a ng-href="#/student/{{video.idLecture}}">{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</a>
+                    <a class="caption-link" ng-href="#/student/{{video.idLecture}}">{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</a>
                     <p>by {{video.teacherFirstName}} {{video.teacherLastName}}</p>
                 </div>
             </a>
@@ -103,12 +123,12 @@
             <a ng-href="#/allReplay" ng-if="mainCtrl.replayVideos.length > 8" style="font-size:130%;">More</a>
         </div>
     </ul>-->
-    <div class="row" style="display:flex; flex-wrap:wrap; padding-right: 10px;" ng-init="mainCtrl.init()">
+    <div class="row" style="display:flex; flex-wrap:wrap; padding-right: 10px;" >
         <div ng-repeat="video in mainCtrl.replayVideos | limitTo: 8" class="tb col-lg-3 col-md-3 col-sm-4 col-xs-6">
             <a ng-href="#/student/{{video.idLecture}}" class="darken">
                 <img ng-src="{{video.image}}" class="img-responsive" alt="1"/>
                 <div class="caption">
-                    <a ng-href="#/student/{{video.idLecture}}">{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</a>
+                    <a class="caption-link" ng-href="#/student/{{video.idLecture}}">{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</a>
                     <p>by {{video.teacherFirstName}} {{video.teacherLastName}}</p>
                 </div>
             </a>

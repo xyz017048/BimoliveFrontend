@@ -9,15 +9,18 @@ angular.module('bimoliveApp')
 .controller('MainCtrl', ['$http', 'MainService', '$location', function ($http, MainService, $location) {
     
     var appScope = this;
-    $(window).load(function() {
-        $("#cover-video-caption").css({'padding-top': $("#homepage-video").height()/2 - $("#cover-video-caption").height(), 'padding-bottom': $("#homepage-video").height()/2});
-    });
-    $(window).resize(function() {
-        $("#cover-video-caption").css({'padding-top': $("#homepage-video").height()/2 - $("#cover-video-caption").height(), 'padding-bottom': $("#homepage-video").height()/2});
-    });
     this.init = function () {
         this.getLiveVideo();
         this.getReplayVideo();
+        $("#cover-video-caption").css({'padding-top': $("#homepage-video").height()/2 + $("#homepage-video").height()*0.1 - $("#cover-video-caption").height(), 'padding-bottom': $("#homepage-video").height()/2});
+    };
+    $(window).resize(function() {
+        $("#cover-video-caption").css({'padding-top': $("#homepage-video").height()/2 - $("#cover-video-caption").height(), 'padding-bottom': $("#homepage-video").height()/2});
+    });
+    this.scrollDown = function() {
+        $('html, body').animate({
+            scrollTop: $("#live-videos").offset().top
+        }, 1000);
     };
     // getLiveLectures (videoInfo)
     this.getLiveVideo = function () {
