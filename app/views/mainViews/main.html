@@ -6,52 +6,19 @@
 <!--main body-->
 <br>
 <div class="container" ng-init="mainCtrl.init()">
-    <div class="page-header">
-        <h1>Trending
-        </h1>
-    </div>
-    <div class="container">
-        <br>
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
-                <li data-target="#myCarousel" data-slide-to="3"></li>
-                <li data-target="#myCarousel" data-slide-to="4"></li>
-                <li data-target="#myCarousel" data-slide-to="5"></li>
-            </ol>
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-
-                <div class="item active">
-                    <img src="images/thumbnail_pics/0.png" alt="instructionVideo" width="460" height="345">
-                    <div class="carousel-caption">
-                        <h3>How to use our website</h3>
-                    </div>
+    <div>
+        <video id="homepage-video" autoplay loop>
+            <source src="images/coverr/We-Work-We-Wait.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
+            <source src="images/coverr/We-Work-We-Wait.webm" type="video/webm" />Your browser does not support the video tag. I suggest you upgrade your browser.
+            <source src="images/coverr/We-Work-We-Wait.ogv" type="video/ogv" />Your browser does not support the video tag. I suggest you upgrade your browser.
+        </video>
+        <div class="container"id="cover-video-caption">
+            <div class="row">
+                <div class="col-lg-12" style="color:#fff; text-align:center;" >
+                    <h1>Bimolive</h1>  
+                    <h3>Learn from best</h3>
                 </div>
-
-                <div class="item" ng-repeat="video in mainCtrl.replayVideos | limitTo: 5">
-                    <img ng-src="{{video.image}}" alt="{{video.topic}" width="460" height="345">
-                    <div class="carousel-caption">
-                        <h3>{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</h3>
-                        <p>by {{video.teacherFirstName}} {{video.teacherLastName}}</p>
-                    </div>
-                </div>
-
             </div>
-
-            <!-- Left and right controls -->
-            <a class="left carousel-control" role="button" data-target="#myCarousel" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" role="button" data-target="#myCarousel" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
     </div>
     <div class="page-header">
