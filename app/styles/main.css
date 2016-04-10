@@ -1,7 +1,7 @@
 body {
 /*background: #fdfdfc !important; */
 /*overflow-x: hidden;*/
-font-family: 'Open Sans', sans-serif;
+font-family: 'Lato', sans-serif;
 /*background: url('../images/background.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -25,19 +25,25 @@ video#homepage-video{
     background: url(../images/coverr/White-Board.jpg) no-repeat;
     background-size: cover;
 }
-.jumbotron {
-background-color: #ffffff;
-margin-top: 0px;
-padding-top: 0px;
-padding-bottom: 0px;
+a.darken {
+    display: inline-block;
+    background: #ffffff;
+    background-image: url(../images/play_icon.png) no-repeat;
+    padding: 0;
 }
-.thumbnail:hover img{
-opacity: 0.8;
+a.darken img {
+    display: block;
+    -webkit-transition: all 0.2s linear;
+       -moz-transition: all 0.2s linear;
+        -ms-transition: all 0.2s linear;
+         -o-transition: all 0.2s linear;
+            transition: all 0.2s linear;
 }
-.thumbnail:hover .play-icon{
-visibility: visible;
+a.darken:hover img {
+    opacity: 0.7;
+    box-shadow: 7px 7px 5px #888888;
 }
-.thumbnail p{
+.tb p{
 font-size: 80%;
 margin-top: 0px; 
 margin-bottom: 0px;

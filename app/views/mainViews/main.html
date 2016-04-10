@@ -8,15 +8,19 @@
 <div class="container" ng-init="mainCtrl.init()">
     <div>
         <video id="homepage-video" autoplay loop>
-            <source src="images/coverr/We-Work-We-Wait.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
-            <source src="images/coverr/We-Work-We-Wait.webm" type="video/webm" />Your browser does not support the video tag. I suggest you upgrade your browser.
-            <source src="images/coverr/We-Work-We-Wait.ogv" type="video/ogv" />Your browser does not support the video tag. I suggest you upgrade your browser.
+            <source src="images/coverr/Meeting-Room.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
+            <source src="images/coverr/Meeting-Room.webm" type="video/webm" />Your browser does not support the video tag. I suggest you upgrade your browser.
+            <source src="images/coverr/Meeting-Room.ogv" type="video/ogv" />Your browser does not support the video tag. I suggest you upgrade your browser.
         </video>
         <div class="container"id="cover-video-caption">
             <div class="row">
-                <div class="col-lg-12" style="color:#fff; text-align:center;" >
+                <div class="col-lg-12" style="color:#fff; text-align:center; letter-spacing: 3px;" >
                     <h1>Bimolive</h1>  
-                    <h3>Learn from best</h3>
+                    <h4>Learn from best</h4>
+                </div>
+                <div class="col-lg-12" style="color:#fff; text-align:center; letter-spacing: 3px; padding-top:50px;" >
+                    <a href ng-if="!mainCtrl.isLogin" style="color: #fff; padding-right:10px;" data-toggle="modal" data-target="#loginModal" mydata="mydata">Log In</a>
+                    <a href ng-if="!mainCtrl.isLogin" style="color: #fff;" data-toggle="modal" data-target="#signUpModal" mydata="mydata">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -25,16 +29,10 @@
         <h1>Live Lectures
         </h1>
     </div>
-    <!--<div class="row" style="display:flex; flex-wrap:wrap;" ng-init="mainCtrl.init()">
-        <div ng-repeat="video in mainCtrl.liveVideos track by $index" ng-if="$index < 8" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
-            <a ng-href="#/student/{{video.idLecture}}">
-                <div class="imageWrapper" style="position: relative;">
-                    <img ng-src="{{video.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;"
-                    />
-                    <div class="img-overlay">
-                        <img ng-src="images/play_icon.png" class="img-responsive play-icon" alt="play" />
-                    </div>
-                </div>
+    <div class="row" style="display:flex; flex-wrap:wrap; padding-right: 10px;" ng-init="mainCtrl.init()">
+        <div ng-repeat="video in mainCtrl.liveVideos | limitTo: 8" class="tb col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <a ng-href="#/student/{{video.idLecture}}" class="darken">
+                <img ng-src="{{video.image}}" class="img-responsive" alt="1"/>
                 <div class="caption">
                     <a ng-href="#/student/{{video.idLecture}}">{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</a>
                     <p>by {{video.teacherFirstName}} {{video.teacherLastName}}</p>
@@ -44,8 +42,8 @@
         <div class="container">
             <a ng-href="#/allLive" ng-if="mainCtrl.liveVideos.length > 8">More</a>
         </div>
-    </div>-->
-    <ul class="grid caption-style">
+    </div>
+    <!--<ul class="grid caption-style">
         <li ng-repeat="video in mainCtrl.liveVideos | limitTo: 8" class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
             <figure>
                 <a ng-href="#/student/{{video.idLecture}}"> <img ng-src="{{video.image}}" alt="img01">
@@ -62,7 +60,7 @@
         <div class="container">
             <a ng-href="#/allLive" ng-if="mainCtrl.liveVideos.length > 8" style="font-size:130%;">More</a>
         </div>
-    </ul>
+    </ul>-->
     <div class="page-header">
         <h1>Popular Replay
         </h1>
@@ -87,7 +85,7 @@
             <a ng-href="#/allReplay" ng-if="mainCtrl.replayVideos.length > 8">More</a>
         </div>
     </div>-->
-    <ul class="grid caption-style">
+    <!--<ul class="grid caption-style">
         <li ng-repeat="video in mainCtrl.replayVideos | limitTo: 8" class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
             <figure>
                 <a ng-href="#/student/{{video.idLecture}}"> <img ng-src="{{video.image}}" alt="img01">
@@ -104,7 +102,21 @@
         <div class="container">
             <a ng-href="#/allReplay" ng-if="mainCtrl.replayVideos.length > 8" style="font-size:130%;">More</a>
         </div>
-    </ul>
+    </ul>-->
+    <div class="row" style="display:flex; flex-wrap:wrap; padding-right: 10px;" ng-init="mainCtrl.init()">
+        <div ng-repeat="video in mainCtrl.replayVideos | limitTo: 8" class="tb col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <a ng-href="#/student/{{video.idLecture}}" class="darken">
+                <img ng-src="{{video.image}}" class="img-responsive" alt="1"/>
+                <div class="caption">
+                    <a ng-href="#/student/{{video.idLecture}}">{{video.courseName}} {{video.lectureNum}}: {{video.topic}}</a>
+                    <p>by {{video.teacherFirstName}} {{video.teacherLastName}}</p>
+                </div>
+            </a>
+        </div>
+        <div class="container">
+            <a ng-href="#/allLive" ng-if="mainCtrl.replayVideos.length > 8">More</a>
+        </div>
+    </div>
 </div>
 <!--footer-->
 <!--<div class="footer">
