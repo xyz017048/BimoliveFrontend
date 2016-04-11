@@ -192,7 +192,7 @@ label {
     text-align: right;
     filter: alpha(opacity=0);
     opacity: 0;
-    outline: none;
+    outline: none !important;
     background: white;
     cursor: inherit;
     display: block;
@@ -221,6 +221,12 @@ input[readonly] {
     color: #252424;
     border-color: #252424;
     border: 1px solid #252424;
+    background: none;
+}
+.btn-nav, .btn-nav:hover, .btn-nav:active, .btn-nav:focus {
+    outline: none !important;
+    color: #ffffff;
+    border: none;
     background: none;
 }
 .btn-primary {
@@ -255,11 +261,14 @@ input[readonly] {
     border: 1px solid #d5332a;
     background: none;
 }
-a:focus {
-    outline: none;
+a {
+    outline: none !important;
 }
-.btn:focus {
-  outline: none;
+.btn {
+  outline: none !important;
+}
+.list-group-item {
+    outline: none !important;
 }
 .navbar {
     font-size: 17px;

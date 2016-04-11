@@ -30,7 +30,7 @@
                     <ul class="dropdown-menu">
                         <li><a ng-href="#/allLive">Live Now</a></li>
                         <li><a ng-href="#/allReplay">Replay Videos</a></li>
-                        <li><a ng-href="#/allCourses">Find Courses</a></li>
+                        <li><a ng-href="#/allCourses">All Courses</a></li>
                         <li><a ng-href="#/followedTeachers">Followed Teachers</a></li>
                         <li><a ng-href="#/followedCourses">Followed Courses</a></li>
                     </ul>
@@ -61,12 +61,14 @@
                 </li>
             </ul>
             <!-- navbar-left will move the search to the left -->
-            <!--<form class="navbar-form navbar-right" role="search" ng-submit="topCtrl.search()">
+            <form class="navbar-form navbar-right" role="search" ng-submit="topCtrl.search()">
+                <button type="submit" class="btn btn-nav hidden-md hidden-sm hidden-xs">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search" ng-model="topCtrl.words">
+                    <input type="text" class="form-control" placeholder="Search" ng-model="topCtrl.words">                                   
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>-->
+            </form>
         </div>
     </div>
 </nav>
