@@ -17,21 +17,19 @@ html
     // build:css(.tmp) styles/main.css
     link(rel='stylesheet', href='styles/main.css')
     |     
-    link(href='https://fonts.googleapis.com/css?family=Open+Sans', rel='stylesheet', type='text/css')
+    link(href='https://fonts.googleapis.com/css?family=Lato:300', rel='stylesheet', type='text/css')
     |     
     script(src='styles/modernizr.custom.js')
     // endbuild
-  body(ng-app='bimoliveApp', ng-controller='MainCtrl as mainCtrl')
+  body(ng-app='bimoliveApp', ng-controller='MainCtrl as mainCtrl', data-spy='scroll', data-target='#myScrollspy', data-offset='20')
     .container
       // top navigation
       top-nav
     |     
     .row
       // toggle navigation
-      toggle-nav
-      |         
-      .well.well-lg
-        div(ng-view='')
+      // <toggle-nav></toggle-nav>
+      div(ng-view='')
     // log in modal
     div(ng-include="'views/modalViews/loginModal.html'")
     // sign up modal
