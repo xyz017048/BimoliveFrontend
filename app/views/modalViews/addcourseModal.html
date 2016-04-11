@@ -30,6 +30,10 @@
                         </select>
                         <p ng-show="courseCtrl.newCourseForm.level.$invalid && !courseCtrl.newCourseForm.level.$pristine" class="help-block">Level is required.</p>
                     </div>
+                    <div class="form-group" ng-class="{ 'has-error' : !courseCtrl.newCourseForm.permissionCode.$pristine && courseCtrl.newCourseForm.permissionCode.$invalid }">
+                        <label class="control-label" for="permissionCode">Permission code</label>
+                        <input type="text" class="form-control" id="permissionCode" name="permissionCode" placeholder="" ng-model="courseCtrl.newCourse.permissionCode">
+                    </div>
                     <div class="form-group" ng-class="{ 'has-error' : !courseCtrl.newCourseForm.startDate.$pristine && !courseCtrl.isStartDateValid() }">
                         <label class="control-label" for="startDate">Start Date</label>
                         <p class="input-group">

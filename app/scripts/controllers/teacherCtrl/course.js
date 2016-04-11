@@ -93,7 +93,8 @@ angular.module('bimoliveApp')
         'startDate': '',
         'endDate': '',
         'intro': '',
-        'image': ''};    
+        'image': '',
+        'permissionCode': ''};    
     }
     
     this.newCourse = createNewCourse();
@@ -174,7 +175,8 @@ angular.module('bimoliveApp')
                     image: 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/course_pics/course_default_pic.png',
                     startDate: appScope.dateFormat(appScopeCourse.startDate),
                     endDate: appScope.dateFormat(appScopeCourse.endDate),
-                    endFlag: 1
+                    endFlag: 1,
+                    permissionCode: appScopeCourse.permissionCode
                 }
             } )
             

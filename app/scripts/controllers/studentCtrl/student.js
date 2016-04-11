@@ -23,9 +23,10 @@ angular.module('bimoliveApp')
         this.isLive = false;
         this.isBanned = false;
         this.lastId = -1;
+        this.sentQuestions = [];
+        appScope.questions = [];
 
         this.getLecture();
-        this.sentQuestionsfunction();
     };    
     
     this.getLecture = function () {
@@ -37,24 +38,80 @@ angular.module('bimoliveApp')
             },
             data: {
                 idUser: user.idUser,
-                idLecture: $routeParams.id
+                idLecture: appScope.idLecture
             }
         })
         .success(function (data, status) {
-            appScope.currentLecture = data;
-            appScope.isLive = (data.lectureInfo.status === 'live');
-            // get question after get lecture
-            appScope.getQuestions(appScope.lastId);
-            appScope.getAllAnwseredQuestions();
-            
+            if (data.permitStatus) { // need permission
+                appScope.showPermissionModal();
+            } else {
+                appScope.currentLecture = data;
+                appScope.isLive = (data.lectureInfo.status === 'live');
+                // get question after get lecture
+                appScope.getQuestions(appScope.lastId);
+                appScope.getAllAnwseredQuestions();
+                appScope.sentQuestionsfunction();
+            }
         })
         .error(function (data, status) {
         });
     };
+
+    /**
+     * Modal Use functions
+     */
+    this.showPermissionModal = function () {
+        $(document).on('keydown', function (e) {
+            if (e.which === 8 && !$(e.target).is('input, textarea')) {
+                e.preventDefault();
+            }
+        });  
+        
+        // if (this.getPermission()) {
+        //     this.permissioncode = '';
+        //     this.showLoader = false;
+        //     this.isPermitted = true;
+        //     this.notPermitted = false;   
+            
+        // } else {
+        //     this.permissioncode = '';
+        //     this.showLoader = false;
+        //     this.isPermitted = false;
+        //     this.notPermitted = false;
+        // }
+    };
     
+    this.submitPermission = function () {
+        var permission = '';
+        $http({
+            method: 'POST',
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/singlelecture',
+            headers: {
+                'Content-Type': undefined
+            },
+            data: {
+                idUser: user.idUser,
+                idLecture: appScope.idLecture,
+                code: permission
+            }
+        })
+        .success(function (data, status) {
+            if (data.result) { // success
+                $('#permissioncodeModal').modal('hide');
+                $('#permissioncodeModal').on('hidden.bs.modal', function (e) {
+                    appScope.getLecture();
+                });
+            } else {
+                // should make prision to modal
+                alert('wrong permission');
+            }
+        })
+        .error(function (data, status) {
+        });
+    };
+
     // this.getLecture();
     
-    this.sentQuestions = [];
     // Display sent questions
     // sentQuestions();
     /**
@@ -69,7 +126,7 @@ angular.module('bimoliveApp')
             },
             data: {
                 idUser: user.idUser,
-                idLecture: $routeParams.id
+                idLecture: appScope.idLecture
             }
         })
         .success(function (data, status) {
@@ -78,8 +135,6 @@ angular.module('bimoliveApp')
         .error(function (data, status) {
         });
     }
-
-    appScope.questions = [];
     
     /**
      * get Question with last idQuestion
@@ -95,7 +150,7 @@ angular.module('bimoliveApp')
             },
             data: {
                 roleLevel: 1,
-                idLecture: $routeParams.id,
+                idLecture: appScope.idLecture,
                 idQuestion: idQuestion
             }
         } )
@@ -148,8 +203,8 @@ angular.module('bimoliveApp')
                 data: {
                     idUser: user.idUser,
                     username: user.username,
-                    idLecture: this.idLecture,
-                    content: this.currentQuestion.trim()
+                    idLecture: appScope.idLecture,
+                    content: appScope.currentQuestion.trim()
                 }
             } )
             .success(function(data, status) {
@@ -428,81 +483,12 @@ angular.module('bimoliveApp')
             });
         }
     }
-    /**
-     * Modal Use functions
-     */
-    this.showPermissionModal = function () {
-        $(document).on('keydown', function (e) {
-            if (e.which === 8 && !$(e.target).is('input, textarea')) {
-                e.preventDefault();
-            }
-        });  
-        
-        if (this.getPermission()) {
-            this.permissioncode = '';
-            this.showLoader = false;
-            this.isPermitted = true;
-            this.notPermitted = false;   
-            
-        } else {
-            this.permissioncode = '';
-            this.showLoader = false;
-            this.isPermitted = false;
-            this.notPermitted = false;
-        }
-    };
-    
-    this.submitPermission = function () {
-        this.showLoader = true;
-        // check with server, if permission code is right, do this
-        if (this.checkPermission()) {
-            this.permissioncode = '';
-            this.isPermitted = true;
-            this.setPermission();
-            $('#permissioncodeModal').modal('hide');   
-            $('#permissioncodeModal').on('hidden.bs.modal', function (e) {
-                appScope.getLecture();
-            });
-            
-        } else {
-            this.notPermitted = true;
-        }
-        this.showLoader = false;
-    };
-    
-    // FAKE !!! return true if permission is good, false if permission denied
-    this.checkPermission = function () {
-        if (this.permissioncode === '1') {
-            return true;
-        } else {
-            return false;   
-        }
-    };
     
     // redirect to the page before 
     this.redirectBack = function () {
         $('#permissioncodeModal').on('hidden.bs.modal', function (e) {
             $location.url($window.history.back(1));
         });
-    };
-    
-    this.permittedLectures = [];
-    if (sessionStorage.getItem('permittedLectures') !== null) {
-        this.permittedLectures = JSON.parse(sessionStorage.getItem('permittedLectures'));
-    } 
-    
-    this.setPermission = function () {
-        this.permittedLectures.push(this.idLecture);
-        sessionStorage.setItem('permittedLectures', JSON.stringify(this.permittedLectures));
-    };
-    
-    this.getPermission = function () {
-        // if (this.permittedLectures.indexOf(this.idLecture) === -1) {
-        //     return false;
-        // } else {
-        //     return true;
-        // }
-        return true;
     };
     
     // show the modal
