@@ -22,14 +22,25 @@ html
     script(src='styles/modernizr.custom.js')
     // endbuild
   body(ng-app='bimoliveApp', ng-controller='MainCtrl as mainCtrl', data-spy='scroll', data-target='#myScrollspy', data-offset='20')
-    .container
-      // top navigation
+    #wrapper
       top-nav
-    |     
-    .row
-      // toggle navigation
-      // <toggle-nav></toggle-nav>
-      div(ng-view='')
+      |         
+      #content(ng-view='')
+      |         
+      #footer
+        a.col-lg-1.col-lg-offset-2(ng-href='#/about') About Us
+        |             
+        a.col-lg-1(ng-href='#/about') Contact Us
+        |             
+        a.col-lg-1(ng-href='#/about') Help
+        |             
+        a.col-lg-1(ng-href='/sitemap.xml') Sitemap
+        |             
+        a.col-lg-1(ng-href='/privacypolicy.htm') Privacy Policy
+        |             
+        a.col-lg-1(ng-href='/termsofuse.html') Terms of Use
+        |             
+        p.col-lg-2.pull-right &copy; Copyright 2016 The PROs
     // log in modal
     div(ng-include="'views/modalViews/loginModal.html'")
     // sign up modal
