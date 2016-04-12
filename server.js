@@ -6,7 +6,7 @@ var port = process.env.PORT || 8080;
 app.set('views', __dirname + '/app');
 app.set('view engine', 'jade');
 
-app.use(express.static('/public'));
+app.use(express.static(__dirname + '/app/public'));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use('/scripts',  express.static(__dirname + '/app/scripts'));
 app.use('/styles',  express.static(__dirname + '/app/styles'));
