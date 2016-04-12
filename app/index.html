@@ -20,16 +20,20 @@
 </head>
 
 <body ng-app="bimoliveApp" ng-controller="MainCtrl as mainCtrl" data-spy="scroll" data-target="#myScrollspy" data-offset="20">
-    <div class="container">
-        <!--top navigation-->
+    <div id="wrapper">
         <top-nav></top-nav>
+        <div ng-view id="content"></div>
+        <div id="footer">
+            <a class="col-lg-1 col-lg-offset-2" ng-href="#/about">About Us</a>
+            <a class="col-lg-1" ng-href="#/about">Contact Us</a>
+            <a class="col-lg-1" ng-href="#/about">Help</a>
+            <a class="col-lg-1" ng-href="/sitemap.xml">Sitemap</a>
+            <a class="col-lg-1" ng-href="/privacypolicy.htm">Privacy Policy</a>
+            <a class="col-lg-1" ng-href="/termsofuse.html">Terms of Use</a>
+            <p class="col-lg-2 pull-right">© Copyright 2016 The PROs</p>
+        </div>
     </div>
-
-    <div class="row">
-        <!--toggle navigation-->
-        <!--<toggle-nav></toggle-nav>-->
-        <div ng-view></div>
-    </div>
+    
 
     <!--log in modal-->
     <div ng-include="'views/modalViews/loginModal.html'"></div>
