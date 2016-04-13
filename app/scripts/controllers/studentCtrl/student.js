@@ -42,7 +42,7 @@ angular.module('bimoliveApp')
             }
         })
         .success(function (data, status) {
-            if (data.permitStatus) { // need permission
+            if (!data.permitStatus) { // need permission
                 appScope.showPermissionModal();
             } else {
                 appScope.currentLecture = data;
@@ -61,38 +61,24 @@ angular.module('bimoliveApp')
      * Modal Use functions
      */
     this.showPermissionModal = function () {
-        $(document).on('keydown', function (e) {
-            if (e.which === 8 && !$(e.target).is('input, textarea')) {
-                e.preventDefault();
-            }
-        });  
-        
-        // if (this.getPermission()) {
-        //     this.permissioncode = '';
-        //     this.showLoader = false;
-        //     this.isPermitted = true;
-        //     this.notPermitted = false;   
-            
-        // } else {
-        //     this.permissioncode = '';
-        //     this.showLoader = false;
-        //     this.isPermitted = false;
-        //     this.notPermitted = false;
-        // }
+        $('#permissioncodeModal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $('#permissioncodeModal').modal('show');
     };
     
     this.submitPermission = function () {
-        var permission = '';
         $http({
             method: 'POST',
-            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/singlelecture',
+            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/student/permissioncode',
             headers: {
                 'Content-Type': undefined
             },
             data: {
                 idUser: user.idUser,
                 idLecture: appScope.idLecture,
-                code: permission
+                code: appScope.permissioncode
             }
         })
         .success(function (data, status) {

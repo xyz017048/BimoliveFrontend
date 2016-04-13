@@ -72,7 +72,7 @@ angular.module('bimoliveApp')
             alert('Upload Lecture Failed!');
             return;
         }
-        // appScope.captureImage(url);
+        appScope.captureImage(url);
         $http({
             method: 'POST',
             url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/uploadlecture',
@@ -93,7 +93,7 @@ angular.module('bimoliveApp')
         });
     };
 
-    // use for capture image when upload
+    // // use for capture image when upload
     // this.captureImage = function (video_src) {
     //     var video = document.createElement('video');
     //     video.setAttribute('src', video_src);
@@ -117,33 +117,33 @@ angular.module('bimoliveApp')
     //         document.body.appendChild(a);
     //         a.click();
     //     };
-    //     download: function(config) {
-    //       var dataURL = this.canvas.toDataURL('image/png'),
-    //           anchor = document.createElement('a'),
-    //           fileName, evtObj;
+        // download: function(config) {
+        //   var dataURL = this.canvas.toDataURL('image/png'),
+        //       anchor = document.createElement('a'),
+        //       fileName, evtObj;
 
-    //       if (!config) {
-    //         config = {};
-    //       }
+        //   if (!config) {
+        //     config = {};
+        //   }
 
-    //       fileName = config.fileName || 'canvas.png',
-    //       dataURL = dataURL.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+        //   fileName = config.fileName || 'canvas.png',
+        //   dataURL = dataURL.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
 
-    //       // set a attributes
-    //       anchor.setAttribute('href', dataURL);
-    //       anchor.setAttribute('target', '_blank');
-    //       anchor.setAttribute('download', fileName);
+        //   // set a attributes
+        //   anchor.setAttribute('href', dataURL);
+        //   anchor.setAttribute('target', '_blank');
+        //   anchor.setAttribute('download', fileName);
 
-    //       // simulate click
-    //       if (document.createEvent) {
-    //         evtObj = document.createEvent('MouseEvents');
-    //         evtObj.initEvent('click', true, true);
-    //         anchor.dispatchEvent(evtObj);
-    //       }
-    //       else if (anchor.click) {
-    //         anchor.click();
-    //       }
-    //     }
+        //   // simulate click
+        //   if (document.createEvent) {
+        //     evtObj = document.createEvent('MouseEvents');
+        //     evtObj.initEvent('click', true, true);
+        //     anchor.dispatchEvent(evtObj);
+        //   }
+        //   else if (anchor.click) {
+        //     anchor.click();
+        //   }
+        // }
     // };
     
     this.updateData = function () {
