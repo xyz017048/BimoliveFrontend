@@ -16,7 +16,7 @@ angular.module('bimoliveApp')
     var appScope = this;
     this.currentLecture = {};
     this.courseName = '';
-    this.isFinished = false;
+    // this.isFinished = false;
    
     if(MainService.getCurrentUser().roleLevel === 2) // is teacher
     {
@@ -35,10 +35,10 @@ angular.module('bimoliveApp')
         .success(function(data, status) {
             appScope.currentLecture = data.lectureInfo;
             appScope.courseName = data.courseName;
-            appScope.origLecture = JSON.parse(JSON.stringify(data));
-            if (data.status === 'finish' || data.status === 'replay') {
-                appScope.isFinished = true; 
-            }
+            appScope.origLecture = JSON.parse(JSON.stringify(data.lectureInfo));
+            // if (data.status === 'finish' || data.status === 'replay') {
+            //     appScope.isFinished = true; 
+            // }
         })
         
         .error(function(data, status) {
@@ -46,25 +46,29 @@ angular.module('bimoliveApp')
     }
     
     this.startLecture = function () {
-        $http({
-            method: 'POST',
-            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/startlecture',
-            headers: {
-                'Content-Type': undefined
-            },
-            data: {
-                idUser: MainService.getCurrentUser().idUser,
-                idLecture: $routeParams.idLecture
-            }
-        })
+        if(appScope.origLecture.status === 'replay') {
+            $location.url('/student/' + appScope.currentLecture.idLecture);
+        } else { // is wait or live
+            $http({
+                method: 'POST',
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/startlecture',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: {
+                    idUser: MainService.getCurrentUser().idUser,
+                    idLecture: $routeParams.idLecture
+                }
+            })
 
-        .success(function (data, status) {
-            $location.url('/teacher/' + appScope.currentLecture.idLecture);
-        })
+            .success(function (data, status) {
+                $location.url('/teacher/' + appScope.currentLecture.idLecture);
+            })
 
-        .error(function (data, status) {
-            alert('Start Lecture Failed!');
-        });
+            .error(function (data, status) {
+                alert('Start Lecture Failed!');
+            });
+        }
     };
     
     this.uploadReplay = function (idUser, idLecture, url) {
@@ -93,59 +97,39 @@ angular.module('bimoliveApp')
         });
     };
 
-    // // use for capture image when upload
-    // this.captureImage = function (video_src) {
-    //     var video = document.createElement('video');
-    //     video.setAttribute('src', video_src);
-    //     var w = video.videoWidth;
-    //     var h = video.videoHeight;
-    //     var canvas = document.createElement('canvas');
-    //     // canvas.width  = w;
-    //     // canvas.height = h;
-    //     var context = canvas.getContext('2d');
-    //     context.drawImage(video, 0, 0, w, h);
+    // use for capture image when upload
+    this.captureImage = function (video_src) {
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+        var video = document.createElement('video');
+        video.setAttribute('crossOrigin', 'anonymous');
+        video.setAttribute('src', video_src);
+        video.onloadedmetadata = function() {
+            var w = video.videoWidth;
+            var h = video.videoHeight;
+            canvas.width  = w;
+            canvas.height = h;
+            context.drawImage(video, 0, 0,w,h);
 
-    //     var dataURL = canvas.toDataURL();
-    //     var img = document.createElement('img');
-    //     img.setAttribute('src', dataURL);
-    //     img.getAttribute('src');
+            var dataURL = canvas.toDataURL();
 
-    //     var downloadImage = function(data, filename) {
-    //         var a = document.createElement('a');
-    //         a.href = data;
-    //         a.download = filename;
-    //         document.body.appendChild(a);
-    //         a.click();
-    //     };
-        // download: function(config) {
-        //   var dataURL = this.canvas.toDataURL('image/png'),
-        //       anchor = document.createElement('a'),
-        //       fileName, evtObj;
+            var a = document.createElement('a');
+            a.href = dataURL;
+            a.download = "img.png";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        };
+        video.load();
+    };
 
-        //   if (!config) {
-        //     config = {};
-        //   }
-
-        //   fileName = config.fileName || 'canvas.png',
-        //   dataURL = dataURL.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
-
-        //   // set a attributes
-        //   anchor.setAttribute('href', dataURL);
-        //   anchor.setAttribute('target', '_blank');
-        //   anchor.setAttribute('download', fileName);
-
-        //   // simulate click
-        //   if (document.createEvent) {
-        //     evtObj = document.createEvent('MouseEvents');
-        //     evtObj.initEvent('click', true, true);
-        //     anchor.dispatchEvent(evtObj);
-        //   }
-        //   else if (anchor.click) {
-        //     anchor.click();
-        //   }
-        // }
-    // };
-    
+    this.wait = function (ms){
+        var start = new Date().getTime();
+        var end = start;
+        while(end < start + ms) {
+            end = new Date().getTime();
+        }
+    }
     this.updateData = function () {
         $http({
             method: 'POST',
