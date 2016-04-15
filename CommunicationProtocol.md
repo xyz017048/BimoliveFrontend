@@ -114,7 +114,7 @@ Question ask and answer Part:
                                 {
                                     "roleLevel":        INT, (1:student; 2:teacher)
                                     "idLecture":        INT,
-                                    "idQuestion":       INT (if idQuestion == -1, get all questions with 'answer/ban' status for student or 'new/read/answer' status for teacher
+                                    "idQuestion":       INT (if idQuestion == -1, get all questions with 'answer/ban/flag' status for student or 'new/read/answer/flag/ban' status for teacher
 												from this lecture;
 										else, get questions after this idQuestion)
                                 }
@@ -366,7 +366,8 @@ Teacher uploads a lecture video to replay
                             {
                                 "idUser":       INT,
                                 "idLecture":    INT,
-                                "url":          STRING
+                                "url":          STRING,
+                                "image":        STRING
                             }
             Response:   May receive 403 error, if the teacher don't hold this lecture
                             or this lecture is not live.
@@ -869,8 +870,8 @@ search:
                                 }
 
 *************************************** Teacher question and answer during live video *********************************
-
-                Request: POST /teacher/questionanswer (if possible set status to flag instead of answer, deal with it just as answer)
+Teacher can write a question or other things then answer it by himself/herself. The question status will be marked as "flag".
+                Request: POST /teacher/questionanswer
 				{
 					"idUser":	INT,
 					"username" :   	STRING,
