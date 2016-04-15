@@ -14,7 +14,8 @@ angular.module('bimoliveApp')
     }
     
     this.idCourse = $routeParams.idCourse;
-    
+    this.cropper = '';
+    this.isCropped = false;
     function newLectureObject() {
         return {'topic': '',
         'intro': '',
@@ -92,7 +93,6 @@ angular.module('bimoliveApp')
         .success(function (data, status) {
             if (data.result) {
                 appScope.origCourse = JSON.parse(JSON.stringify(appScope.currentCourse));
-                document.getElementById('profile-img').src = appScope.currentCourse.image;
             } else {
                 console.log('success but got ' + data.result);
             }
@@ -103,7 +103,6 @@ angular.module('bimoliveApp')
     
     this.resetData = function () {
         this.currentCourse = JSON.parse(JSON.stringify(this.origCourse));
-        document.getElementById('profile-img').src = this.origCourse.image;
     };
 
     this.formatDateForDisplay = function(date) {
@@ -186,20 +185,68 @@ angular.module('bimoliveApp')
     $('#course_pic').change(function (event) {
         var files = event.target.files;
         var file = files[0];
-        appScope.currentCourse.image = MainService.upload(file, 'course', appScope.currentCourse.idCourse);
         // read the image and display it on page
         var reader = new FileReader();
         reader.onload = function(event) {
             var dataUri = event.target.result,
-                img     = document.getElementById('profile-img');
+                img     = document.getElementById('crop-image');
             img.src = dataUri;
+            $('#cropModal').modal('show');       
         };
         reader.onerror = function(event) {
             console.error('File could not be read! Code ' + event.target.error.code);
         };
         reader.readAsDataURL(file);
     });
+    
+    this.crop = function () {
+        var canvas = appScope.cropper.getCroppedCanvas();
+        var src = canvas.toDataURL();
+        appScope.croppedBlob = appScope.dataURItoBlob(src);
+        appScope.cropper.destroy();        
+        appScope.isCropped = true;
+        document.getElementById('crop-image').src = src;
+        document.getElementById('course-img').src = src;        
+        // $('#cropModal').modal('hide');
+    };
+    
+    this.uploadCoursePic = function () {
+        appScope.currentCourse.image = MainService.upload(appScope.croppedBlob, 'course', appScope.currentCourse.idCourse);
+        $('#cropModal').modal('hide');        
+        appScope.updateData();
+        appScope.isCropped = false;
+    };
+    $('#cropModal').on('shown.bs.modal', function (e) {
+        var img = document.getElementById('crop-image');
+        if (appScope.cropper !== '') {
+            appScope.cropper.destroy();
+        }
+        appScope.cropper = new Cropper(img, {
+            aspectRatio: 16 / 10
+        });
+    })
+    $('#cropModal').on('hidden.bs.modal', function (e) {
+        if (appScope.cropper !== '') {
+            appScope.cropper.destroy();
+        }
+    })
+    
+    this.dataURItoBlob = function(dataURI) {
+        // convert base64 to raw binary data held in a string
+        // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+        var byteString = atob(dataURI.split(',')[1]);
 
+        // write the bytes of the string to an ArrayBuffer
+        var ab = new ArrayBuffer(byteString.length);
+        var ia = new Uint8Array(ab);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        // write the ArrayBuffer to a blob, and you're done
+        var bb = new Blob([ab], {type: 'image/png'});
+        return bb;
+    };
     /// datePicker options  ///  
     this.popup1 = {
         opened: false
