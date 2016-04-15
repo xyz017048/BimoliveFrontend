@@ -289,13 +289,6 @@ angular.module('bimoliveApp')
             });
         }
         
-        videoPlayer.on('ready', function(e) {
-            if(!appScope.isLive) {
-                // replayVideo();
-                // appScope.getAllAnwseredQuestions();
-            }
-        });
-        
         videoPlayer.on('time', function(e) {
         
             var modifiers = document.getElementById('questions').getElementsByTagName('button');

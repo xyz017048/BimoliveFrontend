@@ -104,7 +104,7 @@ angular.module('bimoliveApp')
         var video = document.createElement('video');
         video.setAttribute('crossOrigin', 'anonymous');
         video.setAttribute('src', video_src);
-        video.onloadedmetadata = function() {
+        video.onloadeddata = function() {
             var w = video.videoWidth;
             var h = video.videoHeight;
             canvas.width  = w;
@@ -112,17 +112,27 @@ angular.module('bimoliveApp')
             context.drawImage(video, 0, 0,w,h);
 
             var dataURL = canvas.toDataURL();
-
-            var a = document.createElement('a');
-            a.href = dataURL;
-            a.download = "img.png";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            var blob = appScope.dataURItoBlob(dataURL);
+            MainService.upload(blob, 'lecture', appScope.currentLecture.idCourse, appScope.currentLecture.idLecture);
         };
         video.load();
     };
+    this.dataURItoBlob = function(dataURI) {
+        // convert base64 to raw binary data held in a string
+        // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+        var byteString = atob(dataURI.split(',')[1]);
 
+        // write the bytes of the string to an ArrayBuffer
+        var ab = new ArrayBuffer(byteString.length);
+        var ia = new Uint8Array(ab);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        // write the ArrayBuffer to a blob, and you're done
+        var bb = new Blob([ab], {type: 'image/png'});
+        return bb;
+    };
     this.wait = function (ms){
         var start = new Date().getTime();
         var end = start;
