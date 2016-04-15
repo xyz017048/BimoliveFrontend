@@ -44,11 +44,11 @@
                 <li><a ng-href="#/">How to Use</a></li>
                 <li><a ng-href="#/about">About Us</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right" ng-if="!mainCtrl.isLogin">
+            <ul class="nav navbar-nav navbar-right" ng-if="!mainCtrl.isLogin()">
                 <li><a href data-toggle="modal" data-target="#loginModal" mydata="mydata">Log In</a></li>
                 <li><a href data-toggle="modal" data-target="#signUpModal" mydata="mydata">Sign Up</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right" ng-if="mainCtrl.isLogin">
+            <ul class="nav navbar-nav navbar-right" ng-if="mainCtrl.isLogin()">
                 <a class="pull-right" ng-href="#/profile" style="max-width: 50px; padding:10px;">
                     <img ng-src="{{mainCtrl.currentUser.profile}}" class="img-responsive img-circle"  alt="profile">
                 </a>

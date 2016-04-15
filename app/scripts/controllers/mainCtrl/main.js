@@ -68,7 +68,9 @@ angular.module('bimoliveApp')
     this.username = '';
     
     // a variable for html only changed when refresh
-    this.isLogin = MainService.getIsLogin();
+    this.isLogin = function() {
+        return MainService.getIsLogin();
+    };
     
     // Sign up variables
     this.signUpUsername = '';
@@ -151,7 +153,7 @@ angular.module('bimoliveApp')
                     
                     // Inject into MainService
                     MainService.setCurrentUser(data);
-                    appScope.isLogin = true;
+                    // appScope.isLogin = true;
                     MainService.setIsLogin(true);
                     appScope.currentUser = MainService.getCurrentUser();
 
@@ -178,7 +180,7 @@ angular.module('bimoliveApp')
      * Set isLogin to false, reset the toggle bar
      */
     this.logout = function() {
-        this.isLogin = false;
+        // this.isLogin = false;
         MainService.setIsLogin(false);
         this.currentUser = {};
         MainService.setCurrentUser(null);
@@ -265,7 +267,7 @@ angular.module('bimoliveApp')
         
         .success(function(data, status) {
             if(data.result) {
-                appScope.isLogin = true;
+                // appScope.isLogin = true;
                 MainService.setIsLogin(true);
                 // Inject into MainService
                 MainService.setCurrentUser(data);
@@ -377,12 +379,13 @@ angular.module('bimoliveApp')
     var MainService = {};
     
     // Variables
-    if (sessionStorage.getItem('user')===null) {
-        MainService.CurrentUser = {};
+    if (localStorage.getItem('user') !== null) {
+        MainService.CurrentUser = JSON.parse(localStorage.getItem('user'));
     } else {
-        MainService.CurrentUser = JSON.parse(sessionStorage.getItem('user'));
+        MainService.CurrentUser = {};
+        
     }
-    MainService.isLogin = sessionStorage.getItem('isLogin');
+    MainService.isLogin = localStorage.getItem('isLogin');
     
     
     // Getter and Setter
@@ -396,22 +399,54 @@ angular.module('bimoliveApp')
     
     MainService.setCurrentUser = function(user) {
         if (user!==null) {
-            sessionStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('user', JSON.stringify(user));
+            // Default is 3 hours
+            localStorage.setItem('expiration', new Date().getTime() + 3 * 60 * 60 * 1000);
         } else {
-            sessionStorage.removeItem('user');
+            localStorage.removeItem('user');
+            localStorage.removeItem('expiration');
         }
         MainService.CurrentUser = user;
+        
+        /*
+        if(localStorage.getItem('expiration')) {
+            var expirationTimeOut = setInterval(function() {
+                if(localStorage.getItem('expiration')) {
+                    if(localStorage.getItem('expiration') < new Date().getTime()) {
+                        console.log('login is expired');
+                        if (localStorage.getItem('isLogin') !== null) {
+                            localStorage.setItem('isLogin', false);
+                        }
+                        MainService.isLogin = false;
+                        localStorage.removeItem('user');
+                        localStorage.removeItem('expiration');
+                        clearInterval(expirationTimeOut);
+                        location.reload();
+                    }
+                }
+            }, 1000);
+        }
+        */
     };
     
+    // Is expired?
     MainService.getIsLogin = function() {
+        if(localStorage.getItem('expiration')) {
+            if(localStorage.getItem('expiration') < new Date().getTime()) {
+                console.log('login is expired');
+                MainService.setIsLogin(false);
+                MainService.setCurrentUser(null);
+            }
+        }
+        
         return MainService.isLogin;
     };
     
     MainService.setIsLogin = function(isLogin) {
         if (isLogin) {
-            sessionStorage.setItem('isLogin', isLogin);
+            localStorage.setItem('isLogin', isLogin);
         } else {
-            sessionStorage.removeItem('isLogin');
+            localStorage.removeItem('isLogin');
         }
         MainService.isLogin = isLogin;
     };
