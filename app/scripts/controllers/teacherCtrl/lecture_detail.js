@@ -76,7 +76,7 @@ angular.module('bimoliveApp')
             alert('Upload Lecture Failed!');
             return;
         }
-        appScope.captureImage(url);
+        var imageurl = appScope.captureImage(url);
         $http({
             method: 'POST',
             url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/uploadlecture',
@@ -86,7 +86,8 @@ angular.module('bimoliveApp')
             data: {
                 idUser: idUser,
                 idLecture: idLecture,
-                url: url
+                url: url,
+                image: imageurl
             }
         })
         .success(function (data, status) {
@@ -116,6 +117,7 @@ angular.module('bimoliveApp')
             MainService.upload(blob, 'lecture', appScope.currentLecture.idCourse, appScope.currentLecture.idLecture);
         };
         video.load();
+        return 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/course_pics/' + appScope.currentLecture.idCourse + '/' + appScope.currentLecture.idLecture;
     };
     this.dataURItoBlob = function(dataURI) {
         // convert base64 to raw binary data held in a string

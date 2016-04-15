@@ -86,6 +86,17 @@ font-size: 80%;
 margin-top: 0px; 
 margin-bottom: 0px;
 }
+.thumbnail:hover img{
+opacity: 0.8;
+}
+.thumbnail:hover .play-icon{
+visibility: visible;
+}
+.thumbnail p{
+font-size: 80%;
+margin-top: 0px; 
+margin-bottom: 0px;
+}
 .play-icon {
 visibility: hidden;
 position: absolute; 

@@ -155,7 +155,7 @@ angular.module('bimoliveApp')
                     "lectureNum": this.lectureList.length + 1,
                     "topic": this.newLecture.topic,
                     "intro": this.newLecture.intro,
-                    "image": "https://s3-us-west-2.amazonaws.com/bimolive-pictures/course_pics/lecture_default_pic.png",
+                    "image": this.currentCourse.image,
                     "scheduleDate": scheduleDate,
                     "startTime": startTime,
                     "endTime": endTime

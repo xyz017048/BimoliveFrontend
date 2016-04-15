@@ -423,7 +423,7 @@ angular.module('bimoliveApp')
         } else if (purpose === 'resume-modal') {
             $('#progress-resume-modal').show();
             $('#progress-resume-modal-text').show();
-        } else {
+        } else if (purpose !== 'lecture') {
             $('#progress').show();
             $('#progress-text').show();
         }
@@ -436,7 +436,7 @@ angular.module('bimoliveApp')
         } else if (purpose === 'resume-modal') {
             $('#progress-resume-modal').hide();
             $('#progress-resume-modal-text').hide();
-        } else {
+        } else if (purpose !== 'lecture') {
             $('#progress').hide();
             $('#progress-text').hide();
         }
@@ -451,7 +451,7 @@ angular.module('bimoliveApp')
             $('#progress-bar-resume-modal').attr('style', 'width:' + percentage + '%');
             $('#progress-bar-resume-modal').attr('aria-valuenow', percentage);
             $('#progress-resume-modal-text').text(percentage + '%');
-        } else {
+        } else if (purpose !== 'lecture') {
             $('#progress-bar').attr('style', 'width:' + percentage + '%');
             $('#progress-bar').attr('aria-valuenow', percentage);
             $('#progress-text').text(percentage + '%');
@@ -461,9 +461,7 @@ angular.module('bimoliveApp')
     /**
      * upload function, file is the file object
      * filePurpose is the purpose of this file, 
-     * possible values: 'profile', 'resume', 'course', 'lecture'
-     * courseId is optional for uploading course and lecture
-     * lectureId is opitional for uploading lecture
+     * possible values: 'profile', 'resume', 'course', 'lecture', 'lectureReplay'
      * it will return a url of the uploaded file, it will return '' if anything goes wrong.
      * CallBackFunction is the function will be called during and after upload.
      */
