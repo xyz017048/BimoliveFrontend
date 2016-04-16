@@ -158,7 +158,7 @@ angular.module('bimoliveApp')
     this.addCourseToServer = function () {
         
         var appScopeCourse = this.newCourse;
-        
+        var category = appScopeCourse.category.slice(0, appScopeCourse.category.indexOf(' '));
         if (this.checkNewCourseValid()) {
             $http( { 
                 method: 'POST', 
@@ -168,11 +168,11 @@ angular.module('bimoliveApp')
                 },
                 data: {
                     idUser: MainService.getCurrentUser().idUser, 
-                    category: appScopeCourse.category.slice(0, appScopeCourse.category.indexOf(' ')),
+                    category: category,
                     levelNumber: appScopeCourse.level,
                     name: appScopeCourse.name,
                     intro: appScopeCourse.intro,
-                    image: 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/course_pics/course_default_pic.png',
+                    image: 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/course_pics/'+ category +'.png',
                     startDate: appScope.dateFormat(appScopeCourse.startDate),
                     endDate: appScope.dateFormat(appScopeCourse.endDate),
                     endFlag: 1,
