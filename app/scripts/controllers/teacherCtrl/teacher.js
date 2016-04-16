@@ -74,7 +74,7 @@ angular.module('bimoliveApp')
         } )
         .success(function(data, status) {
             for (var q in data) {
-                if (data[q].idQuestion !== 0) {
+                if (data[q].idQuestion !== 0 && data[q].status !== 'flag') {
                     appScope.questions.push(data[q]);
                 }
                 if (q === data.length - 1 + "") {
@@ -155,8 +155,10 @@ angular.module('bimoliveApp')
         .error(function(data, status) {
         });
     };
-
-    this.addFlag = function(content) {
+    this.flag = '';
+    this.addFlag = function () {
+        var content = this.flag;
+        this.flag = '';
         $http( {
             method: 'POST', 
             url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/questionanswer',
@@ -171,7 +173,8 @@ angular.module('bimoliveApp')
             }
         } )
         
-        .success(function(data, status) {
+        .success(function (data, status) {
+            this.flag = '';
             if(!data.result) {
                 alert("fail to set flag");
             } else {

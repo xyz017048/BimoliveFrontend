@@ -15,7 +15,12 @@
 <div class="container">
     <div class="row">
         <button type="button" class="btn btn-danger btn-lg center-block" ng-click="teacherCtrl.endLecture()">END LECTURE</button> 
-        <button type="button" class="btn btn-danger btn-lg center-block" ng-click="teacherCtrl.addFlag('abc')">Add Flag</button> 
+        <form class="input-group input-group-lg col-lg-6 col-lg-offset-3" ng-submit="teacherCtrl.addFlag()" style="padding-top: 20px;">
+            <input id="question_input" type="text" class="form-control" placeholder="Add a time tag" ng-model="teacherCtrl.flag">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">Add Tag</button>
+            </span>
+        </form>
         <h3 class="text-center" ng-if="teacherCtrl.questions.length <= 0">Question queue is empty</h3>
         <h3 class="text-center" ng-if="teacherCtrl.questions.length > 0">Questions:</h3>
         <ul id="questions" class="list-group col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12"
