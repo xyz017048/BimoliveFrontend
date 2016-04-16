@@ -43,6 +43,14 @@ height:100%;
 h1 {
     font-size: 290%;
 }
+.detail-info {
+    font-size: 130%;
+    text-align: center;
+}
+.detail-title {
+    font-size: 110%;
+    color: grey;
+}
 .page-header h1{
     margin: 0px;
 }
@@ -270,6 +278,11 @@ input[readonly] {
 .btn-nav, .btn-nav:hover, .btn-nav:active, .btn-nav:focus {
     outline: none !important;
     color: #ffffff;
+    border: none;
+    background: none;
+}
+.btn-setting, .btn-nav:hover, .btn-nav:active, .btn-nav:focus {
+    outline: none !important;
     border: none;
     background: none;
 }

@@ -1,16 +1,18 @@
 <br>
 <div class="container">
     <div class="page-header" ng-init="courseDetailCtrl.init()">
-        <h1>Course Detail
+        <h1>{{courseDetailCtrl.origCourse.name}}
+            <button type="submit" class="btn btn-setting" style="font-size:50%;" data-toggle="modal" data-target="#courseSettingModal" mydata="mydata">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </button>
         </h1>
     </div>
     <div class="row">
         <div class="col-lg-5 col-md-5">
-            <form ng-submit="courseDetailCtrl.updateData()">
-                <div class="form-group">
-                    <label class="control-label" for="image">Course picture:</label>
+            <div class="form-group">
+                    <!--<label class="control-label" for="image">Course picture:</label>-->
                     <div class="thumbnail col-lg-offset-4">
-                        <img class="img-responsive img-thumbnail" id="course-img" ng-src="{{courseDetailCtrl.currentCourse.image}}">
+                        <img class="img-responsive img-thumbnail" id="course-img" ng-src="{{courseDetailCtrl.origCourse.image}}">
                     </div>
 
                     <button class="btn btn-default btn-block btn-file col-lg-offset-2" >
@@ -23,56 +25,38 @@
                         <p id="progress-text" style="display:none;">0%</p>
                     </button>
                 </div>
-                <div class="form-group">
-                    <label class="control-label" for="name">Course name:</label>
-                    <input type="text" class="form-control col-lg-offset-2" id="name" name="name" placeholder="{{courseDetailCtrl.currentCourse.name}}"
-                    ng-model="courseDetailCtrl.currentCourse.name">
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="category">Category:</label>
-                    <input type="text" class="form-control col-lg-offset-2" id="category" name="category" placeholder="{{courseDetailCtrl.currentCourse.category}}"
-                    ng-model="courseDetailCtrl.currentCourse.category">
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="level">Level:</label>
-                    <input type="text" class="form-control col-lg-offset-2" id="level" name="level" placeholder="{{courseDetailCtrl.currentCourse.levelNumber}}"
-                    ng-model="courseDetailCtrl.currentCourse.levelNumber">
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="permissionCode">Permission code:</label>
-                    <input type="text" class="form-control col-lg-offset-2" id="permissionCode" name="permissionCode" placeholder="{{courseDetailCtrl.currentCourse.permissionCode}}"
-                    ng-model="courseDetailCtrl.currentCourse.permissionCode">
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="startDate">Start date:</label>
-                    <input type="text" class="form-control col-lg-offset-2" id="startDate" name="startDate" placeholder="{{courseDetailCtrl.currentCourse.startDate}}"
-                    ng-model="courseDetailCtrl.currentCourse.startDate">
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="endDate">End date:</label>
-                    <input type="text" class="form-control col-lg-offset-2" id="endDate" name="endDate" placeholder="{{courseDetailCtrl.currentCourse.endDate}}"
-                    ng-model="courseDetailCtrl.currentCourse.endDate">
-                </div>
-                <!--<div class="form-group">
-                    <label class="control-label" for="createDate">Date created:</label>
-                    <input type="text" class="form-control col-lg-offset-2" id="createDate" name="createDate" placeholder="{{courseDetailCtrl.currentCourse.createDate}}"
-                    ng-model="courseDetailCtrl.currentCourse.createDate">
-                </div>-->
-                <div class="form-group">
-                    <label class="control-label" for="intro">Course description:</label>
-                    <textarea class="form-control col-lg-offset-2" rows="5" id="intro" name="intro" placeholder="{{courseDetailCtrl.currentCourse.intro}}" 
-                    ng-model="courseDetailCtrl.currentCourse.intro"></textarea>
-                </div>
-                <div class="control-group col-lg-offset-5 col-md-offset-3 col-sm-offset-3">
-                    <button type="button" class="btn btn-lg btn-default" ng-click="courseDetailCtrl.resetData()">
-                        <span class="glyphicon glyphicon-repeat"></span> Reset
-                    </button>
-                    <button type="submit" class="btn btn-lg btn-default">
-                        <span class="glyphicon glyphicon-upload"></span> Update
-                    </button>
-                </div>
-                <br>
-            </form>
+                <table class="table col-lg-offset-2">
+                <tbody>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Course name:</p></th>
+                        <td><p class="detail-info">{{courseDetailCtrl.origCourse.name}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Category:</p></th>
+                        <td><p class="detail-info">{{courseDetailCtrl.origCourse.category}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Level:</p></th>
+                        <td><p class="detail-info">{{courseDetailCtrl.origCourse.levelNumber}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Permission code:</p></th>
+                        <td><p class="detail-info">{{courseDetailCtrl.origCourse.permissionCode}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Start date:</p></th>
+                        <td><p class="detail-info">{{courseDetailCtrl.origCourse.startDate.slice(0, courseDetailCtrl.origCourse.startDate.indexOf(' '))}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">End date:</p></th>
+                        <td><p class="detail-info">{{courseDetailCtrl.origCourse.endDate.slice(0, courseDetailCtrl.origCourse.endDate.indexOf(' '))}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Course description:</p></th>
+                        <td><p class="detail-info">{{courseDetailCtrl.origCourse.intro}}</p></td>
+                    </tr>
+                </tbody>
+                </table>
         </div>
         <div class="col-lg-5 col-lg-offset-2 col-md-5 col-md-offset-2">
             <div class="form-group">
@@ -90,8 +74,8 @@
                         <div class="caption">
                             <a ng-href="#/lecturedetail/{{lecture.idLecture}}">Lecture #{{lecture.lectureNum}}: {{lecture.topic}}</a>
                             <p>Date: {{lecture.scheduleDate}}</p>
-                            <p>Start Time: {{lecture.startTime}}</p>
-                            <p>End Time: {{lecture.endTime}}</p>
+                            <!--<p>Start Time: {{lecture.startTime}}</p>
+                            <p>End Time: {{lecture.endTime}}</p>-->
                         </div>
                     </a>
                 </div>
@@ -136,4 +120,82 @@
 </div>
 <!--add course modal-->
 <div ng-include="'views/modalViews/addlectureModal.html'"></div>
+<!--course setting modal-->
+<!-- add course Modal -->
+<div class="modal fade" id="courseSettingModal" role="dialog">
+    <div class="modal-dialog modal-md">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Course Setting</h4>
+            </div>
+            <div class="modal-body">
+                <form name="courseDetailCtrl.newCourseForm" id="newCourseForm" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' : courseDetailCtrl.newCourseForm.newCourseName.$invalid && !courseDetailCtrl.newCourseForm.newCourseName.$pristine }">
+                        <label class="control-label" for="newCourseName">Course Name</label>
+                        <input type="text" class="form-control" id="newCourseName" name="newCourseName" placeholder="Course name" ng-model="courseDetailCtrl.currentCourse.name"
+                        required>
+                        <p ng-show="courseDetailCtrl.newCourseForm.newCourseName.$invalid && !courseDetailCtrl.newCourseForm.newCourseName.$pristine" class="help-block">Course name is invalid.</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : courseDetailCtrl.newCourseForm.category.$invalid && !courseDetailCtrl.newCourseForm.category.$pristine }">
+                        <label class="control-label" for="category">Category</label>
+                        <select class="form-control" id="category" name="category" ng-model="courseDetailCtrl.currentCourse.category" required>
+                            <option ng-repeat="category in courseDetailCtrl.categories">{{category}}</option>
+                        </select>
+                        <p ng-show="courseDetailCtrl.newCourseForm.category.$invalid && !courseDetailCtrl.newCourseForm.category.$pristine" class="help-block">Category is required.</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : courseDetailCtrl.newCourseForm.level.$invalid && !courseDetailCtrl.newCourseForm.level.$pristine }">
+                        <label class="control-label" for="level">Level</label>
+                        <select class="form-control" id="level" name="level" ng-model="courseDetailCtrl.currentCourse.level" required>
+                            <option ng-repeat="level in courseDetailCtrl.levels">{{level}}</option>
+                        </select>
+                        <p ng-show="courseDetailCtrl.newCourseForm.level.$invalid && !courseDetailCtrl.newCourseForm.level.$pristine" class="help-block">Level is required.</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : !courseDetailCtrl.newCourseForm.permissionCode.$pristine && courseDetailCtrl.newCourseForm.permissionCode.$invalid }">
+                        <label class="control-label" for="permissionCode">Permission code</label>
+                        <input type="text" class="form-control" id="permissionCode" name="permissionCode" placeholder="" ng-model="courseDetailCtrl.currentCourse.permissionCode">
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : !courseDetailCtrl.newCourseForm.startDate.$pristine && !courseDetailCtrl.isStartDateValid() }">
+                        <label class="control-label" for="startDate">Start Date</label>
+                        <p class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="courseDetailCtrl.open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                            <input type="text" class="form-control" id="startDate" name="startDate" uib-datepicker-popup="{{courseDetailCtrl.format}}" ng-model="courseDetailCtrl.currentCourse.startDate" is-open="courseDetailCtrl.popup1.opened" min-date="courseDetailCtrl.today"
+                            max-date="courseDetailCtrl.maxDate" datepicker-options="courseDetailCtrl.dateOptions" ng-required="true"
+                            close-text="Close"/>
+                        </p>
+                        <p ng-show="!courseDetailCtrl.newCourseForm.startDate.$pristine && !courseDetailCtrl.isStartDateValid() " class="help-block">{{courseDetailCtrl.startDateErrMsg}}</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : !courseDetailCtrl.newCourseForm.endDate.$pristine && !courseDetailCtrl.isEndDateValid()}">
+                        <label class="control-label" for="endDate">End Date</label>
+                        <p class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="courseDetailCtrl.open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                            <input type="text" class="form-control" id="endDate" name="endDate" uib-datepicker-popup="{{courseDetailCtrl.format}}" ng-model="courseDetailCtrl.currentCourse.endDate" is-open="courseDetailCtrl.popup2.opened" min-date="courseDetailCtrl.currentCourse.startDate"
+                            max-date="courseDetailCtrl.maxDate" datepicker-options="courseDetailCtrl.dateOptions" ng-required="true"
+                            close-text="Close"/>
+                        </p>
+                        <p ng-show="!courseDetailCtrl.newCourseForm.endDate.$pristine && !courseDetailCtrl.isEndDateValid() " class="help-block">{{courseDetailCtrl.endDateErrMsg}}</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : !courseDetailCtrl.newCourseForm.intro.$pristine && courseDetailCtrl.newCourseForm.intro.$invalid }">
+                        <label class="control-label" for="intro">Course description</label>
+                        <textarea type="text" class="form-control" id="intro" name="intro" ng-model="courseDetailCtrl.currentCourse.intro"></textarea>
+                        <p ng-show="!courseDetailCtrl.newCourseForm.intro.$pristine && courseDetailCtrl.newCourseForm.intro.$invalid" class="help-block">Description is too long.</p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-default" ng-click="courseDetailCtrl.updateData()">Update</button>
+                    <button type="button" class="btn btn-default" ng-click="courseDetailCtrl.clearCourseForm()">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

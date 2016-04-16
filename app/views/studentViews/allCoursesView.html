@@ -13,8 +13,8 @@
                 <div class="caption">
                     <a ng-href="#/courseInfo/{{course.courseInfo.idCourse}}">{{course.courseInfo.category}} {{course.courseInfo.levelNumber}}: {{course.courseInfo.name}}</a>
                     <p>by {{course.teacherFirstName}} {{course.teacherLastName}}</p>
-                    <p>Start Date: {{course.courseInfo.startDate}}</p>
-                    <p>End Date: {{course.courseInfo.endDate}}</p>
+                    <p>Start Date: {{course.courseInfo.startDate.slice(0, course.courseInfo.startDate.indexOf(' '))}}</p>
+                    <p>End Date: {{course.courseInfo.endDate.slice(0, course.courseInfo.endDate.indexOf(' '))}}</p>
                 </div>
             </a>
         </div>

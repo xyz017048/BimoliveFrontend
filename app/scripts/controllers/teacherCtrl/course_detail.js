@@ -24,7 +24,6 @@ angular.module('bimoliveApp')
         'startTime': '',
         'endTime': ''};
     }
-    
     this.init = function () {
         this.getCurrentCourse();
         this.newLectureForm = '';
@@ -32,6 +31,39 @@ angular.module('bimoliveApp')
     };
     
     var appScope = this;
+    this.newCourseForm = '';
+    this.levels = ['1', '2', '3', '4', '5'];
+    this.isCourseNameValid = function() {
+        if (this.currentCourse.name.length <= 0 || this.currentCourse.name.length > 200) {
+            this.newCourseForm.newCourseName.$setValidity('name', false);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    this.isCourseDescriptionValid = function() {
+        if (this.currentCourse.intro.length > 1000000) {
+            this.newCourseForm.intro.$setValidity('intro', false);
+            return false;
+        } else {
+            return true;
+        }
+    }
+    // check if the form is valid
+    this.checkNewCourseValid = function () {
+        if (this.newCourseForm.$invalid || !this.isStartDateValid() || !this.isEndDateValid() || !this.isCourseNameValid() || !this.isCourseDescriptionValid()) {
+            this.newCourseForm.newCourseName.$setDirty();
+            this.newCourseForm.category.$setDirty();
+            this.newCourseForm.level.$setDirty();
+            this.newCourseForm.startDate.$setDirty();
+            this.newCourseForm.endDate.$setDirty();
+            return false;
+        } else {
+            return true;
+        }
+    };
     
     this.getCurrentCourse = function () {
         // currentCourse
@@ -82,25 +114,43 @@ angular.module('bimoliveApp')
     };
     
     this.updateData = function () {
-        $http({
-            method: 'POST',
-            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/updatecourse',
-            headers: {
-                'Content-Type': undefined
-            },
-            data: this.currentCourse
-        })
-        .success(function (data, status) {
-            if (data.result) {
-                appScope.origCourse = JSON.parse(JSON.stringify(appScope.currentCourse));
-            } else {
-                console.log('success but got ' + data.result);
-            }
-        })
-        .error(function (data, status) {
-        });
+        var appScopeCourse = this.currentCourse;
+        // var category = appScopeCourse.category.slice(0, appScopeCourse.category.indexOf(' '));
+        if (1) {
+            $http({
+                method: 'POST',
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/updatecourse',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: this.currentCourse
+            })
+            .success(function (data, status) {
+                if (data.result) {
+                    appScope.origCourse = JSON.parse(JSON.stringify(appScope.currentCourse));
+                } else {
+                    console.log('success but got ' + data.result);
+                }
+            })
+            .error(function (data, status) {
+            });
+            this.clearCourseForm();
+        }
     };
-    
+    /**
+     * clears the form
+     */
+    this.clearCourseForm = function () {
+        // clear the feilds
+        this.currentCourse = JSON.parse(JSON.stringify(this.origCourse));
+        // hide the modal
+        $('#courseSettingModal').modal('hide');
+        // hide set the form to be pristine
+        this.newCourseForm.$setPristine();
+    };
+    $('#courseSettingModal').on('hidden.bs.modal', function (e) {
+        appScope.clearCourseForm();
+    });
     this.resetData = function () {
         this.currentCourse = JSON.parse(JSON.stringify(this.origCourse));
     };
