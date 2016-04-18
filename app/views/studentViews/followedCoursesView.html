@@ -12,10 +12,11 @@
                     <img ng-src="{{course.courseInfo.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
                 </div>
                 <div class="caption">
-                    <a ng-href="#/courseInfo/{{course.courseInfo.idCourse}}">{{course.courseInfo.category}} {{course.courseInfo.levelNumber}}: {{course.courseInfo.name}}</a>
+                    <a ng-href="#/courseInfo/{{course.courseInfo.idCourse}}" style="font-size: 20px;">{{course.courseInfo.name}}</a>
+                    <p style="font-size: 12px;">{{course.courseInfo.category}} - Level {{course.courseInfo.levelNumber}}</p>
                     <p>by {{course.teacherFirstName}} {{course.teacherLastName}}</p>
-                    <p>Start Date: {{course.courseInfo.startDate.slice(0, course.courseInfo.startDate.indexOf(' '))}}</p>
-                    <p>End Date: {{course.courseInfo.endDate.slice(0, course.courseInfo.endDate.indexOf(' '))}}</p>
+                    <!--<p>Start Date: {{course.courseInfo.startDate.slice(0, course.courseInfo.startDate.indexOf(' '))}}</p>
+                    <p>End Date: {{course.courseInfo.endDate.slice(0, course.courseInfo.endDate.indexOf(' '))}}</p>-->
                 </div>
             </a>
         </div>

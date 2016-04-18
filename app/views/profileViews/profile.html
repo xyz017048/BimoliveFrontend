@@ -14,7 +14,7 @@
             <form ng-submit="profileCtrl.updateData()">
                 <div class="form-group">
                     <label class="control-label" for="profile">Profile picture</label>
-                    <img class="img-circle center-block" id="profile-img" style="max-width: 25%" ng-src="{{profileCtrl.user.profile}}" src="">
+                    <img class="img-circle center-block" id="profile-img" style="width: 160px;" ng-src="{{profileCtrl.user.profile}}" src="">
                     <br>
                     <!--<img ng-show="profileCtrl.showLoader" ng-src="images/loader.gif" class="img-responsive" style="padding-top:20px; height:60px; width:30px; padding-bottom:10px; display:block; margin:auto;">-->
                     <button class="btn btn-default btn-block btn-file">
@@ -45,6 +45,18 @@
                 <div class="form-group">
                     <label class="control-label" for="lastName">Last name</label>
                     <input class="form-control" id="lastName" placeholder="{{profileCtrl.user.lastName}}" ng-model="profileCtrl.user.lastName">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="lastName">Company</label>
+                    <input class="form-control" id="company" placeholder="{{profileCtrl.user.company}}" ng-model="profileCtrl.user.company">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="lastName">Job</label>
+                    <input class="form-control" id="jobTitle" placeholder="{{profileCtrl.user.jobTitle}}" ng-model="profileCtrl.user.jobTitle">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="lastName">Introduction</label>
+                    <input class="form-control" id="introWords" placeholder="{{profileCtrl.user.introWords}}" ng-model="profileCtrl.user.introWords">
                 </div>
                 <div class="form-group" ng-if="profileCtrl.user.roleLevel === 2">
                     <label class="control-label" for="resume">Resume Upload</label>
@@ -83,7 +95,32 @@
         </div>
     </div>
 </div>
+<!--Crop Picture Modal-->
+<div class="modal fade" id="cropModal" role="dialog">
+    <div class="modal-dialog modal-lg" >
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h1 class="modal-title">Crop Picture</h1>
+            </div>
+            <div class="modal-body" >
+                <div style="max-width:100%; margin-left: auto ; margin-right: auto ;">
+                    <img class="center-block" style="max-width:100%;" id="crop-image" src=""/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-default" ng-if="!profileCtrl.isCropped" ng-click="profileCtrl.crop()">Crop</button>
+                    <button type="submit" class="btn btn-default" ng-if="profileCtrl.isCropped" ng-click="profileCtrl.uploadCoursePic()">Upload</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 <!-- apply to teach Modal -->
 <div class="modal fade" id="applyToTeachModal" role="dialog">
     <div class="modal-dialog modal-md">
@@ -114,6 +151,14 @@
                     <div class="form-group">
                         <label class="control-label" for="lastName">Last name</label>
                         <input class="form-control" id="lastName" placeholder="{{profileCtrl.user.lastName}}" ng-model="profileCtrl.user.lastName">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="company">Company</label>
+                        <input class="form-control" id="company" placeholder="{{profileCtrl.user.company}}" ng-model="profileCtrl.user.company">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="jobTitle">Job</label>
+                        <input class="form-control" id="jobTitle" placeholder="{{profileCtrl.user.jobTitle}}" ng-model="profileCtrl.user.jobTitle">
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="intro">Self Introduction</label>

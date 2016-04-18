@@ -18,7 +18,7 @@
                 <div class="list-group">
                     <img class="img-responsive center-block" ng-src="{{infoCtrl.course.courseInfo.image}}">
                 </div>
-                <div class="list-group">
+                <!--<div class="list-group">
                     <label class="control-label" for="name">Course name</label>
                     <li class="list-group-item info-lable" id="name" name="name">{{infoCtrl.course.courseInfo.name}}</li>
                 </div>
@@ -52,9 +52,47 @@
                     <label class="control-label" for="intro">Course description</label>
                     <p class="list-group-item list-group-text info-lable" id="intro" name="intro">{{infoCtrl.course.courseInfo.intro}}</p>
                 </div>
-                <br>
+                <br>-->
                 
             </form>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Course name:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.course.courseInfo.name}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Taught by:</p></th>
+                        <td style="text-align: center;">
+                            <a class="detail-info" ng-href="#/teacherInfo/{{infoCtrl.course.courseInfo.idUser}}"> {{infoCtrl.course.teacherFirstName}} {{infoCtrl.course.teacherLastName}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Category:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.course.courseInfo.category}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Level:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.course.courseInfo.levelNumber}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Start date:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.course.courseInfo.startDate}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">End date:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.course.courseInfo.endDate}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Date created:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.course.courseInfo.createDate}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Course description:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.course.courseInfo.intro}}</p></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="col-lg-5 col-lg-offset-2 col-md-5 col-md-offset-2">
             <div class="list-group">

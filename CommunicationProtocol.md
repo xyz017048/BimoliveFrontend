@@ -318,7 +318,8 @@ Teacher create/update/get [single course/ all courses/ single lecture/all lectur
                                 }
                 Response:
                                 {
-                                    "result":           INT (result=0 fail; reuslt=1 success)
+                                    "result":           INT     //actually the idLecture, if -1 indicates "create" successfully, but DB happens something ban when getting id.
+                                                                                          if 0, indicates "create" unsuccessfully.
                                 }
 
 

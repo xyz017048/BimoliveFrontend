@@ -76,6 +76,29 @@ angular.module('bimoliveApp')
         } )
         .success(function (data, status) {
             appScope.teacher = data;
+            
+            $http( { 
+                method: 'POST', 
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/courses',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: {
+                    idUser: $routeParams.teacherid
+                }
+            } )
+            .success(function (data, status) {
+                appScope.teacher.courses = [];
+                var length = data.length;
+                for (var i = 0; i < length; i++) {
+                    appScope.teacher.courses.push(data[i]);
+                }
+            })
+            .error(function(data, status) {
+                console.log(data);
+                console.log(status);
+                console.log('Request failed');
+            });
         })
         .error(function(data, status) {
             console.log(data);

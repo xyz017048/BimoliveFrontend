@@ -8,6 +8,9 @@
         </h1>
     </div>
     <div class="row">
+        <div style="padding-top: 10px; padding-bottom: 30px;">
+                <button data-toggle="modal" data-target="#addLectureAndStartModal" mydata="mydata" type="button" class="btn btn-danger btn-lg center-block">START A LECTURE</button>       
+        </div>
         <div class="col-lg-5 col-md-5">
             <div class="form-group">
                     <!--<label class="control-label" for="image">Course picture:</label>-->
@@ -45,11 +48,11 @@
                     </tr>
                     <tr>
                         <th scope="row"><p class="detail-title">Start date:</p></th>
-                        <td><p class="detail-info">{{courseDetailCtrl.origCourse.startDate.slice(0, courseDetailCtrl.origCourse.startDate.indexOf(' '))}}</p></td>
+                        <td><p class="detail-info">{{courseDetailCtrl.formatDateForDisplay(courseDetailCtrl.origCourse.startDate)}}</p></td>
                     </tr>
                     <tr>
                         <th scope="row"><p class="detail-title">End date:</p></th>
-                        <td><p class="detail-info">{{courseDetailCtrl.origCourse.endDate.slice(0, courseDetailCtrl.origCourse.endDate.indexOf(' '))}}</p></td>
+                        <td><p class="detail-info">{{courseDetailCtrl.formatDateForDisplay(courseDetailCtrl.origCourse.endDate)}}</p></td>
                     </tr>
                     <tr>
                         <th scope="row"><p class="detail-title">Course description:</p></th>
@@ -63,7 +66,7 @@
                 <label class="control-label" for="addLectureButton">Lectures:</label>
             </div>
         </div>
-        <div class="row col-lg-5 col-lg-offset-2 col-md-5 col-md-offset-2" style="overflow: auto; margin-bottom: 50px; height: 1000px;">   
+        <div class="row col-lg-5 col-lg-offset-2 col-md-5 col-md-offset-2" style="overflow: auto; margin-bottom: 50px; height: 570px;">   
             <div class="row" style="display:flex; flex-wrap:wrap;">
                 <div ng-repeat="lecture in courseDetailCtrl.lectureList" class="thumbnail col-lg-4 col-md-4 col-sm-3 col-xs-6">
                     <a ng-href="#/lecturedetail/{{lecture.idLecture}}">
@@ -120,6 +123,8 @@
 </div>
 <!--add course modal-->
 <div ng-include="'views/modalViews/addlectureModal.html'"></div>
+<!--add lecture and start modal-->
+<div ng-include="'views/modalViews/addlectureandstartModal.html'"></div>
 <!--course setting modal-->
 <!-- add course Modal -->
 <div class="modal fade" id="courseSettingModal" role="dialog">
@@ -141,35 +146,33 @@
                     </div>
                     <div class="form-group" ng-class="{ 'has-error' : courseDetailCtrl.newCourseForm.category.$invalid && !courseDetailCtrl.newCourseForm.category.$pristine }">
                         <label class="control-label" for="category">Category</label>
-                        <select class="form-control" id="category" name="category" ng-model="courseDetailCtrl.currentCourse.category" required>
-                            <option ng-repeat="category in courseDetailCtrl.categories">{{category}}</option>
+                        <select class="form-control" id="category" name="category" ng-model="courseDetailCtrl.currentCourse.category" ng-options="category for category in courseDetailCtrl.categories" required>
                         </select>
                         <p ng-show="courseDetailCtrl.newCourseForm.category.$invalid && !courseDetailCtrl.newCourseForm.category.$pristine" class="help-block">Category is required.</p>
                     </div>
-                    <div class="form-group" ng-class="{ 'has-error' : courseDetailCtrl.newCourseForm.level.$invalid && !courseDetailCtrl.newCourseForm.level.$pristine }">
-                        <label class="control-label" for="level">Level</label>
-                        <select class="form-control" id="level" name="level" ng-model="courseDetailCtrl.currentCourse.level" required>
-                            <option ng-repeat="level in courseDetailCtrl.levels">{{level}}</option>
+                    <div class="form-group" ng-class="{ 'has-error' : courseDetailCtrl.newCourseForm.levelNumber.$invalid && !courseDetailCtrl.newCourseForm.levelNumber.$pristine }">
+                        <label class="control-label" for="levelNumber">Level</label>
+                        <select class="form-control" id="levelNumber" name="levelNumber" ng-model="courseDetailCtrl.currentCourse.levelNumber" ng-options="level for level in courseDetailCtrl.levels" required>
                         </select>
-                        <p ng-show="courseDetailCtrl.newCourseForm.level.$invalid && !courseDetailCtrl.newCourseForm.level.$pristine" class="help-block">Level is required.</p>
+                        <p ng-show="courseDetailCtrl.newCourseForm.levelNumber.$invalid && !courseDetailCtrl.newCourseForm.levelNumber.$pristine" class="help-block">level is required.</p>
                     </div>
                     <div class="form-group" ng-class="{ 'has-error' : !courseDetailCtrl.newCourseForm.permissionCode.$pristine && courseDetailCtrl.newCourseForm.permissionCode.$invalid }">
                         <label class="control-label" for="permissionCode">Permission code</label>
                         <input type="text" class="form-control" id="permissionCode" name="permissionCode" placeholder="" ng-model="courseDetailCtrl.currentCourse.permissionCode">
                     </div>
-                    <div class="form-group" ng-class="{ 'has-error' : !courseDetailCtrl.newCourseForm.startDate.$pristine && !courseDetailCtrl.isStartDateValid() }">
+                    <div class="form-group" ng-class="{ 'has-error' : !courseDetailCtrl.isStartDateValid() }">
                         <label class="control-label" for="startDate">Start Date</label>
                         <p class="input-group">
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="courseDetailCtrl.open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                <button type="button" class="btn btn-default" ng-click="courseDetailCtrl.CourseOpen1()"><i class="glyphicon glyphicon-calendar"></i></button>
                             </span>
-                            <input type="text" class="form-control" id="startDate" name="startDate" uib-datepicker-popup="{{courseDetailCtrl.format}}" ng-model="courseDetailCtrl.currentCourse.startDate" is-open="courseDetailCtrl.popup1.opened" min-date="courseDetailCtrl.today"
+                            <input type="text" class="form-control" id="startDate" name="startDate" uib-datepicker-popup="{{courseDetailCtrl.format}}" ng-model="courseDetailCtrl.currentCourse.startDate" is-open="courseDetailCtrl.CoursePopup1.opened" min-date="courseDetailCtrl.today"
                             max-date="courseDetailCtrl.maxDate" datepicker-options="courseDetailCtrl.dateOptions" ng-required="true"
                             close-text="Close"/>
                         </p>
-                        <p ng-show="!courseDetailCtrl.newCourseForm.startDate.$pristine && !courseDetailCtrl.isStartDateValid() " class="help-block">{{courseDetailCtrl.startDateErrMsg}}</p>
+                        <p ng-show="!courseDetailCtrl.isStartDateValid() " class="help-block">{{courseDetailCtrl.startDateErrMsg}}</p>
                     </div>
-                    <div class="form-group" ng-class="{ 'has-error' : !courseDetailCtrl.newCourseForm.endDate.$pristine && !courseDetailCtrl.isEndDateValid()}">
+                    <div class="form-group" ng-class="{ 'has-error' :!courseDetailCtrl.isEndDateValid()}">
                         <label class="control-label" for="endDate">End Date</label>
                         <p class="input-group">
                             <span class="input-group-btn">
@@ -179,7 +182,7 @@
                             max-date="courseDetailCtrl.maxDate" datepicker-options="courseDetailCtrl.dateOptions" ng-required="true"
                             close-text="Close"/>
                         </p>
-                        <p ng-show="!courseDetailCtrl.newCourseForm.endDate.$pristine && !courseDetailCtrl.isEndDateValid() " class="help-block">{{courseDetailCtrl.endDateErrMsg}}</p>
+                        <p ng-show="!courseDetailCtrl.isEndDateValid() " class="help-block">{{courseDetailCtrl.endDateErrMsg}}</p>
                     </div>
                     <div class="form-group" ng-class="{ 'has-error' : !courseDetailCtrl.newCourseForm.intro.$pristine && courseDetailCtrl.newCourseForm.intro.$invalid }">
                         <label class="control-label" for="intro">Course description</label>

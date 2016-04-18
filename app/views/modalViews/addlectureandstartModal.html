@@ -1,0 +1,35 @@
+<!-- add lecture Modal -->
+<div class="modal fade" id="addLectureAndStartModal" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Lecture #{{courseDetailCtrl.lectureList.length + 1}}</h4>
+            </div>
+            <div class="modal-body">
+                <form name="courseDetailCtrl.newStartLectureForm" id="newStartLectureForm" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' : courseDetailCtrl.newStartLectureForm.topic.$invalid && !courseDetailCtrl.newStartLectureForm.topic.$pristine }">
+                        <label class="control-label" for="topic">Lecture topic</label>
+                        <input type="text" class="form-control" id="topic" name="topic" ng-model="courseDetailCtrl.newStartLecture.topic"
+                        required>
+                        <p ng-show="courseDetailCtrl.newStartLectureForm.topic.$invalid && !courseDetailCtrl.newStartLectureForm.topic.$pristine" class="help-block">Lecture topic is required.</p>
+                    </div>
+                    <div class="form-group" >
+                        <label class="control-label" for="intro">Lecture description (optional)</label>
+                        <textarea type="text" class="form-control" id="intro" name="intro" ng-model="courseDetailCtrl.newStartLecture.intro"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-default" ng-click="courseDetailCtrl.createNewLectureAndStart()">Start Lecture</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="courseDetailCtrl.clearStartForm()">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

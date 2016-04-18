@@ -2,12 +2,12 @@
 <div class="container">
     <div class="page-header" ng-init="infoCtrl.getLecture()">
         <h1 class="text-center">
-            Course "{{infoCtrl.lecture.courseName}}"</br>
-            Lecture #{{infoCtrl.lecture.lectureInfo.lectureNum}} 
-            <span class="label label-danger" style="font-size:20px; padding-top:7px;" ng-if="infoCtrl.lecture.lectureInfo.status === 'live'">LIVE</span>
-            <span class="label label-warning" style="font-size:20px; padding-top:7px;" ng-if="infoCtrl.lecture.lectureInfo.status === 'wait'">Waiting</span>
-            <span class="label label-success" style="font-size:20px; padding-top:7px;" ng-if="infoCtrl.lecture.lectureInfo.status === 'finish'">Finished</span>
-            <span class="label label-primary" style="font-size:20px; padding-top:7px;" ng-if="infoCtrl.lecture.lectureInfo.status === 'replay'">Replay</span>
+            {{infoCtrl.lecture.courseName}}</br>
+            Lecture #{{infoCtrl.lecture.lectureInfo.lectureNum}}: {{infoCtrl.lecture.lectureInfo.topic}}
+            <span class="label label-danger" style="font-size:20px; " ng-if="infoCtrl.lecture.lectureInfo.status === 'live'">LIVE</span>
+            <span class="label label-warning" style="font-size:20px; " ng-if="infoCtrl.lecture.lectureInfo.status === 'wait'">Waiting</span>
+            <span class="label label-success" style="font-size:20px; " ng-if="infoCtrl.lecture.lectureInfo.status === 'finish'">Finished</span>
+            <span class="label label-primary" style="font-size:20px;" ng-if="infoCtrl.lecture.lectureInfo.status === 'replay'">Replay</span>
         </h1>
     </div>
     <div class="row">
@@ -18,7 +18,7 @@
                 </div>
                 <a ng-href="#/student/{{infoCtrl.lecture.lectureInfo.idLecture}}" ng-if="infoCtrl.lecture.lectureInfo.status === 'live'"><button type="button" class="btn btn-lg btn-danger center-block">Watch live</button></a>
                 <a ng-href="#/student/{{infoCtrl.lecture.lectureInfo.idLecture}}" ng-if="infoCtrl.lecture.lectureInfo.status === 'replay'"><button type="button" class="btn btn-lg btn-default center-block">Watch Replay</button></a>
-                <div class="list-group">
+                <!--<div class="list-group">
                     <label class="control-label" for="topic">Lecture topic</label>
                     <li class="list-group-item info-lable" id="topic" name="topic">{{infoCtrl.lecture.lectureInfo.topic}}</li>
                 </div>
@@ -44,9 +44,39 @@
                     <label class="control-label" for="intro">lecture description</label>
                     <p class="list-group-item list-group-text info-lable" id="intro" name="intro">{{infoCtrl.lecture.lectureInfo.intro}}</p>
                 </div>
-                <br>
+                <br>-->
                 
             </form>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Lecture Topic:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.lecture.lectureInfo.topic}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Taught by:</p></th>
+                        <td style="text-align: center;">
+                            <a class="detail-info" ng-href="#/teacherInfo/{{infoCtrl.course.courseInfo.idUser}}"> {{infoCtrl.lecture.teacherFirstName}} {{infoCtrl.lecture.teacherFirstName}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Scheduled Date:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.lecture.idTeacher}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Start Time:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.lecture.lectureInfo.startTime}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">End Time:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.lecture.lectureInfo.endTime}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Description:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.lecture.lectureInfo.intro}}</p></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
    

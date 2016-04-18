@@ -16,7 +16,7 @@
                         required>
                         <p ng-show="courseDetailCtrl.newLectureForm.topic.$invalid && !courseDetailCtrl.newLectureForm.topic.$pristine" class="help-block">Lecture topic is required.</p>
                     </div>
-                    <div class="form-group" ng-class="{ 'has-error' : !courseDetailCtrl.newLectureForm.scheduleDate.$pristine && !courseDetailCtrl.isscheduleDateValid() }">
+                    <div class="form-group" ng-class="{ 'has-error' : !courseDetailCtrl.newLectureForm.scheduleDate.$pristine && !courseDetailCtrl.isLectureStartDateValid() }">
                         <label class="control-label" for="scheduleDate">Schedule Date</label>
                         <p class="input-group">
                             <span class="input-group-btn">
@@ -26,7 +26,7 @@
                             max-date="courseDetailCtrl.maxDate" datepicker-options="courseDetailCtrl.dateOptions" ng-required="true"
                             close-text="Close"/>
                         </p>
-                        <p ng-show="!courseDetailCtrl.newLectureForm.scheduleDate.$pristine && !courseDetailCtrl.isscheduleDateValid() " class="help-block">{{courseDetailCtrl.scheduleDateErrMsg}}</p>
+                        <p ng-show="!courseDetailCtrl.newLectureForm.scheduleDate.$pristine && !courseDetailCtrl.isLectureStartDateValid() " class="help-block">{{courseDetailCtrl.scheduleDateErrMsg}}</p>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="intro">Start time</label>

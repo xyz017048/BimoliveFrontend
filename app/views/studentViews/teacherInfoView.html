@@ -14,12 +14,12 @@
         </h1>
     </div>
     <div class="row">
-        <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+        <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
             <form class="list-group">
                 <div class="list-group">
-                    <img class="img-responsive center-block" ng-src="{{infoCtrl.teacher.teacherInfo.profile}}">
+                    <img class="img-circle center-block" id="profile-img" style="width: 160px;" ng-src="{{infoCtrl.teacher.teacherInfo.profile}}">
                 </div>
-                <div class="list-group">
+                <!--<div class="list-group">
                     <label class="control-label" for="name">Teacher name</label>
                     <li class="list-group-item info-lable" id="name" name="name">{{infoCtrl.teacher.teacherInfo.firstName}} {{infoCtrl.teacher.teacherInfo.lastName}} </li>
                 </div>
@@ -39,9 +39,49 @@
                     <label class="control-label" for="intro">teacher description</label>
                     <p class="list-group-item list-group-text info-lable" id="intro" name="intro">{{infoCtrl.teacher.teacherInfo.intro}}</p>
                 </div>
-                <br>
+                <br>-->
                 
             </form>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Teacher name:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.teacher.teacherInfo.firstName}} {{infoCtrl.teacher.teacherInfo.lastName}} </p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Email:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.teacher.teacherInfo.email}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Employed with:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.teacher.teacherInfo.company}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Job title:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.teacher.teacherInfo.jobTitle}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Introduction:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.teacher.teacherInfo.introWords}}</p></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="page-header">
+        <h1>Courses of {{infoCtrl.teacher.teacherInfo.firstName}}</h1>
+    </div>
+    <div class="row" style="display:flex; flex-wrap:wrap;">
+        <div ng-repeat="course in infoCtrl.teacher.courses" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <a ng-href="#/coursedetail/{{course.idCourse}}">
+                <div class="imageWrapper" style="position: relative;">
+                    <img ng-src="{{course.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
+                </div>
+                <div class="caption">
+                    <a ng-href="#/coursedetail/{{course.idCourse}}" style="font-size: 20px;">{{course.name}}</a>
+                    <p style="font-size: 12px;">{{course.category}} - Level {{course.levelNumber}}</p>
+                </div>
+            </a>
         </div>
     </div>
    
