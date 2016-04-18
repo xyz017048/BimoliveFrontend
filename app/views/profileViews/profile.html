@@ -46,6 +46,18 @@
                     <label class="control-label" for="lastName">Last name</label>
                     <input class="form-control" id="lastName" placeholder="{{profileCtrl.user.lastName}}" ng-model="profileCtrl.user.lastName">
                 </div>
+                <div class="form-group">
+                    <label class="control-label" for="lastName">Company</label>
+                    <input class="form-control" id="company" placeholder="{{profileCtrl.user.company}}" ng-model="profileCtrl.user.company">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="lastName">Job</label>
+                    <input class="form-control" id="jobTitle" placeholder="{{profileCtrl.user.jobTitle}}" ng-model="profileCtrl.user.jobTitle">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="lastName">Introduction</label>
+                    <input class="form-control" id="introWords" placeholder="{{profileCtrl.user.introWords}}" ng-model="profileCtrl.user.introWords">
+                </div>
                 <div class="form-group" ng-if="profileCtrl.user.roleLevel === 2">
                     <label class="control-label" for="resume">Resume Upload</label>
                     <a ng-href="{{profileCtrl.user.resume}}" href="" target="_blank" id="view-resume">View Resume</a>
@@ -139,6 +151,14 @@
                     <div class="form-group">
                         <label class="control-label" for="lastName">Last name</label>
                         <input class="form-control" id="lastName" placeholder="{{profileCtrl.user.lastName}}" ng-model="profileCtrl.user.lastName">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="company">Company</label>
+                        <input class="form-control" id="company" placeholder="{{profileCtrl.user.company}}" ng-model="profileCtrl.user.company">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="jobTitle">Job</label>
+                        <input class="form-control" id="jobTitle" placeholder="{{profileCtrl.user.jobTitle}}" ng-model="profileCtrl.user.jobTitle">
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="intro">Self Introduction</label>

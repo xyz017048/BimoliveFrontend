@@ -77,6 +77,15 @@ angular.module('bimoliveApp')
         } else if (!this.user.lastName || this.user.lastName === null || this.user.lastName === '') {
             alert('Please enter your last name');
             return false;
+        } else if (!this.user.company || this.user.company === null || this.user.company === '') {
+            alert('Please enter your company\'s name');
+            return false;
+        } else if (!this.user.jobTitle || this.user.jobTitle === null || this.user.jobTitle === '') {
+            alert('Please enter your job');
+            return false;
+        } else if (!this.user.introWords || this.user.introWords === null || this.user.introWords === '') {
+            alert('Please enter your introduction');
+            return false;
         } else if (!this.user.resume || this.user.resume === null || this.user.resume === '') {
             alert('Please select your resume');
             return false;
