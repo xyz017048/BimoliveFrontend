@@ -8,6 +8,9 @@
         </h1>
     </div>
     <div class="row">
+        <div style="padding-top: 10px; padding-bottom: 30px;">
+                <button data-toggle="modal" data-target="#addLectureAndStartModal" mydata="mydata" type="button" class="btn btn-danger btn-lg center-block">START A LECTURE</button>       
+        </div>
         <div class="col-lg-5 col-md-5">
             <div class="form-group">
                     <!--<label class="control-label" for="image">Course picture:</label>-->
@@ -63,7 +66,7 @@
                 <label class="control-label" for="addLectureButton">Lectures:</label>
             </div>
         </div>
-        <div class="row col-lg-5 col-lg-offset-2 col-md-5 col-md-offset-2" style="overflow: auto; margin-bottom: 50px; height: 1000px;">   
+        <div class="row col-lg-5 col-lg-offset-2 col-md-5 col-md-offset-2" style="overflow: auto; margin-bottom: 50px; height: 570px;">   
             <div class="row" style="display:flex; flex-wrap:wrap;">
                 <div ng-repeat="lecture in courseDetailCtrl.lectureList" class="thumbnail col-lg-4 col-md-4 col-sm-3 col-xs-6">
                     <a ng-href="#/lecturedetail/{{lecture.idLecture}}">
@@ -120,6 +123,8 @@
 </div>
 <!--add course modal-->
 <div ng-include="'views/modalViews/addlectureModal.html'"></div>
+<!--add lecture and start modal-->
+<div ng-include="'views/modalViews/addlectureandstartModal.html'"></div>
 <!--course setting modal-->
 <!-- add course Modal -->
 <div class="modal fade" id="courseSettingModal" role="dialog">

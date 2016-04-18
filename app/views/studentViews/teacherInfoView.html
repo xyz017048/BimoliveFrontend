@@ -19,7 +19,7 @@
                 <div class="list-group">
                     <img class="img-responsive center-block" ng-src="{{infoCtrl.teacher.teacherInfo.profile}}">
                 </div>
-                <div class="list-group">
+                <!--<div class="list-group">
                     <label class="control-label" for="name">Teacher name</label>
                     <li class="list-group-item info-lable" id="name" name="name">{{infoCtrl.teacher.teacherInfo.firstName}} {{infoCtrl.teacher.teacherInfo.lastName}} </li>
                 </div>
@@ -39,9 +39,21 @@
                     <label class="control-label" for="intro">teacher description</label>
                     <p class="list-group-item list-group-text info-lable" id="intro" name="intro">{{infoCtrl.teacher.teacherInfo.intro}}</p>
                 </div>
-                <br>
+                <br>-->
                 
             </form>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Teacher name:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.teacher.teacherInfo.firstName}} {{infoCtrl.teacher.teacherInfo.lastName}} </p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Email:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.teacher.teacherInfo.email}}</p></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
    

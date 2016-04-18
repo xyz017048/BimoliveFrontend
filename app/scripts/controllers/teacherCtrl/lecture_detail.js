@@ -114,6 +114,7 @@ angular.module('bimoliveApp')
 
             var dataURL = canvas.toDataURL();
             var blob = appScope.dataURItoBlob(dataURL);
+            document.getElementById('course-img').src = dataURL;
             MainService.upload(blob, 'lecture', appScope.currentLecture.idCourse, appScope.currentLecture.idLecture);
         };
         video.load();

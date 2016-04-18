@@ -27,13 +27,15 @@ angular.module('bimoliveApp')
         this.getCurrentCourse();
         this.newLectureForm = '';
         this.newLecture = newLectureObject();
+        this.newStartLecture = {'topic': '', 'intro': ''};
     };
     
     var appScope = this;
     this.newCourseForm = '';
+    this.newStartLectureForm = '';    
     this.levels = [1 , 2, 3, 4, 5];
     this.isCourseNameValid = function () {
-        if (this.currentCourse.name.length <= 0 || this.currentCourse.name.length > 200) {
+        if (this.currentCourse && (this.currentCourse.name.length <= 0 || this.currentCourse.name.length > 200)) {
             this.newCourseForm.newCourseName.$setValidity('name', false);
             return false;
         }
@@ -42,7 +44,7 @@ angular.module('bimoliveApp')
         }
     };
     this.isCourseDescriptionValid = function() {
-        if (this.currentCourse.intro.length > 1000000) {
+        if (this.currentCourse && (this.currentCourse.intro.length > 1000000)) {
             this.newCourseForm.intro.$setValidity('intro', false);
             return false;
         } else {
@@ -50,14 +52,14 @@ angular.module('bimoliveApp')
         }
     }
     this.isStartDateValid = function () {
-        if (!this.currentCourse.startDate) {
+        if (this.currentCourse && (!this.currentCourse.startDate)) {
             this.startDateErrMsg = 'Start date is not valid.';
             return false; 
         }
         return true;
     };
     this.isEndDateValid = function () {
-        if (this.currentCourse.endDate) {
+        if (this.currentCourse && (this.currentCourse.endDate)) {
             if (this.currentCourse.endDate < this.currentCourse.startDate) {
                 this.endDateErrMsg = 'End date can not be earlier than start date.';
                 return false;
@@ -245,18 +247,22 @@ angular.module('bimoliveApp')
         }
     }    
     
-    // FAKE, place holder for a function foring checking valivation
+    this.isLectureStartDateValid = function () {
+        if (!this.newLecture.scheduleDate) {
+            this.scheduleDateErrMsg = 'Schedule date is not valid.';
+            return false; 
+        } else if (this.newLecture.scheduleDate < this.currentCourse.startDate) {
+            this.scheduleDateErrMsg = 'Schedule date can not be earlier than course start date ' + this.formatDateForDisplay(this.currentCourse.startDate);
+            return false;             
+        }
+        return true;
+    };
     this.checkNewLectureValid = function() {
-        if (this.newLecture.topic === '') {
-            alert('Please enter a topic');
-            return false;
-        } else if (this.newLecture.scheduleDate === '') {
-            alert('Please select a schedule date');
-        } else if (this.newLecture.startTime === '') {
-            alert('Please select a start time');
-            return false;
-        } else if (this.newLecture.endTime === '') {
-            alert('Please select a end time');
+        if (this.newLecture.$invalid || !this.isLectureStartDateValid()) {
+            this.newLecture.topic.$setDirty();
+            this.newCourseForm.scheduleDate.$setDirty();
+            this.newCourseForm.startTime.$setDirty();
+            this.newCourseForm.endTime.$setDirty();
             return false;
         } else {
             return true;
@@ -297,8 +303,98 @@ angular.module('bimoliveApp')
                 }
             })
             .success(function (data, status) {
-                if (data.result) {
+                if (data.result && data.result !== -1) {
                     appScope.clearForm();
+                } else {
+                    console.log("success but got " + data.result);
+                }
+            })
+            .error(function (data, status) {
+                console.log(data);
+                console.log(status);
+                console.log('Request failed');
+            });
+        }
+    };
+    this.getCurrentDate = function () {
+        var date = new Date();
+        return date;
+    };
+    this.getAnHourLater = function () {
+        var date = new Date();
+        if (date.getHours() === 23) {
+            date.setMinutes(59);
+        } else {
+            date.setHours(date.getHours()+1);
+            date.setMinutes(date.getMinutes());
+        }
+        return date;
+    };
+    this.isStartLectureValid = function () {
+        if (!this.newStartLecture || this.newStartLecture.topic === '') {
+            this.newStartLectureForm.topic.$setDirty();
+            return false;
+        } else {
+            return true;
+        }
+    };
+    this.createNewLectureAndStart = function() {
+        if (this.isStartLectureValid()) {
+            var month = this.getCurrentDate().getMonth() + 1;
+            var date = this.getCurrentDate().getDate();
+            var startHour = this.getCurrentDate().getHours();
+            var startMin = this.getCurrentDate().getMinutes();
+            var endHour = this.getAnHourLater().getHours();
+            var endMin = this.getAnHourLater().getMinutes();
+            var scheduleDate = this.getCurrentDate().getFullYear() +
+                '-' + (month < 10 ? ('0' + month) : month) +
+                '-' + (date < 10 ? ('0' + date) : date);
+            var startTime = (startHour < 10 ? ('0' + startHour) : startHour) +
+                ':' + (startMin < 10 ? ('0' + startMin) : startMin);
+            var endTime = (endHour < 10 ? ('0' + endHour) : endHour) +
+                ':' + (endMin < 10 ? ('0' + endMin) : endMin);
+            $http({
+                method: 'POST',
+                url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/createlecture',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: {
+                    "idCourse": this.idCourse,
+                    "lectureNum": this.lectureList.length + 1,
+                    "topic": this.newStartLecture.topic,
+                    "intro": this.newStartLecture.intro,
+                    "image": this.currentCourse.image,
+                    "scheduleDate": scheduleDate,
+                    "startTime": startTime,
+                    "endTime": endTime
+                }
+            })
+            .success(function (data, status) {
+                if (data.result && data.result !== -1) {
+                    var idLecture = data.result;
+                    appScope.clearStartForm();
+                    $('#addLectureAndStartModal').on('hidden.bs.modal', function (e) {
+                        $http({
+                            method: 'POST',
+                            url: 'http://bimolive.us-west-2.elasticbeanstalk.com/teacher/startlecture',
+                            headers: {
+                                'Content-Type': undefined
+                            },
+                            data: {
+                                idUser: MainService.getCurrentUser().idUser,
+                                idLecture: idLecture
+                            }
+                        })
+
+                            .success(function (data, status) {
+                                $location.url('/teacher/' + idLecture);
+                            })
+
+                            .error(function (data, status) {
+                                alert('Start Lecture Failed!');
+                            })
+                    });
                 } else {
                     console.log("success but got " + data.result);
                 }
@@ -315,6 +411,12 @@ angular.module('bimoliveApp')
         this.newLecture = newLectureObject();
         $('#addLectureModal').modal('hide');
         this.newLectureForm.$setPristine();
+        this.getLectureList();
+    };
+    this.clearStartForm = function () {
+        this.newStartLecture = { 'topic': '', 'intro': '' };
+        $('#addLectureAndStartModal').modal('hide');
+        this.newStartLectureForm.$setPristine();
         this.getLectureList();
     };
     
@@ -399,10 +501,6 @@ angular.module('bimoliveApp')
     this.dateOptions = {
         formatYear: 'yy',
         startingDay: 1
-    };
-
-    this.isscheduleDateValid = function() {
-        return true;
     };
     /////
     /**
