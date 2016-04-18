@@ -11,9 +11,11 @@
                     <img ng-src="{{course.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
                 </div>
                 <div class="caption">
-                    <a ng-href="#/coursedetail/{{course.idCourse}}" ng-click="courseCtrl.setCurrentCourse(course)">{{course.category}} {{course.levelNumber}}: {{course.name}}</a>
-                    <p>Start Date: {{courseCtrl.formatDateForDisplay(course.startDate)}}</p>
-                    <p>End Date: {{courseCtrl.formatDateForDisplay(course.endDate)}}</p>
+                    <a ng-href="#/coursedetail/{{course.idCourse}}" ng-click="courseCtrl.setCurrentCourse(course)" style="font-size: 20px;">{{course.name}}</a>
+                    <p style="font-size: 12px;">{{course.category}} - Level {{course.levelNumber}}</p>
+                    <!--<p style="font-size: 12px;"></p>-->
+                    <!--<p>Start Date: {{courseCtrl.formatDateForDisplay(course.startDate)}}</p>
+                    <p>End Date: {{courseCtrl.formatDateForDisplay(course.endDate)}}</p>-->
                 </div>
             </a>
         </div>

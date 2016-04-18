@@ -52,8 +52,36 @@
                         <th scope="row"><p class="detail-title">Email:</p></th>
                         <td><p class="detail-info">{{infoCtrl.teacher.teacherInfo.email}}</p></td>
                     </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Employed with:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.teacher.teacherInfo.company}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Job title:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.teacher.teacherInfo.jobTitle}}</p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><p class="detail-title">Introduction:</p></th>
+                        <td><p class="detail-info">{{infoCtrl.teacher.teacherInfo.intro}}</p></td>
+                    </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="page-header">
+        <h1>Courses of {{infoCtrl.teacher.teacherInfo.firstName}}</h1>
+    </div>
+    <div class="row" style="display:flex; flex-wrap:wrap;">
+        <div ng-repeat="course in infoCtrl.teacher.courses" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <a ng-href="#/coursedetail/{{course.idCourse}}">
+                <div class="imageWrapper" style="position: relative;">
+                    <img ng-src="{{course.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
+                </div>
+                <div class="caption">
+                    <a ng-href="#/coursedetail/{{course.idCourse}}" style="font-size: 20px;">{{course.name}}</a>
+                    <p style="font-size: 12px;">{{course.category}} - Level {{course.levelNumber}}</p>
+                </div>
+            </a>
         </div>
     </div>
    
