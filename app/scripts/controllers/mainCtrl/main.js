@@ -160,7 +160,7 @@ angular.module('bimoliveApp')
                     
                     // appScope.checkIsLoggedIn();
                 } else {
-                    alert('email or password is incorrect');   
+                    alert('Email or password is incorrect.');   
                 }
             })
             
@@ -168,7 +168,7 @@ angular.module('bimoliveApp')
                 console.log(data);
                 console.log(status);
                 console.log('Request failed');
-                alert('Server error, please try again later!');
+                alert('Server error, please try again later.');
             });
             
             // Clear the textbox
@@ -272,9 +272,9 @@ angular.module('bimoliveApp')
                 // Inject into MainService
                 MainService.setCurrentUser(data);
                 appScope.currentUser = data;
-                alert('Sign up successed!');
+                alert('Sign up successful.');
             } else {
-                alert('Sign up failed! Please try again!');
+                alert('Sign up failed! Please try again.');
             }
         })
         .error(function (data, status) {
@@ -302,9 +302,9 @@ angular.module('bimoliveApp')
     this.signUpForm = '';
     this.loginForm = '';
     this.usernameErrMsg = 'Username is required.';
-    this.emailErrMsg = 'Email is required';
-    this.passwordErrMsg = 'Password is required';
-    this.confirmPasswordErrMsg = 'Confirm password is required';
+    this.emailErrMsg = 'Email is required.';
+    this.passwordErrMsg = 'Password is required.';
+    this.confirmPasswordErrMsg = 'Confirm password is required.';
     // This is FAKE! It's for checking if the user name is taken with the server
     function isUserNameTaken() {
         return false;
@@ -534,7 +534,7 @@ angular.module('bimoliveApp')
                     return '';
                 }
             } else {
-                alert('Upload Failed');
+                alert('Upload Failed! Please try again.');
                 MainService.hideProgress(filePurpose);
                 return '';
             }
@@ -568,7 +568,7 @@ angular.module('bimoliveApp')
         else {
             // No File Selected
             MainService.hideProgress(filePurpose);
-            alert('No File Selected');
+            alert('No File Has Been Selected.');
             return '';
         }
     };

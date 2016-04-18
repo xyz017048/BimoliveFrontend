@@ -211,7 +211,7 @@ angular.module('bimoliveApp')
                 }
             })
             .error(function (data, status) {
-                alert('server error, please try again');    
+                alert('Server error, please try again.');    
             });
             this.clearCourseForm();
         }

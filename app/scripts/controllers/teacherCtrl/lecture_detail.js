@@ -91,7 +91,7 @@ angular.module('bimoliveApp')
             }
         })
         .success(function (data, status) {
-            alert('upload success');
+            alert('Upload Successful!');
         })
         .error(function (data, status) {
             alert('Upload Lecture Failed!');
