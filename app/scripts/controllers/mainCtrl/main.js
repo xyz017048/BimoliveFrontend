@@ -553,6 +553,11 @@ angular.module('bimoliveApp')
                     if (callBackFunction) {
                         callBackFunction(MainService.getCurrentUser().idUser, lectureId, 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key);   
                     }
+                    if (filePurpose === 'profile') {
+                        document.getElementById('profile-img').src = 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key;                        
+                    } else if (filePurpose === 'course') {
+                        document.getElementById('course-img').src = 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key;                        
+                    }
                 }
             })
             .on('httpUploadProgress', function (progress) {
@@ -562,7 +567,6 @@ angular.module('bimoliveApp')
                 }
 
             });
-            
             return 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key;
         }
         else {

@@ -200,7 +200,8 @@ angular.module('bimoliveApp')
                     intro: appScopeCourse.intro,
                     startDate: appScope.dateFormat(appScopeCourse.startDate),
                     endDate: appScope.dateFormat(appScopeCourse.endDate),
-                    permissionCode: appScopeCourse.permissionCode
+                    permissionCode: appScopeCourse.permissionCode,
+                    image: appScopeCourse.image
                 }
             })
             .success(function (data, status) {
