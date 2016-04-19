@@ -193,7 +193,7 @@ angular.module('bimoliveApp')
                 alert(data.result);
                 // */
                 if (!data.result) {
-                    alert('server error, please try again');
+                    alert('Server error, please try again!');
                 }
                 appScope.getCourseList();
             })

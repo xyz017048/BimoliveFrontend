@@ -89,7 +89,7 @@ angular.module('bimoliveApp')
                 });
             } else {
                 // should make prision to modal
-                alert('wrong permission');
+                alert('Wrong permission code!');
             }
         })
         .error(function (data, status) {
@@ -160,7 +160,7 @@ angular.module('bimoliveApp')
                 }, 3000);
             } else if (appScope.currentLecture.lectureInfo.status === 'finish') { // it is not 'live' change video
                 // appScope.streamVideo();
-                alert('Lecture Finished');
+                alert('Lecture Finished.');
                 // $location.url($window.history.back(1));
                 $location.url('/');
             }

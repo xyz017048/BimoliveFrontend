@@ -4,7 +4,7 @@
         <h1 ng-if="profileCtrl.user.roleLevel == 1">Student Account Setting <!-- student -->
             <button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#applyToTeachModal" ng-if="profileCtrl.user.applyStatus === ''">Apply to teach</button>
             <button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#applyToTeachModal" ng-if="profileCtrl.user.applyStatus !== ''">Edit application</button>
-            <button type="button" class="btn btn-lg btn-default" data-toggle="modal" ng-if="profileCtrl.user.applyStatus === 'new'||profileCtrl.user.applyStatus === 'read'">Cancel application</button>
+            <!--<button type="button" class="btn btn-lg btn-default" data-toggle="modal" ng-if="profileCtrl.user.applyStatus === 'new'||profileCtrl.user.applyStatus === 'read'">Cancel application</button>-->
         </h1>
         <h1 ng-if="profileCtrl.user.roleLevel === 2">Teacher Account Setting</h1>
         
@@ -51,12 +51,12 @@
                     <input class="form-control" id="company" placeholder="{{profileCtrl.user.company}}" ng-model="profileCtrl.user.company">
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="lastName">Job</label>
+                    <label class="control-label" for="lastName">Job Title</label>
                     <input class="form-control" id="jobTitle" placeholder="{{profileCtrl.user.jobTitle}}" ng-model="profileCtrl.user.jobTitle">
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="lastName">Introduction</label>
-                    <input class="form-control" id="introWords" placeholder="{{profileCtrl.user.introWords}}" ng-model="profileCtrl.user.introWords">
+                    <textarea class="form-control" id="introWords" type="textarea" placeholder="{{profileCtrl.user.introWords}}" ng-model="profileCtrl.user.introWords"></textarea>
                 </div>
                 <div class="form-group" ng-if="profileCtrl.user.roleLevel === 2">
                     <label class="control-label" for="resume">Resume Upload</label>
