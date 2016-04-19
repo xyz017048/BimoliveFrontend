@@ -293,10 +293,11 @@ angular.module('bimoliveApp')
         
             var modifiers = document.getElementById('questions').getElementsByTagName('button');
             for(var i = 0, len = modifiers.length-1; i < len; ++i) {
-                
                 // Special case
                 if(timeTag[len][0] < e.position && e.position < e.duration) {
-                    modifiers[len-1].classList.remove('list-group-item-info');
+                    for(var j = 0; j <= len - 1; ++j) {
+                        modifiers[j].classList.remove('list-group-item-info');
+                    }
                     modifiers[len].classList.add('list-group-item-info');
                     continue;
                 } else {
@@ -306,7 +307,7 @@ angular.module('bimoliveApp')
                 if(timeTag[i][0] < e.position && e.position < timeTag[i+1][0]) {
                     modifiers[i].classList.add('list-group-item-info');
                 } else {
-                    modifiers[i].classList.remove('list-group-item-info');  
+                    modifiers[i].classList.remove('list-group-item-info');
                 }
             }
             
@@ -605,18 +606,20 @@ angular.module('bimoliveApp')
                     //   data[0].content + '\n\n';
                       
             for(var i = 0, len = data.length; i < len; ++i) {
-                var index = i + 1;
-                if(i < len - 1) {
-                    content += ('Chapter ' + index + '\n' + 
-                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[i].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart)) + ' --> ' + 
-                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[i+1].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart)) + '\n' +
-                    data[i].content + '\n\n');
-                } else {
-                    // last one
-                    content += ('Chapter ' + index + '\n' + 
-                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[i].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart)) + ' --> ' + 
-                    this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[i].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart) + 5) + '\n' +
-                    data[i].content);
+                if(data[i].status === 'answer' || data[i].status === 'flag') {
+                    var index = i + 1;
+                    if(i < len - 1) {
+                        content += ('Chapter ' + index + '\n' + 
+                        this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[i].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart)) + ' --> ' + 
+                        this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[i+1].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart)) + '\n' +
+                        data[i].content + '\n\n');
+                    } else {
+                        // last one
+                        content += ('Chapter ' + index + '\n' + 
+                        this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[i].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart)) + ' --> ' + 
+                        this.seconds2vttTimeFormat(appScope.realTime2Seconds(data[i].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart) + 5) + '\n' +
+                        data[i].content);
+                    }
                 }
             }
         }
