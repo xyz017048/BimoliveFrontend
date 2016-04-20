@@ -176,7 +176,7 @@ angular.module('bimoliveApp')
         .success(function (data, status) {
             this.flag = '';
             if(!data.result) {
-                alert("fail to set flag");
+                alert('Server error, please try again!');
             } else {
                 // TODO: flag[] should add one question
                 // or question[] should add one
@@ -208,7 +208,7 @@ angular.module('bimoliveApp')
             appScope.currentLecture.status = 'finish';
             appScope.isFinished = true;
             // $('#redirectModal').modal('show');
-            alert('Lecture finished');
+            // alert('Lecture finished');
             $location.url('/lecturedetail/' + appScope.idLecture);
         })
 

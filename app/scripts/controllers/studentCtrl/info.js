@@ -136,7 +136,7 @@ angular.module('bimoliveApp')
      */
     this.followCourse = function() {
         if (!MainService.getIsLogin()) {
-            alert('Plese Login');
+            alert('Plese Login!');
         } else if (appScope.course.followCourse !== 1) {
             var user = MainService.getCurrentUser();
             $http( { 
@@ -172,7 +172,7 @@ angular.module('bimoliveApp')
      */
     this.unfollowCourse = function() {
         if (!MainService.getIsLogin()) {
-            alert('Plese Login');
+            alert('Plese Login!');
         } else if (appScope.course.followCourse !== 0) {
             var user = MainService.getCurrentUser();
             $http( { 
@@ -208,7 +208,7 @@ angular.module('bimoliveApp')
      */
     this.followTeacher = function() {
         if (!MainService.getIsLogin()) {
-            alert('Plese Login');
+            alert('Plese Login!');
         } else if (appScope.teacher.followTeacher !== 1) {
             var user = MainService.getCurrentUser();
             $http( { 
@@ -245,7 +245,7 @@ angular.module('bimoliveApp')
      */
     this.unfollowTeacher = function() {
         if (!MainService.getIsLogin()) {
-            alert('Plese Login');
+            alert('Plese Login!');
         } else if (appScope.teacher.followTeacher !== 0) {
             var user = MainService.getCurrentUser();
             $http( { 

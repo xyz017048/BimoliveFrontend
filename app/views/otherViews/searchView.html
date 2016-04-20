@@ -17,10 +17,10 @@
                     <img ng-src="{{course.courseInfo.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
                 </div>
                 <div class="caption">
-                    <a ng-href="#/courseInfo/{{course.courseInfo.idCourse}}">{{course.courseInfo.category}} {{course.courseInfo.levelNumber}}: {{course.courseInfo.name}}</a>
+                    <a ng-href="#/courseInfo/{{course.courseInfo.idCourse}}" style="font-size: 20px;">{{course.courseInfo.name}}</a>
+                    <p style="font-size: 12px;">{{course.courseInfo.category}} - Level {{course.courseInfo.levelNumber}}</p>
                     <p>by {{course.teacherFirstName}} {{course.teacherLastName}}</p>
-                    <p>Start Date: {{course.courseInfo.startDate.slice(0, course.courseInfo.startDate.indexOf(' '))}}</p>
-                    <p>End Date: {{course.courseInfo.endDate.slice(0, course.courseInfo.endDate.indexOf(' '))}}</p>
+                    <!--<p>End Date: {{course.courseInfo.endDate.slice(0, course.courseInfo.endDate.indexOf(' '))}}</p>-->
                 </div>
             </a>
         </div>
@@ -35,10 +35,9 @@
                     <img ng-src="{{lecture.lectureInfo.image}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
                 </div>
                 <div class="caption">
-                    <a ng-href="#/lecturedetail/{{lecture.lectureInfo.idCourse}}">Lecture #{{lecture.lectureInfo.lectureNum}}: {{lecture.lectureInfo.topic}}</a>
-                    <p>Date: {{lecture.lectureInfo.scheduleDate}}</p>
-                    <p>Start Time: {{lecture.lectureInfo.startTime}}</p>
-                    <p>End Time: {{lecture.lectureInfo.endTime}}</p>
+                    <a ng-href="#/lecturedetail/{{lecture.lectureInfo.idCourse}}" style="font-size: 20px;">Lecture {{lecture.lectureInfo.lectureNum}}: {{lecture.lectureInfo.topic}}</a>
+                    <!--<p style="font-size: 12px;">Course: {{lecture.courseName}}</p>-->
+                    <p style="font-size: 12px;">Date: {{lecture.lectureInfo.scheduleDate}}</p>
                 </div>
             </a>
         </div>
@@ -47,13 +46,13 @@
         <h1>Teachers</h1>
     </div>
     <div class="row" style="display:flex; flex-wrap:wrap;">
-        <div ng-repeat="teacher in searchCtrl.teachers" class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6">
+        <div ng-repeat="teacher in searchCtrl.teachers" class="thumbnail col-lg-2 col-md-2 col-sm-3 col-xs-4"style="width: 160px; margin-right: 10px;">
             <a ng-href="#/teacherInfo/{{teacher.idUser}}">
                 <div class="imageWrapper" style="position: relative;">
                     <img ng-src="{{teacher.profile}}" class="img-responsive img-thumbnail" alt="1" style="position: relative;" />
                 </div>
                 <div class="caption">
-                    <a ng-href="#/teacherInfo/{{teacher.idUser}}">{{teacher.jobTitle}}: {{teacher.firstName}} {{teacher.lastName}}</a>
+                    <a ng-href="#/teacherInfo/{{teacher.idUser}}">{{teacher.firstName}} {{teacher.lastName}}</a>
                 </div>
             </a>
         </div>
