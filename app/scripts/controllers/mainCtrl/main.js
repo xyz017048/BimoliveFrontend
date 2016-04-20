@@ -557,6 +557,8 @@ angular.module('bimoliveApp')
                         document.getElementById('profile-img').src = 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key;                        
                     } else if (filePurpose === 'course') {
                         document.getElementById('course-img').src = 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key;                        
+                    } else if (filePurpose === 'lecture') {
+                        document.getElementById('course-img').src = 'https://s3-us-west-2.amazonaws.com/bimolive-pictures/' + key;                        
                     }
                 }
             })

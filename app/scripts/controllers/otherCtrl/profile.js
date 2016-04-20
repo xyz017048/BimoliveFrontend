@@ -42,7 +42,6 @@ angular.module('bimoliveApp')
         .success(function (data, status) {
             if (data.result) {
                 MainService.setCurrentUser(appScope.user);
-                document.getElementById('profile-img').src = src;
                 // location.reload();
             } else {
                 console.log('success but got ' + data.result);
