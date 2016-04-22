@@ -114,6 +114,11 @@ angular.module('bimoliveApp', [
             controller: 'SearchCtrl',
             controllerAs: 'searchCtrl'
         })
+        .when('/instruction', {
+            templateUrl: 'views/otherViews/instruction.html',
+            controller: 'AboutCtrl',
+            controllerAs: 'aboutCtrl'
+        })
         .otherwise({
             redirectTo: '/'
         });
