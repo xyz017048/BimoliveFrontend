@@ -154,7 +154,7 @@ angular.module('bimoliveApp')
                     appScope.currentLecture.lectureInfo.status = data[q].lectureStatus;
                 }
             }
-            if (appScope.currentLecture.lectureInfo.status === 'live') {
+            if (appScope.currentLecture.lectureInfo.status === 'live' && $location.path() === ('/student/' + appScope.idLecture)) {
                 setTimeout(function () {
                     appScope.getQuestions(appScope.lastId);
                 }, 3000);
