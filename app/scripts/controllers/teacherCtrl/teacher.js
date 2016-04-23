@@ -78,7 +78,7 @@ angular.module('bimoliveApp')
         } )
         .success(function(data, status) {
             for (var q in data) {
-                if (data[q].idQuestion !== 0 && data[q].status !== 'flag') {
+                if (data[q].idQuestion !== 0 && data[q].status !== 'flag' && data[q].status !== 'delete') {
                     appScope.questions.push(data[q]);
                 }
                 if (q === data.length - 1 + "") {
