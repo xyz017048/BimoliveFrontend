@@ -42,13 +42,17 @@ angular.module('bimoliveApp')
                 appScope.courseName = data.courseName;
                 appScope.currentLecture = data.lectureInfo;
                 appScope.getQuestions(appScope.lastId);
-                if (appScope.currentLecture.status === 'replay') {
+                if (appScope.currentLecture.status === 'replay' || appScope.currentLecture.status === 'finish') {
                     appScope.isFinished = true;
+                    $location.url('/lecturedetail/' + appScope.idLecture);
                 }
             })
             
             .error(function (data, status) {
-                alert('Err:' + data);    
+                $location.url('/');   
+                if (status === 403) {
+                    console.log('You are not allowed to access this page.');    
+                }
             });
         }
     };
@@ -84,7 +88,10 @@ angular.module('bimoliveApp')
             }
             if (appScope.currentLecture.status === 'live') {
                 setTimeout(function () {
-                    appScope.getQuestions(appScope.lastId);
+                    
+                    if ($location.path() === ('/teacher/' + appScope.idLecture)) {
+                        appScope.getQuestions(appScope.lastId);                        
+                    }
                 }, 3000);
             } else if (appScope.currentLecture.status === 'finish') { // it is not 'live' change video
                 // appScope.streamVideo();
