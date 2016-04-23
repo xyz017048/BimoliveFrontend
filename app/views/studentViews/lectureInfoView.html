@@ -56,12 +56,12 @@
                     <tr>
                         <th scope="row"><p class="detail-title">Taught by:</p></th>
                         <td style="text-align: center;">
-                            <a class="detail-info" ng-href="#/teacherInfo/{{infoCtrl.course.courseInfo.idUser}}"> {{infoCtrl.lecture.teacherFirstName}} {{infoCtrl.lecture.teacherFirstName}}</a>
+                            <a class="detail-info" ng-href="#/teacherInfo/{{infoCtrl.lecture.idTeacher}}"> {{infoCtrl.lecture.teacherFirstName}} {{infoCtrl.lecture.teacherLastName}}</a>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row"><p class="detail-title">Scheduled Date:</p></th>
-                        <td><p class="detail-info">{{infoCtrl.lecture.idTeacher}}</p></td>
+                        <td><p class="detail-info">{{infoCtrl.lecture.lectureInfo.scheduleDate}}</p></td>
                     </tr>
                     <tr>
                         <th scope="row"><p class="detail-title">Start Time:</p></th>
