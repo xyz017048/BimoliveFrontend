@@ -48,9 +48,9 @@
             <ul class="list-group" id="question_display" style="overflow-y:auto;height:440px;bottom:0;" ng-if="studentCtrl.isLive">
                 <!-- Add any html elements in list -->
                 <a href class="list-group-item" data-toggle="modal" data-target="#myModal" ng-repeat="question in studentCtrl.questions">
-                    <h4 class="list-group-item-heading" ng-if="question.status === 'flag'">Tagged by teacher</h4>
-                    <h4 class="list-group-item-heading" ng-if="question.status !== 'flag'">Question from {{question.username}}</h4>                    
-                    <p class="list-group-item-text">{{question.content}}</p>
+                    <h4 class="list-group-item-heading">{{question.content}}</h4>
+                    <p class="list-group-item-text" ng-if="question.status === 'flag'">- by teacher</p>
+                    <p class="list-group-item-text" ng-if="question.status !== 'flag'">- by {{question.username}}</p>                     
                 </a>
             </ul>
         </div>

@@ -523,18 +523,23 @@ angular.module('bimoliveApp')
             aElement.setAttribute('data-start', timeTag[i][0]);
             // Bind click event
             aElement.addEventListener("click", seek);
-            
-            var h4Element = document.createElement('h4');
-            h4Element.classList.add('list-group-item-heading');
-            h4Element.innerHTML = timeTag[i][1];
-            
-            var pElement = document.createElement('p');
-            pElement.classList.add('list-group-item-text');
+
+            var pElement = document.createElement('h4');
+            pElement.classList.add('list-group-item-heading');
             pElement.innerHTML = timeTag[i][2];
             
+            var h4Element = document.createElement('p');
+            h4Element.classList.add('list-group-item-text');
+            if (timeTag[i][3] !== 'flag') {
+                h4Element.innerHTML = '- by ' + timeTag[i][1];
+            } else {
+                h4Element.innerHTML = '- by teacher';
+            }          
+            
             ulElement.appendChild(aElement);
-            aElement.appendChild(h4Element);
             aElement.appendChild(pElement);
+            aElement.appendChild(h4Element);
+            
         }
         questionPanel.appendChild(ulElement);
         
@@ -658,7 +663,7 @@ angular.module('bimoliveApp')
                 for(var i = 0, len = data.length; i < len; ++i) {
                     if(data[i].status === 'answer' || data[i].status === 'flag') {
                         var question = [appScope.realTime2Seconds(data[i].changeTime) - appScope.realTime2Seconds(appScope.currentLecture.lectureInfo.realStart),
-                        data[i].username, data[i].content];
+                        data[i].username, data[i].content, data[i].status];
                         timeTag.push(question);
                     }
                 }
